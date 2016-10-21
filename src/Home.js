@@ -37,7 +37,7 @@ class UploadRubricForm extends Component {
   handleSubmit(e) {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function() { 
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+        if (xmlHttp.readyState === 4 && xmlHttp.status === 200)
             console.log(xmlHttp.responseText);
             console.log(xmlHttp.responseXML);
     }
