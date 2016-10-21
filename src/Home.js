@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router';
 import {Jumbotron, Button, Form, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 
 
@@ -85,6 +86,7 @@ class Home extends Component {
       <div className="App">
         <Header />
         <UploadRubricForm />
+        <Link to="criteriaGrader">Criteria</Link>
       </div>
     );
   }
