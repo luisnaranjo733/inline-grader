@@ -19,23 +19,30 @@ class UploadRubricForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: ''
+      url: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   getValidationState() {
-    const length = this.state.value.length;
+    const length = this.state.url.length;
     if (length > 0) return 'success';
   }
 
   handleChange(e) {
-    this.setState({ value: e.target.value });
+    this.setState({ url: e.target.value });
   }
   
   handleSubmit(e) {
-    console.log("Hello");
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() { 
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            console.log(xmlHttp.responseText);
+            console.log(xmlHttp.responseXML);
+    }
+    xmlHttp.open("GET", this.state.url, true); // true for asynchronous 
+    xmlHttp.send(null);
   }
 
   render() {
@@ -57,13 +64,13 @@ class UploadRubricForm extends Component {
           <ControlLabel>Submit rubric URL</ControlLabel>
           <FormControl
             type="text"
-            value={this.state.value}
+            value={this.state.url}
             placeholder="Enter rubric URL"
             onChange={this.handleChange}
             style={formControlStyle}
           />
           <FormControl.Feedback />
-          <button onClick={this.handleSubmit} className="btn btn-default">Submit</button>
+          <button type="button" onClick={this.handleSubmit} className="btn btn-default">Submit</button>
         </FormGroup>
       </Form>
     );
