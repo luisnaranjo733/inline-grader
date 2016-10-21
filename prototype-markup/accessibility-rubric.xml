@@ -1,0 +1,96 @@
+<rubric name="Accessibility challenge rubric">
+    <section name="Markup and accessibility">
+      <section name="Meta">
+        <criteria name="DOCTYPE" weight="1" />
+        <criteria name="lang=en" weight="1" />
+        <criteria name="utf-8" weight="1" />
+        <criteria name="meta author" weight="1" />
+        <criteria name="meta keywords" weight="1" />
+      </section>
+
+      <section name="Page structure">
+        <criteria name="&lt;article&gt; and &lt;sections&gt; appropriate" weight="3" />
+        <criteria name="appropriate heading levels (h1-h4)" weight="4" />
+        <criteria name="internal links (figures, Section 3)" weight="1" />
+      </section>
+
+      <section name="Heading/title">
+        <criteria name="&lt;header&gt; (inc landmark)" weight="1" />
+        &lt;criteria name="&lt;address&gt;" weight="1" />
+      </section>
+
+      <section name="Abstract">
+        <criteria name="&lt;abbr>" weight="2">
+          .5 for any, .5pt catching them all (9, counting SD/ns), 1pt for titles (-.5 if not correct
+        </criteria>
+        <criteria name="&lt;i&gt;in situ&lt;/i&gt;" weight="1" />
+        <criteria name="keywords in ul format" weight="2" />
+      </section>
+
+      <section name="Intro">
+        <criteria name="figure" weight="1" />
+        <criteria name="&lt;caption&gt;" weight="1" />
+        <criteria name="&lt;img&gt; has alt text" weight="2" />
+        <criteria name="&lt;img&gt; has longdescr" weight="1">
+          -2 pts if missing on second figure
+        </criteria>
+        <criteria name="ol contributions" weight="1" />
+      </section>
+
+      <section name="Study design">
+        <criteria name="Definitions" weight="4">
+          (1pt &lt;dfn&gt;, 2pt aria-describedby + span, 1pt for all 3)
+        </criteria>
+        <criteria name="&lt;cite&gt; on WACG" weight="0.5" />
+        <criteria name="&lt;code&gt; tags" weight="1" />
+        <criteria name=" &lt;; &gt;; entities" weight="1.5">
+          (-.5 if missing more than one or two)
+        </criteria>
+      </section>
+
+      <section name="Results">
+        <criteria name="dl/dt/dd under timing tasks" weight="2" />
+        <criteria name="table caption" weight="1" />
+        <criteria name="&lt;th&gt; tags" weight="1" />
+        <criteria name="&lt;scope&gt; attributes" weight="1" />
+      </section>
+
+      <section name="End material">
+        <criteria name="&lt;footer&gt;" weight="1">
+          Includes landmark
+        </criteria>
+        <criteria name="&lt;small&gt;" weight="1" />
+      </section>
+
+      <section name="Validation">
+        <criteria name="Validation errors" weight="0">
+          up to -5 if validation errors
+        </criteria>
+      </section>
+    </section>
+
+    <section name="CSS Styling">
+    </section>
+
+    <section name="Navigation menu">
+    </section>
+
+    <section name="Reading quiz">
+    </section>
+
+    <section name="Coding style &amp; documentation">
+    </section>
+</rubric>
+
+<!--
+* Types of tags allowed
+  - <rubric name=required>
+  - <section name=required>
+  - <criteria>
+* Rules
+  - <section> tags can be nested as many times as you'd like.
+  - <section> tags can have either all <section> tags as immediate children OR all <criteria> as immediate children.
+  - Outer most <section> tag is assumed to be the canvas grading section.
+    All comments to criteria nested inside this section will be aggregated 
+    and listen in a textbox so you can copy and paste the whole box into Canvas.
+-->
