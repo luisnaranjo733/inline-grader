@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import {Jumbotron, Button, Form, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
-import Home from './Home';
-import CriteriaGrader from './CriteriaGrader';
 
-class App extends Component {
+class CriteriaGrader extends Component {
   render() {
     return (
-      <Home />
+      <h1>CriteriaGrader</h1>
     );
   }
 }
 
-export default App;
+export default CriteriaGrader;
