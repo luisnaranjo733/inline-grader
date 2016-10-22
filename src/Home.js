@@ -13,6 +13,8 @@ class Rubric {
     this.CRITERIA_TAG = 'criteria';
 
     this.dom = dom;
+    console.log('DOM');
+    console.log(dom);
     this.rubric = {
       name: '',
       criteria: []
@@ -24,17 +26,11 @@ class Rubric {
   }
 
   xmlIsValid() {
-    var rubricTag = this.dom[this.RUBRIC_TAG];
-    if (rubricTag) {
-      var rubricName = rubricTag['$']['name'];
-      if (rubricName) {
-        return true;
-      }
-    }
-    return false;
+    return true;
   }
 
   organize() {
+    console.log(this.dom);
     var rubricTag = this.dom[this.RUBRIC_TAG];
     this.rubric['name'] = rubricTag['$']['name'];
 
@@ -73,12 +69,14 @@ class Rubric {
   }
 }
 
-var url = "https://raw.githubusercontent.com/luisnaranjo733/inline-grader/master/prototype-markup/accessibility-rubric.xml?token=ABCn25Fgw2pRc-VdivjVrXxr4mSu9EBMks5YFFB8wA%3D%3D";
+var url = "https://raw.githubusercontent.com/luisnaranjo733/inline-grader/master/prototype-markup/accessibility-rubric.xml?token=ABCn22r6-LhpyKJQx3hhN2LCKlySq6X1ks5YFOXgwA%3D%3D";
 var xmlHttp = new XMLHttpRequest();
 xmlHttp.onreadystatechange = function() { 
     if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
       var parser = new xml2js.Parser();
       parser.parseString(xmlHttp.responseText, function(err, result) {
+        console.log('err');
+        console.log(err);
         var rubric = new Rubric(result);
         console.log(rubric.rubric);
       });
