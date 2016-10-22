@@ -13,8 +13,6 @@ class Rubric {
     this.CRITERIA_TAG = 'criteria';
 
     this.dom = dom;
-    console.log('DOM');
-    console.log(dom);
     this.rubric = {
       name: '',
       criteria: []
@@ -34,30 +32,32 @@ class Rubric {
     var rubricTag = this.dom[this.RUBRIC_TAG];
     this.rubric['name'] = rubricTag['$']['name'];
 
+    /*
     if (rubricTag[this.SECTION_TAG]) {
       for (var section of rubricTag[this.SECTION_TAG]) {
         this.organizeHelper(section, [section['$']['name']]); // kick off recursion for each top level section tree
       }
     }
-
+    */
+    this.organizeHelper(rubricTag, []);
   }
 
   organizeHelper(tag, path) {
     var childSections = tag[this.SECTION_TAG];
     var childCriteria = tag[this.CRITERIA_TAG];
 
-    if (childSections) {
-      for (var section of childSections) {
-        this.organizeHelper(section, path.concat([section['$']['name']]));        
-      }
-
-    } else if (childCriteria) {
+    if (childCriteria) {
       for (var criteria of childCriteria) {
         this.rubric.criteria.push({
           name: criteria['$']['name'],
           path: path,
           weight: criteria['$']['weight'],
         });
+      }
+    } 
+    if (childSections) {
+      for (var section of childSections) {
+        this.organizeHelper(section, path.concat([section['$']['name']]));        
       }
     }
   }
@@ -69,16 +69,18 @@ class Rubric {
   }
 }
 
-var url = "https://raw.githubusercontent.com/luisnaranjo733/inline-grader/master/prototype-markup/accessibility-rubric.xml?token=ABCn22r6-LhpyKJQx3hhN2LCKlySq6X1ks5YFOXgwA%3D%3D";
+var url = "https://raw.githubusercontent.com/luisnaranjo733/inline-grader/master/prototype-markup/accessibility-rubric.xml?token=ABCn28KvD-h_qzIXoqXN9KTYtKnuFhvrks5YFOg0wA%3D%3D";
 var xmlHttp = new XMLHttpRequest();
 xmlHttp.onreadystatechange = function() { 
     if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
       var parser = new xml2js.Parser();
       parser.parseString(xmlHttp.responseText, function(err, result) {
-        console.log('err');
-        console.log(err);
-        var rubric = new Rubric(result);
-        console.log(rubric.rubric);
+        if (err) {
+          console.log("XML PARSING ERROR: " + err);
+        } else {
+          var rubric = new Rubric(result);
+          console.log(rubric.rubric);
+        }
       });
     }
         

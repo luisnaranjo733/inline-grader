@@ -1,6 +1,7 @@
 <rubric name="Accessibility challenge rubric">
     <criteria name="root level criteria" weight="2" />
     <section name="Markup and accessibility">
+      <criteria name="mid level criteria" weight="2" />
       <section name="Meta">
         <criteria name="DOCTYPE" weight="1" />
         <criteria name="lang=en" weight="1" />
