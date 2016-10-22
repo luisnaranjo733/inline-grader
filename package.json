@@ -11,8 +11,7 @@
     "react": "^15.3.2",
     "react-bootstrap": "^0.30.5",
     "react-dom": "^15.3.2",
-    "react-router": "^2.8.1",
-    "xml-parser": "^1.2.1"
+    "react-router": "^2.8.1"
   },
   "scripts": {
     "start": "react-scripts start",

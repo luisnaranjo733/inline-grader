@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Link} from 'react-router';
 import {Jumbotron, Button, Form, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 
-var parse = require('xml-parser');
+var parseString = require('xml2js').parseString;
 
 function validateXML(parsedXML) {
   console.log(parsedXML);
@@ -21,34 +21,19 @@ function validateXML(parsedXML) {
 		○ All <criteria> tags must have "name" attribute.
 		○ All <criteria> tags must have "weight" attribute.
   */
-  var root = parsedXML['root']; // root tag of xml document
 
-  
-  if (root['name'] === 'rubric') { 
-    var rubricName = root['attributes']['name'];
-    if (rubricName && rubricName.length > 0) {
-      
-      var topLevelSection = root['children'];
-      topLevelSection.forEach(function(section) {
-        console.log(section);
-      });
-
-
-    } else {
-
-    }
-  } else {
-    // invalid xml, root tag should be of type <rubric>
-  }
 
 }
 
-var url = "https://raw.githubusercontent.com/luisnaranjo733/inline-grader/master/prototype-markup/accessibility-rubric.xml?token=ABCn22fxxKiAbfNrlrm5Y7wdisW1bGcPks5YFE6vwA%3D%3D";
+var url = "https://raw.githubusercontent.com/luisnaranjo733/inline-grader/master/prototype-markup/accessibility-rubric.xml?token=ABCn25Fgw2pRc-VdivjVrXxr4mSu9EBMks5YFFB8wA%3D%3D";
 var xmlHttp = new XMLHttpRequest();
 xmlHttp.onreadystatechange = function() { 
-    if (xmlHttp.readyState === 4 && xmlHttp.status === 200)
-        var parsedXML = parse(xmlHttp.responseText);
-        validateXML(parsedXML);
+    if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+      parseString(xmlHttp.responseText, function(err, result) {
+        console.log(result);
+      });
+    }
+        
 }
 xmlHttp.open("GET", url, true); // true for asynchronous 
 xmlHttp.send(null);
@@ -70,7 +55,7 @@ class UploadRubricForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      url: 'https://raw.githubusercontent.com/luisnaranjo733/inline-grader/master/prototype-markup/accessibility-rubric-notescaped.xml?token=ABCn23FAtD39Lfb7Lj3OgOxn8tN2rs9bks5YE7eQwA%3D%3D'
+      url: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
