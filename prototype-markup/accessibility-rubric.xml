@@ -70,15 +70,20 @@
     </section>
 
     <section name="CSS Styling">
+        <criteria name="looks good" weight="20" />
+        <criteria name="looks great" weight="2" />
     </section>
 
     <section name="Navigation menu">
+      <criteria name="navigates good" weight="20" />
     </section>
 
     <section name="Reading quiz">
+      <criteria name="reads good" weight="20" />
     </section>
 
     <section name="Coding style &amp; documentation">
+      <criteria name="conforms good" weight="20" />
     </section>
 </rubric>
 
