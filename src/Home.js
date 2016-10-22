@@ -4,12 +4,14 @@ import {Jumbotron, Button, Form, FormGroup, ControlLabel, FormControl} from 'rea
 
 var xml2js = require('xml2js');
 
-var RUBRIC_TAG = 'rubric';
-var SECTION_TAG = 'section';
-var CRITERIA_TAG = 'criteria';
+
 
 class Rubric {
   constructor(dom) {
+    this.RUBRIC_TAG = 'rubric';
+    this.SECTION_TAG = 'section';
+    this.CRITERIA_TAG = 'criteria';
+
     this.dom = dom;
     this.rubric = {
       name: '',
@@ -22,7 +24,7 @@ class Rubric {
   }
 
   xmlIsValid() {
-    var rubricTag = this.dom[RUBRIC_TAG];
+    var rubricTag = this.dom[this.RUBRIC_TAG];
     if (rubricTag) {
       var rubricName = rubricTag['$']['name'];
       if (rubricName) {
@@ -33,19 +35,20 @@ class Rubric {
   }
 
   organize() {
-    var rubricTag = this.dom[RUBRIC_TAG];
+    var rubricTag = this.dom[this.RUBRIC_TAG];
     this.rubric['name'] = rubricTag['$']['name'];
 
-    if (rubricTag[SECTION_TAG]) {
-      for (var section of rubricTag[SECTION_TAG]) {
+    if (rubricTag[this.SECTION_TAG]) {
+      for (var section of rubricTag[this.SECTION_TAG]) {
         this.organizeHelper(section, [section['$']['name']]); // kick off recursion for each top level section tree
       }
     }
+
   }
 
   organizeHelper(tag, path) {
-    var childSections = tag[SECTION_TAG];
-    var childCriteria = tag[CRITERIA_TAG];
+    var childSections = tag[this.SECTION_TAG];
+    var childCriteria = tag[this.CRITERIA_TAG];
 
     if (childSections) {
       for (var section of childSections) {
