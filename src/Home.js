@@ -24,21 +24,24 @@ class Rubric {
   }
 
   xmlIsValid() {
+    /*
+      * Root tag should be rubric
+      * Rubric tag should have name attribute
+      * Rubric tag must have at least 1 criteria or section tag as immediate children
+      * Traverse tree
+        - Criteria tags must have
+          * name attribute
+          * weight attribute
+        - Section tags must have
+          * name attribute
+          * At least 1 criteria or section tag as immediate children
+    */
     return true;
   }
 
   organize() {
-    console.log(this.dom);
     var rubricTag = this.dom[this.RUBRIC_TAG];
     this.rubric['name'] = rubricTag['$']['name'];
-
-    /*
-    if (rubricTag[this.SECTION_TAG]) {
-      for (var section of rubricTag[this.SECTION_TAG]) {
-        this.organizeHelper(section, [section['$']['name']]); // kick off recursion for each top level section tree
-      }
-    }
-    */
     this.organizeHelper(rubricTag, []);
   }
 
@@ -69,7 +72,7 @@ class Rubric {
   }
 }
 
-var url = "https://raw.githubusercontent.com/luisnaranjo733/inline-grader/master/prototype-markup/accessibility-rubric.xml?token=ABCn28KvD-h_qzIXoqXN9KTYtKnuFhvrks5YFOg0wA%3D%3D";
+var url = "https://raw.githubusercontent.com/luisnaranjo733/inline-grader/master/prototype-markup/accessibility-rubric.xml?token=ABCn26exuHdJkqOLGCO52H_0pPQCVXGeks5YFOoawA%3D%3D";
 var xmlHttp = new XMLHttpRequest();
 xmlHttp.onreadystatechange = function() { 
     if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
@@ -79,7 +82,7 @@ xmlHttp.onreadystatechange = function() {
           console.log("XML PARSING ERROR: " + err);
         } else {
           var rubric = new Rubric(result);
-          console.log(rubric.rubric);
+          rubric.printRubric();
         }
       });
     }
