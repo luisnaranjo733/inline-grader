@@ -2,35 +2,82 @@ import React, { Component } from 'react';
 import {Link} from 'react-router';
 import {Jumbotron, Button, Form, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 
-var parseString = require('xml2js').parseString;
+var xml2js = require('xml2js');
 
-function validateXML(parsedXML) {
-  console.log(parsedXML);
-  /*
-	• <rubric> rules
-		○ Root tag must be a <rubric> tag.
-		○ <rubric> tag must have a "name" attribute.
-	• <section> rules
-		○ All <section> tags must have a "name" attribute
-		○ All <section> tags must have 1 or more child tags
-		○ All <section> tags must satisfy one of the following rules
-			§ All direct children are <criteria> tags
-			§ All direct children are <section> tags
-		
-	• <criteria> rules
-		○ All <criteria> tags must have "name" attribute.
-		○ All <criteria> tags must have "weight" attribute.
-  */
+var RUBRIC_TAG = 'rubric';
+var SECTION_TAG = 'section';
+var CRITERIA_TAG = 'criteria';
 
+class Rubric {
+  constructor(dom) {
+    this.dom = dom;
+    this.rubric = {
+      name: '',
+      criteria: []
+    };
 
+    if (this.xmlIsValid()) {
+      this.organize()
+    }
+  }
+
+  xmlIsValid() {
+    var rubricTag = this.dom[RUBRIC_TAG];
+    if (rubricTag) {
+      var rubricName = rubricTag['$']['name'];
+      if (rubricName) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  organize() {
+    var rubricTag = this.dom[RUBRIC_TAG];
+    this.rubric['name'] = rubricTag['$']['name'];
+
+    if (rubricTag[SECTION_TAG]) {
+      for (var section of rubricTag[SECTION_TAG]) {
+        this.organizeHelper(section, [section['$']['name']]); // kick off recursion for each top level section tree
+      }
+    }
+  }
+
+  organizeHelper(tag, path) {
+    var childSections = tag[SECTION_TAG];
+    var childCriteria = tag[CRITERIA_TAG];
+
+    if (childSections) {
+      for (var section of childSections) {
+        this.organizeHelper(section, path.concat([section['$']['name']]));        
+      }
+
+    } else if (childCriteria) {
+      for (var criteria of childCriteria) {
+        this.rubric.criteria.push({
+          name: criteria['$']['name'],
+          path: path,
+          weight: criteria['$']['weight'],
+        });
+      }
+    }
+  }
+
+  printRubric() {
+    for(var criteria of this.rubric.criteria) {
+      console.log(criteria);
+    }
+  }
 }
 
 var url = "https://raw.githubusercontent.com/luisnaranjo733/inline-grader/master/prototype-markup/accessibility-rubric.xml?token=ABCn25Fgw2pRc-VdivjVrXxr4mSu9EBMks5YFFB8wA%3D%3D";
 var xmlHttp = new XMLHttpRequest();
 xmlHttp.onreadystatechange = function() { 
     if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-      parseString(xmlHttp.responseText, function(err, result) {
-        console.log(result);
+      var parser = new xml2js.Parser();
+      parser.parseString(xmlHttp.responseText, function(err, result) {
+        var rubric = new Rubric(result);
+        console.log(rubric.rubric);
       });
     }
         
