@@ -17,26 +17,62 @@ class Rubric {
       name: '',
       criteria: []
     };
-
-    if (this.xmlIsValid()) {
-      this.organize()
-    }
   }
 
-  xmlIsValid() {
-    /*
-      * Root tag should be rubric
-      * Rubric tag should have name attribute
-      * Rubric tag must have at least 1 criteria or section tag as immediate children
-      * Traverse tree
-        - Criteria tags must have
-          * name attribute
-          * weight attribute
-        - Section tags must have
-          * name attribute
-          * At least 1 criteria or section tag as immediate children
-    */
-    return true;
+  isXmlValid() {
+    var rubricTagValid = false;
+
+    var rubricTag = this.dom[this.RUBRIC_TAG];
+    if (rubricTag) {
+      if (rubricTag['$']['name'] && rubricTag['$']['name'].length > 0) {
+        if (rubricTag[this.SECTION_TAG] || rubricTag[this.CRITERIA_TAG]) {
+          rubricTagValid = true;
+        } else {
+          console.log('Rubric tag must contain at least 1 criteria or section tag as immediate child');
+        }
+      } else {
+        console.log('Rubric tag should have a name attribute')
+      }
+    } else {
+      console.log("Root tag should be a rubric tag");
+    }
+
+    return rubricTagValid && this.isXmlValidRecursive(rubricTag);
+  }
+
+  isXmlValidRecursive(tag) {
+    var childSections = tag[this.SECTION_TAG];
+    var childCriteria = tag[this.CRITERIA_TAG];
+
+    var allSectionTagsValid = true;
+    var allCriteriaTagsValid = true;
+
+    if (childCriteria) {
+      for (var criteria of childCriteria) {
+        if (!criteria['$']['name'] || criteria['$']['name'].length === 0) {
+          allCriteriaTagsValid = false;
+          console.log("All criteria tags should have a non empty name attribute");
+        }
+      }
+    } 
+
+    if (childSections) {
+      for (var section of childSections) {
+        if (!section['$']['name'] || section['$']['name'].length === 0) {
+          allSectionTagsValid = false;
+          console.log("All section tags should have a non empty name attribute");
+        }
+
+        if (!section[this.SECTION_TAG] && !section[this.CRITERIA_TAG]) {
+          allSectionTagsValid = false;
+          console.log("All section tags must contain a criteria tag or a section tag");
+        }
+
+        allSectionTagsValid = this.isXmlValidRecursive(section);
+      }
+    }
+
+    return allSectionTagsValid & allCriteriaTagsValid;
   }
 
   organize() {
@@ -82,7 +118,14 @@ xmlHttp.onreadystatechange = function() {
           console.log("XML PARSING ERROR: " + err);
         } else {
           var rubric = new Rubric(result);
-          rubric.printRubric();
+          if (rubric.isXmlValid()) {
+            console.log("XML is valid");
+            rubric.organize();
+            console.log("Organized rubric");
+            console.log(rubric.rubric);
+          } else {
+            console.log("XML is NOT valid");
+          }
         }
       });
     }
