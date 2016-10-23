@@ -108,31 +108,8 @@ class Rubric {
   }
 }
 
-var url = "https://raw.githubusercontent.com/luisnaranjo733/inline-grader/master/prototype-markup/accessibility-rubric.xml?token=ABCn26exuHdJkqOLGCO52H_0pPQCVXGeks5YFOoawA%3D%3D";
-var xmlHttp = new XMLHttpRequest();
-xmlHttp.onreadystatechange = function() { 
-    if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-      var parser = new xml2js.Parser();
-      parser.parseString(xmlHttp.responseText, function(err, result) {
-        if (err) {
-          console.log("XML PARSING ERROR: " + err);
-        } else {
-          var rubric = new Rubric(result);
-          if (rubric.isXmlValid()) {
-            console.log("XML is valid");
-            rubric.organize();
-            console.log("Organized rubric");
-            console.log(rubric.rubric);
-          } else {
-            console.log("XML is NOT valid");
-          }
-        }
-      });
-    }
-        
-}
-xmlHttp.open("GET", url, true); // true for asynchronous 
-xmlHttp.send(null);
+//var url = "https://raw.githubusercontent.com/luisnaranjo733/inline-grader/master/prototype-markup/accessibility-rubric.xml?token=ABCn26exuHdJkqOLGCO52H_0pPQCVXGeks5YFOoawA%3D%3D";
+
 
 class Header extends Component {
   render() {
@@ -151,7 +128,7 @@ class UploadRubricForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      url: ''
+      url: 'https://raw.githubusercontent.com/luisnaranjo733/inline-grader/master/prototype-markup/accessibility-rubric.xml?token=ABCn26exuHdJkqOLGCO52H_0pPQCVXGeks5YFOoawA%3D%3D'
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -167,7 +144,30 @@ class UploadRubricForm extends Component {
   }
   
   handleSubmit(e) {
-
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() { 
+        if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+          var parser = new xml2js.Parser();
+          parser.parseString(xmlHttp.responseText, function(err, result) {
+            if (err) {
+              console.log("XML PARSING ERROR: " + err);
+            } else {
+              var rubric = new Rubric(result);
+              if (rubric.isXmlValid()) {
+                console.log("XML is valid");
+                rubric.organize();
+                console.log("Organized rubric");
+                console.log(rubric.rubric);
+              } else {
+                console.log("XML is NOT valid");
+              }
+            }
+          });
+        }
+            
+    }
+    xmlHttp.open("GET", this.state.url, true); // true for asynchronous 
+    xmlHttp.send(null);
   }
 
   render() {
