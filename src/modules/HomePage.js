@@ -1,26 +1,13 @@
 import React, { Component } from 'react';
-import Rubric from './Rubric';
+import Rubric from '../Rubric';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import {Jumbotron, Button, Form, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
-import {Link} from 'react-router';
+// import {Link} from 'react-router';
 import 'whatwg-fetch';
 
-class CriteriaGrader extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      rubric: {}
-    };
-  }
 
-  render() {
-    return (
-      <h1>CriteriaGrader</h1>
-    );
-  }
-}
 
 class Header extends Component {
   render() {
@@ -97,11 +84,10 @@ class Home extends Component {
       <div className="home">
         <Header />
         <UploadRubricForm />
-        <Link to="criteriaGrader">Criteria</Link>
       </div>
     );
   }
 }
 
 
-export {Home, CriteriaGrader};
+export default Home;
