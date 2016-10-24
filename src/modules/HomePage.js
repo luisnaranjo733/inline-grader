@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import {router} from 'react-router'
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import {Jumbotron, Button, Form, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
@@ -21,13 +21,15 @@ class Header extends Component {
 }
 class UploadRubricForm extends Component {
 
-  constructor(props) {
+  constructor(props, context) {
     super(props);
     this.state = {
       url: 'https://raw.githubusercontent.com/luisnaranjo733/inline-grader/master/prototype-markup/accessibility-rubric.xml?token=ABCn26exuHdJkqOLGCO52H_0pPQCVXGeks5YFOoawA%3D%3D'
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.context = context;
+
   }
 
   handleChange(e) {
@@ -42,7 +44,13 @@ class UploadRubricForm extends Component {
     })
     .then(function(xmlBody) {
         outerThis.props.onAddRubric(xmlBody);
+        console.log("CONTEXT")
+        console.log(outerThis.context);
+        console.log(outerThis.context.router)
+        console.log(outerThis.context.router.push)
+        outerThis.context.router.push('/criteria/1');
     });
+    
   }
 
   render() {
@@ -75,6 +83,7 @@ class UploadRubricForm extends Component {
     );
   }
 }
+UploadRubricForm.contextTypes = {router: React.PropTypes.object};
 
 class HomePage extends Component {
   render() {
