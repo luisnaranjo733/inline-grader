@@ -57,8 +57,7 @@ class UploadRubricForm extends Component {
         var rubric = new Rubric(body);
         console.log(rubric.name);
         console.log(rubric.criteria);
-    })
-
+    });
   }
 
   render() {
