@@ -88,7 +88,7 @@ UploadRubricForm.contextTypes = {router: React.PropTypes.object};
 class HomePage extends Component {
   render() {
     return (
-      <div className="home">
+      <div>
         <Header />
         <UploadRubricForm onAddRubric={this.props.onAddRubric} />
       </div>

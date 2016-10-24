@@ -1,20 +1,18 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import Rubric from './Rubric';
-import {Navbar, Nav, NavItem} from 'react-bootstrap'
 
 class FixedNavBar extends Component {
   render() {
 
     const navBarStyle = {
-      borderStyle: 'solid',
-      borderBottom: 'thick solid #f44336!important'
+      borderBottom: 'thin solid black',
     }
 
     return (
       <nav style={navBarStyle}>
         <ul>
-          <li>Inline Grader</li>
+          <li><Link to="/">Inline Grader</Link></li>
           <li><Link to="/criteria/1">Criteria</Link></li>
         </ul>
       </nav>
@@ -43,6 +41,7 @@ class Navigation extends Component {
     return (
       <div>
         <FixedNavBar rubric={this.state.rubric}/>
+
         {this.props.children && React.cloneElement(this.props.children, {
           onAddRubric: this.addRubric
         })}
