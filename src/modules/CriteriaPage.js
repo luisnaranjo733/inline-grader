@@ -3,24 +3,39 @@ import React, { Component } from 'react';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
-//import {Jumbotron, Button, Form, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
+import {Breadcrumb} from 'react-bootstrap'
 //import {Link} from 'react-router';
 
 class BreadCrumbs extends Component {
   render() {
     return (
-      <span>
-        <p>BreadCrumbs</p>
-      </span>
+      <Breadcrumb>
+        <Breadcrumb.Item>
+          Home
+        </Breadcrumb.Item>
+        <Breadcrumb.Item href="http://getbootstrap.com/components/#breadcrumbs">
+          Library
+        </Breadcrumb.Item>
+        <Breadcrumb.Item active>
+          Data
+        </Breadcrumb.Item>
+      </Breadcrumb>
     );
   }
 }
 
 class ProgressBox extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentCriteria: 0,
+      totalCriteria: 52
+    }
+  }
   render() {
     return (
-      <span>
-        <p>Criteria: this.props.params.position</p>
+      <span className="pull-right progress-box">
+        Criteria: {this.state.currentCriteria} / {this.state.totalCriteria}
       </span>
     );
   }

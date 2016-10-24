@@ -20,3 +20,12 @@ nav li {
 .criteria-page {
     margin-top: 70px;
 }
+
+ol.breadcrumb {
+    display: inline
+}
+
+.progress-box {
+    color: red;
+}
+

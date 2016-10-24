@@ -48,7 +48,7 @@ class UploadRubricForm extends Component {
         console.log(outerThis.context);
         console.log(outerThis.context.router)
         console.log(outerThis.context.router.push)
-        outerThis.context.router.push('/criteria/1');
+        outerThis.context.router.push('/criteria/0');
     });
     
   }

@@ -13,7 +13,7 @@ class FixedNavBar extends Component {
       <nav style={navBarStyle}>
         <ul>
           <li><Link to="/">Inline Grader</Link></li>
-          <li><Link to="/criteria/1">Criteria</Link></li>
+          <li><Link to="/criteria/0">Criteria</Link></li>
         </ul>
       </nav>
 
