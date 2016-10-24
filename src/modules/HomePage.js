@@ -36,12 +36,14 @@ class UploadRubricForm extends Component {
   }
   
   handleSubmit(e) {
+    var outerThis = this;
     fetch(this.state.url)
     .then(function(response) {
         return response.text();
     })
     .then(function(body) {
         var rubric = new Rubric(body);
+        outerThis.props.onAddRubric(rubric);
         console.log(rubric.name);
         console.log(rubric.criteria);
     });
@@ -78,16 +80,16 @@ class UploadRubricForm extends Component {
   }
 }
 
-class Home extends Component {
+class HomePage extends Component {
   render() {
     return (
       <div className="home">
         <Header />
-        <UploadRubricForm />
+        <UploadRubricForm onAddRubric={this.props.onAddRubric} />
       </div>
     );
   }
 }
 
 
-export default Home;
+export default HomePage ;
