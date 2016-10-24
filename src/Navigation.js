@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router'
+import { Link } from 'react-router';
 import Rubric from './Rubric';
 import {Navbar, Nav, NavItem} from 'react-bootstrap'
 
@@ -12,24 +12,13 @@ class FixedNavBar extends Component {
     }
 
     return (
-      // <span style={navBarStyle}>
-      //   <h1>Inline Grader</h1>
-      //   <ul>
-      //     <li><Link to="/">Home</Link></li>
-      //     <li><Link to="/criteria/1">Criteria</Link></li>
-      //   </ul>
-      //   <p>Rubric: {this.props.rubric.name || this.props.rubric} </p>
-      // </span>
-    <Navbar inverse fixedTop>
-      <Navbar.Header>
-        <Navbar.Brand>
-          <a href="/">Inline Grader</a>
-        </Navbar.Brand>
-      </Navbar.Header>
-      <Nav>
-        <NavItem eventKey={1}>Criteria</NavItem>
-      </Nav>
-    </Navbar>
+      <nav style={navBarStyle}>
+        <ul>
+          <li>Inline Grader</li>
+          <li><Link to="/criteria/1">Criteria</Link></li>
+        </ul>
+      </nav>
+
     )
   }
 }

@@ -1,0 +1,32 @@
+nav {
+  background-color: rgba(24, 28, 34, 0.8);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  font-size: 16px;
+  color: #FFF;
+  z-index: 1;
+}
+nav ul {
+  padding-left: 15px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+nav li {
+  display: inline-block;
+  padding: 0.5em;
+  font-variant: small-caps;
+}
+nav a {
+  transition: all 0.1s;
+  color: #FFF;
+  fill: #FFF;
+  text-decoration: none;
+}
+nav a:hover,
+nav a:focus {
+  color: #D87E28;
+ 
+  text-decoration: none;
+}
