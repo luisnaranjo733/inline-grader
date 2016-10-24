@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import {Jumbotron, Button, Form, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 import {Link} from 'react-router';
-
+import 'whatwg-fetch';
 
 class CriteriaGrader extends Component {
   constructor(props) {
@@ -49,17 +49,16 @@ class UploadRubricForm extends Component {
   }
   
   handleSubmit(e) {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function() { 
-        if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-          var rubric = new Rubric(xmlHttp.responseText);
-          console.log(rubric.name);
-          console.log(rubric.criteria);
-        }
-            
-    }
-    xmlHttp.open("GET", this.state.url, true); // true for asynchronous 
-    xmlHttp.send(null);
+    fetch(this.state.url)
+    .then(function(response) {
+        return response.text();
+    })
+    .then(function(body) {
+        var rubric = new Rubric(body);
+        console.log(rubric.name);
+        console.log(rubric.criteria);
+    })
+
   }
 
   render() {
