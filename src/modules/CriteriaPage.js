@@ -8,10 +8,6 @@ import 'bootstrap/dist/css/bootstrap-theme.css';
 
 
 class Criteria extends Component {
-  constructor(props) {
-    super(props);
-
-  }
 
   render() {
     return (

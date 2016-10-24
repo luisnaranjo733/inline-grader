@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Rubric from '../Rubric';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
@@ -41,11 +40,8 @@ class UploadRubricForm extends Component {
     .then(function(response) {
         return response.text();
     })
-    .then(function(body) {
-        var rubric = new Rubric(body);
-        outerThis.props.onAddRubric(rubric);
-        console.log(rubric.name);
-        console.log(rubric.criteria);
+    .then(function(xmlBody) {
+        outerThis.props.onAddRubric(xmlBody);
     });
   }
 

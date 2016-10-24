@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router'
-import HomePage from './modules/HomePage'
+import Rubric from './Rubric';
 
 class Nav extends Component {
   constructor(props) {
@@ -11,7 +11,9 @@ class Nav extends Component {
     this.addRubric = this.addRubric.bind(this);
   }
 
-  addRubric(rubric) {
+  addRubric(xmlBody) {
+    var rubric = new Rubric(xmlBody);
+    console.log(rubric.criteria);
     this.setState({ rubric: rubric });
   }
 
