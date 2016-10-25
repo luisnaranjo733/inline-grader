@@ -67,21 +67,49 @@ class ToolBar extends Component {
 }
 
 class CriteriaBody extends Component {
+  constructor(props, context) {
+    super(props);
+    this.state = {
+      grade: 0,
+      comment: ''
+    }
+  }
+
   render() {
-    var criteriaBodyStyle = {
-      padding: '5em',
-      border: 'solid'
+    var criteriaContainerStyle = {
+      padding: '2em',
+      border: 'solid',
+      // marginLeft: '2em',
+      // marginRight: '2em',
+
+      // height: '600px'
     };
+    var criteriaTitleStyle = {
+      margin: 'auto',
+      display: 'inline'
+    }
 
     var criteria = this.props.criteria[this.props.currentCriteriaIndex]
     var body = '<Criteria body>';
-    if (criteria && criteria.name) {
+    var weight = '?'
+    if (criteria && criteria.name && criteria.weight) {
       body = criteria.name;
+      weight = criteria.weight;
     }
 
     return (
-      <div style={criteriaBodyStyle}>
-        <p>{body}</p>
+      <div className='' style={criteriaContainerStyle}>
+        <p className='center-block'>{body} ({weight})</p>
+
+        <div>
+          <label for="grade">Grade</label><br />
+          <input type="text" id="grade" name="grade" />
+        </div>
+
+        <div>
+          <label for="comment">Comment</label><br/>
+          <textarea id="comment" name="comment"></textarea>
+        </div>
       </div>
     );
   }
@@ -149,8 +177,11 @@ class CriteriaPage extends Component {
 
 
   render() {
+    var containerStyle = {
+      paddingTop: '100px'
+    };
     return (
-      <div className="criteria-page">
+      <div className="container" style={containerStyle}>
         <ToolBar currentCriteriaIndex={this.state.currentCriteriaIndex} criteria={this.state.currentRubric.criteria}/>
         <CriteriaBody currentCriteriaIndex={this.state.currentCriteriaIndex} criteria={this.state.currentRubric.criteria}/>
         <LaunchGradeReport currentCriteriaIndex={this.state.currentCriteriaIndex} nTotalCriteria={this.state.currentRubric.criteria.length}/>
