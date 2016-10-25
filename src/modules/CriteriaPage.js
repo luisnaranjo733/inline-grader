@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import {Breadcrumb, Button} from 'react-bootstrap'
+import {Link} from 'react-router'
+import ReportPage from './ReportPage'
 
 var hotkey = require('react-hotkey');
 hotkey.activate();
@@ -17,7 +19,7 @@ class BreadCrumbs extends Component {
     } else {
 
     }
-    
+
     return (
       // <Breadcrumb>
       //   <Breadcrumb.Item>
@@ -112,12 +114,7 @@ class CriteriaBody extends Component {
   }
 }
 
-class LaunchGradeReport extends Component {
-
-  onClick(event) {
-    console.log('the button was clicked');
-  }
-
+class LaunchGradeReportButton extends Component {
   render() {
     var wellStyle = {
       maxWidth: 400, margin: '0 auto 10px',
@@ -129,9 +126,7 @@ class LaunchGradeReport extends Component {
     }
 
     return (
-      <div className="" style={wellStyle}>
-        <Button bsStyle="primary" bsSize="large" onClick={this.onClick} block>All done! Finalize grade</Button>
-      </div>
+      <Button style={wellStyle} bsStyle="primary" bsSize="large" onClick={this.props.handleLaunchReportButtonClicked} block>All done! Finalize grade</Button>
     );
   }
 }
@@ -144,14 +139,20 @@ class CriteriaPage extends Component {
         name: this.props.rubric.name,
         criteria: this.props.rubric.criteria
       },
-      currentCriteriaIndex: 0
+      currentCriteriaIndex: 33,
+      showGradingReport: false
     }
     this.hotkeyHandler = this.handleHotkey.bind(this);
+    this.handleLaunchReportButtonClicked = this.handleLaunchReportButtonClicked.bind(this);
   }
 
   handleHotkey(event) {
     var newIndex;
-    if (event.key === 'ArrowLeft') {
+    if (event.key === 'ArrowUp') {
+      this.setState({showGradingReport: true});
+    } else if(event.key === 'ArrowDown') {
+      this.setState({showGradingReport: false});
+    } else if (event.key === 'ArrowLeft') {
       newIndex = this.state.currentCriteriaIndex - 1;
       if (newIndex >= 0) {
         this.setState({ currentCriteriaIndex: newIndex });
@@ -161,7 +162,12 @@ class CriteriaPage extends Component {
       if (newIndex < this.state.currentRubric.criteria.length) {
         this.setState({ currentCriteriaIndex: newIndex});
       }
-    }
+    } 
+  }
+
+  handleLaunchReportButtonClicked() {
+    console.log("Button clicked!!!!");
+    this.setState({showGradingReport: !this.state.showGradingReport});
   }
 
   componentDidMount() {
@@ -177,14 +183,22 @@ class CriteriaPage extends Component {
     var containerStyle = {
       paddingTop: '100px'
     };
-    return (
-      <div className="container" style={containerStyle}>
-        <ToolBar currentCriteriaIndex={this.state.currentCriteriaIndex} criteria={this.state.currentRubric.criteria}/>
-        <CriteriaBody currentCriteriaIndex={this.state.currentCriteriaIndex} criteria={this.state.currentRubric.criteria}/>
-        <LaunchGradeReport currentCriteriaIndex={this.state.currentCriteriaIndex} nTotalCriteria={this.state.currentRubric.criteria.length}/>
-      </div>
-      
-    );
+    if (this.state.showGradingReport) {
+      return <ReportPage />
+    } else {
+      return (
+        <div className="container" style={containerStyle}>
+          <ToolBar currentCriteriaIndex={this.state.currentCriteriaIndex} criteria={this.state.currentRubric.criteria}/>
+          <CriteriaBody currentCriteriaIndex={this.state.currentCriteriaIndex} criteria={this.state.currentRubric.criteria}/>
+          <LaunchGradeReportButton
+            currentCriteriaIndex={this.state.currentCriteriaIndex}
+            handleLaunchReportButtonClicked={this.handleLaunchReportButtonClicked}
+            nTotalCriteria={this.state.currentRubric.criteria.length}
+          />
+          <Link to="/criteria/report">Link</Link>
+        </div>
+      )
+    }
   }
 }
 
