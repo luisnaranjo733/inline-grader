@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-//import Rubric from './Rubric';
-
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import {Breadcrumb} from 'react-bootstrap'
-//import {Link} from 'react-router';
+
+var hotkey = require('react-hotkey');
+hotkey.activate();
 
 class BreadCrumbs extends Component {
   render() {
@@ -88,10 +88,33 @@ class CriteriaPage extends Component {
         name: this.props.rubric.name,
         criteria: this.props.rubric.criteria
       },
-      currentCriteriaIndex: 18
+      currentCriteriaIndex: 0
     }
-
+    this.hotkeyHandler = this.handleHotkey.bind(this);
   }
+
+  handleHotkey(event) {
+    if (event.key === 'ArrowLeft') {
+      var newIndex = this.state.currentCriteriaIndex - 1;
+      if (newIndex >= 0) {
+        this.setState({ currentCriteriaIndex: newIndex });
+      }
+    } else if (event.key === 'ArrowRight') {
+      var newIndex = this.state.currentCriteriaIndex + 1;
+      if (newIndex <= this.state.currentRubric.criteria.length) {
+        this.setState({ currentCriteriaIndex: newIndex});
+      }
+    }
+  }
+
+  componentDidMount() {
+    hotkey.addHandler(this.hotkeyHandler);
+  }
+
+  componentWillUnmount() {
+    hotkey.removeHandler(this.hotkeyHandler);
+  }
+
 
   render() {
     return (
