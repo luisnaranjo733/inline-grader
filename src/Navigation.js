@@ -31,7 +31,6 @@ class Navigation extends Component {
 
   addRubric(xmlBody) {
     var rubric = new Rubric(xmlBody);
-    console.log(rubric.criteria);
     this.setState({ rubric: rubric });
   }
 

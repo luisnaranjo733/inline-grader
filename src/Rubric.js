@@ -30,8 +30,6 @@ class Rubric {
       } else {
         console.log("Warning: Invalid XML passed to Rubric()");
       }
-    } else {
-      console.log("Initialized empty rubric");
     }
 
   }

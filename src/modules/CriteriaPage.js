@@ -39,9 +39,16 @@ class BreadCrumbs extends Component {
 
 class ProgressBox extends Component {
   render() {
+    var numerator = this.props.currentCriteriaIndex;
+    var denominator = this.props.nTotalCriteria;
+
+    if (numerator < denominator) {
+      numerator = numerator + 1;  
+    }
+
     return (
       <span className="pull-right progress-box">
-        Criteria: {this.props.currentCriteriaIndex} / {this.props.nTotalCriteria || String('?')}
+        Criteria: {numerator} / {denominator}
       </span>
     );
   }
@@ -92,7 +99,7 @@ class LaunchGradeReport extends Component {
       display: 'none'
     };
 
-    if (this.props.currentCriteriaIndex == this.props.nTotalCriteria) {
+    if (this.props.currentCriteriaIndex + 1 === this.props.nTotalCriteria) {
       wellStyle['display'] = 'block';
     }
 
@@ -112,20 +119,21 @@ class CriteriaPage extends Component {
         name: this.props.rubric.name,
         criteria: this.props.rubric.criteria
       },
-      currentCriteriaIndex: 30
+      currentCriteriaIndex: 0
     }
     this.hotkeyHandler = this.handleHotkey.bind(this);
   }
 
   handleHotkey(event) {
+    var newIndex;
     if (event.key === 'ArrowLeft') {
-      var newIndex = this.state.currentCriteriaIndex - 1;
+      newIndex = this.state.currentCriteriaIndex - 1;
       if (newIndex >= 0) {
         this.setState({ currentCriteriaIndex: newIndex });
       }
     } else if (event.key === 'ArrowRight') {
-      var newIndex = this.state.currentCriteriaIndex + 1;
-      if (newIndex <= this.state.currentRubric.criteria.length) {
+      newIndex = this.state.currentCriteriaIndex + 1;
+      if (newIndex < this.state.currentRubric.criteria.length) {
         this.setState({ currentCriteriaIndex: newIndex});
       }
     }
