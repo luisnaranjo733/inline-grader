@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
-import {Breadcrumb} from 'react-bootstrap'
+import {Breadcrumb, Button} from 'react-bootstrap'
 
 var hotkey = require('react-hotkey');
 hotkey.activate();
@@ -80,6 +80,30 @@ class CriteriaBody extends Component {
   }
 }
 
+class LaunchGradeReport extends Component {
+
+  onClick(event) {
+    console.log('the button was clicked');
+  }
+
+  render() {
+    var wellStyle = {
+      maxWidth: 400, margin: '0 auto 10px',
+      display: 'none'
+    };
+
+    if (this.props.currentCriteriaIndex == this.props.nTotalCriteria) {
+      wellStyle['display'] = 'block';
+    }
+
+    return (
+      <div className="" style={wellStyle}>
+        <Button bsStyle="primary" bsSize="large" onClick={this.onClick} block>All done! Finalize grade</Button>
+      </div>
+    );
+  }
+}
+
 class CriteriaPage extends Component {
   constructor(props, context) {
     super(props);
@@ -88,7 +112,7 @@ class CriteriaPage extends Component {
         name: this.props.rubric.name,
         criteria: this.props.rubric.criteria
       },
-      currentCriteriaIndex: 0
+      currentCriteriaIndex: 30
     }
     this.hotkeyHandler = this.handleHotkey.bind(this);
   }
@@ -121,6 +145,7 @@ class CriteriaPage extends Component {
       <div className="criteria-page">
         <ToolBar currentCriteriaIndex={this.state.currentCriteriaIndex} criteria={this.state.currentRubric.criteria}/>
         <CriteriaBody currentCriteriaIndex={this.state.currentCriteriaIndex} criteria={this.state.currentRubric.criteria}/>
+        <LaunchGradeReport currentCriteriaIndex={this.state.currentCriteriaIndex} nTotalCriteria={this.state.currentRubric.criteria.length}/>
       </div>
       
     );
