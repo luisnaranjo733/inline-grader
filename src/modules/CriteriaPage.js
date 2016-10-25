@@ -8,9 +8,16 @@ import {Breadcrumb} from 'react-bootstrap'
 
 class BreadCrumbs extends Component {
   render() {
-    this.props.criteria[this.props.currentCriteriaIndex].path.map(function(section, i) {
-      return <Breadcrumb.Item key={i}>{section}</Breadcrumb.Item>
-    });
+    var crumbs = [];
+    var criteria = this.props.criteria[this.props.currentCriteriaIndex];
+    if (criteria) {
+      criteria.path.forEach(function(section, i) {
+        crumbs.push(<Breadcrumb.Item key={i}>{section}</Breadcrumb.Item>);
+      });
+    } else {
+
+    }
+
     return (
       // <Breadcrumb>
       //   <Breadcrumb.Item>
@@ -24,9 +31,7 @@ class BreadCrumbs extends Component {
       //   </Breadcrumb.Item>
       // </Breadcrumb>
       <Breadcrumb>
-      {this.props.criteria[this.props.currentCriteriaIndex].path.map(function(section, i) {
-        return <Breadcrumb.Item key={i}>{section}</Breadcrumb.Item>
-      })}
+      {crumbs}
       </Breadcrumb>
     );
   }
@@ -36,7 +41,7 @@ class ProgressBox extends Component {
   render() {
     return (
       <span className="pull-right progress-box">
-        Criteria: {this.props.currentCriteriaIndex} / {this.props.nTotalCriteria}
+        Criteria: {this.props.currentCriteriaIndex} / {this.props.nTotalCriteria || String('?')}
       </span>
     );
   }
@@ -54,11 +59,22 @@ class ToolBar extends Component {
   }
 }
 
-class Body extends Component {
+class CriteriaBody extends Component {
   render() {
+    var criteriaBodyStyle = {
+      padding: '5em',
+      border: 'solid'
+    };
+
+    var criteria = this.props.criteria[this.props.currentCriteriaIndex]
+    var body = '<Criteria body>';
+    if (criteria && criteria.name) {
+      body = criteria.name;
+    }
+
     return (
-      <div>
-        <p>{this.props.criteria[this.props.currentCriteriaIndex].name}</p>
+      <div style={criteriaBodyStyle}>
+        <p>{body}</p>
       </div>
     );
   }
@@ -81,7 +97,7 @@ class CriteriaPage extends Component {
     return (
       <div className="criteria-page">
         <ToolBar currentCriteriaIndex={this.state.currentCriteriaIndex} criteria={this.state.currentRubric.criteria}/>
-        <Body currentCriteriaIndex={this.state.currentCriteriaIndex} criteria={this.state.currentRubric.criteria}/>
+        <CriteriaBody currentCriteriaIndex={this.state.currentCriteriaIndex} criteria={this.state.currentRubric.criteria}/>
       </div>
       
     );
