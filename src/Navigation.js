@@ -7,6 +7,7 @@ class FixedNavBar extends Component {
 
     const navBarStyle = {
       borderBottom: 'thin solid black',
+      backgroundColor: 'white'
     }
 
     return (

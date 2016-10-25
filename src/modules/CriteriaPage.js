@@ -17,7 +17,7 @@ class BreadCrumbs extends Component {
     } else {
 
     }
-
+    
     return (
       // <Breadcrumb>
       //   <Breadcrumb.Item>
@@ -34,6 +34,7 @@ class BreadCrumbs extends Component {
       {crumbs}
       </Breadcrumb>
     );
+
   }
 }
 
@@ -94,7 +95,7 @@ class CriteriaBody extends Component {
     }
 
     return (
-      <div className='' style={criteriaContainerStyle}>
+      <div className='criteria-body' style={criteriaContainerStyle}>
         <p className='center-block'>{body} ({weight})</p>
 
         <div>
