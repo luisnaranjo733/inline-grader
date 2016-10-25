@@ -43,7 +43,7 @@ class ProgressBox extends Component {
     var denominator = this.props.nTotalCriteria;
 
     if (numerator < denominator) {
-      numerator = numerator + 1;  
+      numerator += 1;  
     }
 
     return (
@@ -84,10 +84,6 @@ class CriteriaBody extends Component {
 
       // height: '600px'
     };
-    var criteriaTitleStyle = {
-      margin: 'auto',
-      display: 'inline'
-    }
 
     var criteria = this.props.criteria[this.props.currentCriteriaIndex]
     var body = '<Criteria body>';
@@ -102,12 +98,12 @@ class CriteriaBody extends Component {
         <p className='center-block'>{body} ({weight})</p>
 
         <div>
-          <label for="grade">Grade</label><br />
+          <label htmlFor="grade">Grade</label><br />
           <input type="text" id="grade" name="grade" />
         </div>
 
         <div>
-          <label for="comment">Comment</label><br/>
+          <label htmlFor="comment">Comment</label><br/>
           <textarea id="comment" name="comment"></textarea>
         </div>
       </div>
