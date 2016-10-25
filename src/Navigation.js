@@ -12,8 +12,7 @@ class FixedNavBar extends Component {
     return (
       <nav style={navBarStyle}>
         <ul>
-          <li><Link to="/">Inline Grader</Link></li>
-          <li><Link to="/criteria/0">Criteria</Link></li>
+          <li><Link to="/">{this.props.rubricName || String('Inline Grader')}</Link></li>
         </ul>
       </nav>
 
@@ -25,7 +24,7 @@ class Navigation extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rubric: 'aye',
+      rubric: new Rubric(),
     }
     this.addRubric = this.addRubric.bind(this);
   }
@@ -40,10 +39,11 @@ class Navigation extends Component {
 
     return (
       <div>
-        <FixedNavBar rubric={this.state.rubric}/>
+        <FixedNavBar rubricName={this.state.rubric.name}/>
 
         {this.props.children && React.cloneElement(this.props.children, {
-          onAddRubric: this.addRubric
+          addRubric: this.addRubric,
+          rubric: this.state.rubric
         })}
 
       </div>

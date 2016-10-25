@@ -43,12 +43,8 @@ class UploadRubricForm extends Component {
         return response.text();
     })
     .then(function(xmlBody) {
-        outerThis.props.onAddRubric(xmlBody);
-        console.log("CONTEXT")
-        console.log(outerThis.context);
-        console.log(outerThis.context.router)
-        console.log(outerThis.context.router.push)
-        outerThis.context.router.push('/criteria/0');
+        outerThis.props.addRubric(xmlBody); // pass xml back up to the Navigation container
+        outerThis.context.router.push('/criteria/0'); // change router state
     });
     
   }
@@ -90,7 +86,7 @@ class HomePage extends Component {
     return (
       <div>
         <Header />
-        <UploadRubricForm onAddRubric={this.props.onAddRubric} />
+        <UploadRubricForm addRubric={this.props.addRubric} />
       </div>
     );
   }

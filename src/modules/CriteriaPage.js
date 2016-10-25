@@ -8,34 +8,35 @@ import {Breadcrumb} from 'react-bootstrap'
 
 class BreadCrumbs extends Component {
   render() {
+    this.props.criteria[this.props.currentCriteriaIndex].path.map(function(section, i) {
+      return <Breadcrumb.Item key={i}>{section}</Breadcrumb.Item>
+    });
     return (
+      // <Breadcrumb>
+      //   <Breadcrumb.Item>
+      //     Home
+      //   </Breadcrumb.Item>
+      //   <Breadcrumb.Item href="http://getbootstrap.com/components/#breadcrumbs">
+      //     Library
+      //   </Breadcrumb.Item>
+      //   <Breadcrumb.Item active>
+      //     Data
+      //   </Breadcrumb.Item>
+      // </Breadcrumb>
       <Breadcrumb>
-        <Breadcrumb.Item>
-          Home
-        </Breadcrumb.Item>
-        <Breadcrumb.Item href="http://getbootstrap.com/components/#breadcrumbs">
-          Library
-        </Breadcrumb.Item>
-        <Breadcrumb.Item active>
-          Data
-        </Breadcrumb.Item>
+      {this.props.criteria[this.props.currentCriteriaIndex].path.map(function(section, i) {
+        return <Breadcrumb.Item key={i}>{section}</Breadcrumb.Item>
+      })}
       </Breadcrumb>
     );
   }
 }
 
 class ProgressBox extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentCriteria: 0,
-      totalCriteria: 52
-    }
-  }
   render() {
     return (
       <span className="pull-right progress-box">
-        Criteria: {this.state.currentCriteria} / {this.state.totalCriteria}
+        Criteria: {this.props.currentCriteriaIndex} / {this.props.nTotalCriteria}
       </span>
     );
   }
@@ -46,8 +47,8 @@ class ToolBar extends Component {
   render() {
     return (
       <div className="criteria-toolBar">
-        <BreadCrumbs />
-        <ProgressBox />
+        <BreadCrumbs currentCriteriaIndex={this.props.currentCriteriaIndex} criteria={this.props.criteria}/>
+        <ProgressBox currentCriteriaIndex={this.props.currentCriteriaIndex} nTotalCriteria={this.props.criteria.length}/>
       </div>
     );
   }
@@ -57,19 +58,30 @@ class Body extends Component {
   render() {
     return (
       <div>
-        <p>Content body goes here</p>
+        <p>{this.props.criteria[this.props.currentCriteriaIndex].name}</p>
       </div>
     );
   }
 }
 
 class CriteriaPage extends Component {
+  constructor(props, context) {
+    super(props);
+    this.state = {
+      currentRubric: {
+        name: this.props.rubric.name,
+        criteria: this.props.rubric.criteria
+      },
+      currentCriteriaIndex: 18
+    }
+
+  }
 
   render() {
     return (
       <div className="criteria-page">
-        <ToolBar />
-        <Body />
+        <ToolBar currentCriteriaIndex={this.state.currentCriteriaIndex} criteria={this.state.currentRubric.criteria}/>
+        <Body currentCriteriaIndex={this.state.currentCriteriaIndex} criteria={this.state.currentRubric.criteria}/>
       </div>
       
     );

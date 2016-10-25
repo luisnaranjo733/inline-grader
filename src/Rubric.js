@@ -7,12 +7,6 @@ class Rubric {
     this._SECTION_TAG = 'section';
     this._CRITERIA_TAG = 'criteria';
 
-    // parse xml document
-    var parser = new xml2js.Parser();
-    parser.parseString(xml, function(error, result) {
-        this._dom = result;
-    }.bind(this));
-    
     // the name and criteria state are the "output" of the Rubric class
     this._name = ''; // rubric name
     this._criteria = []; // array of criteria objects
@@ -21,29 +15,44 @@ class Rubric {
     //  - path: (grading section path)
     //  - weight: (criteria points possible)
 
-    this._isXmlValidated = this._isXmlValid();
-    if (this._isXmlValidated) {
-      this._formatXml();
+    if (xml) {
+      // parse xml document
+      var parser = new xml2js.Parser();
+      parser.parseString(xml, function(error, result) {
+          this._dom = result;
+      }.bind(this));
+      
+
+
+      this._isXmlValidated = this._isXmlValid();
+      if (this._isXmlValidated) {
+        this._formatXml();
+      } else {
+        console.log("Warning: Invalid XML passed to Rubric()");
+      }
     } else {
-      console.log("Warning: Invalid XML passed to Rubric()");
+      console.log("Initialized empty rubric");
     }
+
   }
 
   // name and criteria getters can only be accessed after the xml rubric is validated with a positive result.
   get name() {
-    if (this._isXmlValidated) {
-      return this._name;
-    } else {
-      return 'Sorry, this xml is invalid';
-    }
+    // if (this._isXmlValidated) {
+    //   return this._name;
+    // } else {
+    //   return 'Sorry, this xml is invalid';
+    // }
+    return this._name;
   }
 
   get criteria() {
-    if (this._isXmlValidated) {
-      return this._criteria;
-    } else {
-      return 'Sorry, this xml is invalid';
-    }
+    // if (this._isXmlValidated) {
+    //   return this._criteria;
+    // } else {
+    //   return 'Sorry, this xml is invalid';
+    // }
+    return this._criteria;
   }
 
   // validate xml rubric recursively
@@ -122,6 +131,7 @@ class Rubric {
           name: criteria['$']['name'],
           path: path,
           weight: criteria['$']['weight'],
+          value: 0
         });
       }
     } 
