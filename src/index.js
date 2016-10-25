@@ -12,7 +12,7 @@ render((
 
       {/* add it here, as a child of `/` */}
       <IndexRoute component={HomePage}/>
-      <Route path="/criteria/:position" component={CriteriaPage} />
+      <Route path="/criteria/" component={CriteriaPage} />
     </Route>
   </Router>
 ), document.getElementById('root'))

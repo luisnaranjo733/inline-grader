@@ -44,7 +44,7 @@ class UploadRubricForm extends Component {
     })
     .then(function(xmlBody) {
         outerThis.props.addRubric(xmlBody); // pass xml back up to the Navigation container
-        outerThis.context.router.push('/criteria/0'); // change router state
+        outerThis.context.router.push('/criteria/'); // change router state
     });
     
   }
