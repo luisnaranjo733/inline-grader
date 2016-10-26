@@ -5,7 +5,6 @@ import { Router, Route, hashHistory, IndexRoute } from 'react-router'
 import Navigation from './Navigation'
 import HomePage from './modules/HomePage'
 import CriteriaPage from './modules/CriteriaPage'
-import ReportPage from './modules/ReportPage'
 
 render((
   <Router history={hashHistory}>
@@ -15,7 +14,6 @@ render((
       <IndexRoute component={HomePage}/>
       <Route path="/criteria/" component={CriteriaPage}>
       </Route>
-      <Route path="/criteria/report" component={ReportPage} />
     </Route>
   </Router>
 ), document.getElementById('root'))

@@ -43,7 +43,7 @@ class Navigation extends Component {
 
         {this.props.children && React.cloneElement(this.props.children, {
           addRubric: this.addRubric,
-          rubric: this.state.rubric
+          masterRubric: this.state.rubric
         })}
 
       </div>

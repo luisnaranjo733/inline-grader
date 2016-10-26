@@ -135,12 +135,13 @@ class CriteriaPage extends Component {
   constructor(props, context) {
     super(props);
     this.state = {
+      masterRubric: this.props.masterRubric, // this probably doesn't need to be a state variable because we are only using it to make copies
       currentRubric: {
-        name: this.props.rubric.name,
-        criteria: this.props.rubric.criteria
+        name: this.props.masterRubric.name,
+        criteria: this.props.masterRubric.criteria.slice() // deep copy array for first student
       },
       currentCriteriaIndex: 33,
-      showGradingReport: false
+      showGradingReport: true
     }
     this.hotkeyHandler = this.handleHotkey.bind(this);
     this.handleLaunchReportButtonClicked = this.handleLaunchReportButtonClicked.bind(this);
@@ -184,7 +185,9 @@ class CriteriaPage extends Component {
       paddingTop: '100px'
     };
     if (this.state.showGradingReport) {
-      return <ReportPage />
+      console.log("CriteriaPage")
+      console.log(this.state.currentRubric)
+      return <ReportPage currentRubric={this.state.currentRubric}/>
     } else {
       return (
         <div className="container" style={containerStyle}>
