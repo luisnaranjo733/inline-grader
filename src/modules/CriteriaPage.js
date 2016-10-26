@@ -70,12 +70,20 @@ class ToolBar extends Component {
 }
 
 class CriteriaBody extends Component {
-  constructor(props, context) {
+  constructor(props) {
     super(props);
-    this.state = {
-      grade: 0,
-      comment: ''
-    }
+    this.onCurrentGradeChange = this.onCurrentGradeChange.bind(this);
+    this.onCurrentCommentChange = this.onCurrentCommentChange.bind(this);
+  }
+
+  onCurrentGradeChange(event) {
+    console.log('grade: ' + event.target.value);
+    this.props.setCurrentCriteriaGrade(event.target.value);
+  }
+
+  onCurrentCommentChange(event) {
+    console.log('comment: ' + event.target.value);
+    this.props.setCurrentCriteriaComment(event.target.value);
   }
 
   render() {
@@ -88,12 +96,12 @@ class CriteriaBody extends Component {
       // height: '600px'
     };
 
-    var criteria = this.props.criteria[this.props.currentCriteriaIndex]
+    var currentCriteria = this.props.criteria[this.props.currentCriteriaIndex]
     var body = '<Criteria body>';
     var weight = '?'
-    if (criteria && criteria.name && criteria.weight) {
-      body = criteria.name;
-      weight = criteria.weight;
+    if (currentCriteria && currentCriteria.name && currentCriteria.weight) {
+      body = currentCriteria.name;
+      weight = currentCriteria.weight;
     }
 
     return (
@@ -102,12 +110,12 @@ class CriteriaBody extends Component {
 
         <div>
           <label htmlFor="grade">Grade</label><br />
-          <input type="text" id="grade" name="grade" />
+          <input type="text" id="grade" name="grade" value={this.props.getCurrentCriteriaGrade} onChange={this.onCurrentGradeChange}/>
         </div>
 
         <div>
           <label htmlFor="comment">Comment</label><br/>
-          <textarea id="comment" name="comment"></textarea>
+          <textarea id="comment" name="comment" value={this.props.getCurrentCriteriaComment} onChange={this.onCurrentCommentChange}></textarea>
         </div>
       </div>
     );
@@ -140,11 +148,33 @@ class CriteriaPage extends Component {
         name: this.props.masterRubric.name,
         criteria: this.props.masterRubric.criteria.slice() // deep copy array for first student
       },
-      currentCriteriaIndex: 33,
-      showGradingReport: true
+      currentCriteriaIndex: 0,
+      currentCriteriaGrade: '',
+      currentCriteriaComment: '',
+      showGradingReport: false
     }
     this.hotkeyHandler = this.handleHotkey.bind(this);
     this.handleLaunchReportButtonClicked = this.handleLaunchReportButtonClicked.bind(this);
+    this.setCurrentCriteriaGrade = this.setCurrentCriteriaGrade.bind(this);
+    this.setCurrentCriteriaComment = this.setCurrentCriteriaComment.bind(this);
+  }
+
+  transitionCriteriaState() {
+    console.log('Transitioning current criteria state');
+    console.log(this.state.currentCriteriaIndex);
+    var currentCriteria = this.state.currentRubric.criteria[this.state.currentCriteriaIndex];
+    this.setState({currentCriteriaGrade: currentCriteria.grade});
+    this.setState({currentCriteriaComment: currentCriteria.comment});
+    
+    
+  }
+
+  setCurrentCriteriaGrade(grade) {
+    this.setState({currentCriteriaGrade: grade});
+  }
+
+  setCurrentCriteriaComment(comment) {
+    this.setState({currentCriteriaComment: comment});
   }
 
   handleHotkey(event) {
@@ -156,12 +186,30 @@ class CriteriaPage extends Component {
     } else if (event.key === 'ArrowLeft') {
       newIndex = this.state.currentCriteriaIndex - 1;
       if (newIndex >= 0) {
+        // fetch grade and comment values from <CriteriaBody /> state
+        // fetch current criteria with this.state.currentRubric.criteria this.state.currentCriteriaIndex
+        // set grade and comment values on current criteria state
+        var currentCriteria = this.state.currentRubric.criteria[this.state.currentCriteriaIndex];
+        currentCriteria.grade = this.state.currentCriteriaGrade;
+        currentCriteria.comment = this.state.currentCriteriaComment;
+        console.log(this.state.currentRubric.criteria[this.state.currentCriteriaIndex]);
+
         this.setState({ currentCriteriaIndex: newIndex });
+        this.transitionCriteriaState();
       }
     } else if (event.key === 'ArrowRight') {
       newIndex = this.state.currentCriteriaIndex + 1;
       if (newIndex < this.state.currentRubric.criteria.length) {
+        // fetch grade and comment values from <CriteriaBody /> state
+        // fetch current criteria with this.state.currentRubric.criteria this.state.currentCriteriaIndex
+        // set grade and comment values on current criteria state
+        var currentCriteria = this.state.currentRubric.criteria[this.state.currentCriteriaIndex];
+        currentCriteria.grade = this.state.currentCriteriaGrade;
+        currentCriteria.comment = this.state.currentCriteriaComment;
+        console.log(this.state.currentRubric.criteria[this.state.currentCriteriaIndex]);
+
         this.setState({ currentCriteriaIndex: newIndex});
+        this.transitionCriteriaState();
       }
     } 
   }
@@ -192,13 +240,22 @@ class CriteriaPage extends Component {
       return (
         <div className="container" style={containerStyle}>
           <ToolBar currentCriteriaIndex={this.state.currentCriteriaIndex} criteria={this.state.currentRubric.criteria}/>
-          <CriteriaBody currentCriteriaIndex={this.state.currentCriteriaIndex} criteria={this.state.currentRubric.criteria}/>
+          <CriteriaBody
+            currentCriteriaIndex={this.state.currentCriteriaIndex}
+            setCurrentCriteriaGrade={this.setCurrentCriteriaGrade}
+            setCurrentCriteriaComment={this.setCurrentCriteriaComment}
+            getCurrentCriteriaGrade={this.state.currentCriteriaGrade}
+            getCurrentCriteriaComment={this.state.currentCriteriaComment}
+            criteria={this.state.currentRubric.criteria}
+          />
           <LaunchGradeReportButton
             currentCriteriaIndex={this.state.currentCriteriaIndex}
             handleLaunchReportButtonClicked={this.handleLaunchReportButtonClicked}
             nTotalCriteria={this.state.currentRubric.criteria.length}
           />
           <Link to="/criteria/report">Link</Link>
+          <p>Current grade: {this.state.currentCriteriaGrade}</p>
+          <p>Current comment: {this.state.currentCriteriaComment}</p>
         </div>
       )
     }

@@ -129,7 +129,7 @@ class Rubric {
           name: criteria['$']['name'],
           path: path,
           weight: criteria['$']['weight'],
-          value: 0,
+          grade: '',
           comment: ''
         });
       }
