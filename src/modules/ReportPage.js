@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router'
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import '../index.css';
@@ -30,13 +29,16 @@ class Comment extends Component {
     var customDivStyle = Object.assign({}, divStyle);
     customDivStyle['padding'] = '1em';
     customDivStyle['overflow'] = 'scroll';
+    var comments = [];
+    for (var i = 0; i < this.props.comments.length; i++) {
+      var comment = this.props.comments[i];
+      if (comment) {
+        comments.push(<p key={i}>* {comment}</p>);
+      }
+    }
     return (
       <div style={customDivStyle}>
-        {this.props.comments.map(function(comment, i){
-            if (comment) {
-              return <p key={i}>* {comment}</p>;
-            }
-        })}
+        {comments}
       </div>
     )
   }
@@ -57,7 +59,7 @@ class StartOver extends Component {
   render() {
     var buttonStyle = {};
     return (
-      <button style={buttonStyle} bsStyle="primary" bsSize="large" onClick={this.props.handleStartOverButtonClicked} block>Start over</button>
+      <button style={buttonStyle} onClick={this.props.handleStartOverButtonClicked}>Start over</button>
     );
   }
 }

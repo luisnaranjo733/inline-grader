@@ -175,6 +175,7 @@ class CriteriaPage extends Component {
   // this method needs some major cleanup
   handleHotkey(event) {
     var newIndex;
+    var currentCriteria = this.state.currentRubric.criteria[this.state.currentCriteriaIndex];
     if (event.key === 'ArrowUp') {
       this.setState({showGradingReport: true});
     } else if(event.key === 'ArrowDown') {
@@ -182,10 +183,6 @@ class CriteriaPage extends Component {
     } else if (event.key === 'ArrowLeft') {
       newIndex = this.state.currentCriteriaIndex - 1;
       if (newIndex >= 0) {
-        // fetch grade and comment values from <CriteriaBody /> state
-        // fetch current criteria with this.state.currentRubric.criteria this.state.currentCriteriaIndex
-        // set grade and comment values on current criteria state
-        var currentCriteria = this.state.currentRubric.criteria[this.state.currentCriteriaIndex];
         currentCriteria.grade = this.state.currentCriteriaGrade;
         currentCriteria.comment = this.state.currentCriteriaComment;
 
@@ -195,10 +192,6 @@ class CriteriaPage extends Component {
     } else if (event.key === 'ArrowRight') {
       newIndex = this.state.currentCriteriaIndex + 1;
       if (newIndex < this.state.currentRubric.criteria.length) {
-        // fetch grade and comment values from <CriteriaBody /> state
-        // fetch current criteria with this.state.currentRubric.criteria this.state.currentCriteriaIndex
-        // set grade and comment values on current criteria state
-        var currentCriteria = this.state.currentRubric.criteria[this.state.currentCriteriaIndex];
         currentCriteria.grade = this.state.currentCriteriaGrade;
         currentCriteria.comment = this.state.currentCriteriaComment;
 
@@ -209,8 +202,6 @@ class CriteriaPage extends Component {
   }
 
   handleLaunchReportButtonClicked() {
-    console.log("Button clicked!!!!");
-
     var currentCriteria = this.state.currentRubric.criteria[this.state.currentCriteriaIndex];
     currentCriteria.grade = this.state.currentCriteriaGrade;
     currentCriteria.comment = this.state.currentCriteriaComment;
