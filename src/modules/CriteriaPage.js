@@ -146,7 +146,7 @@ class CriteriaPage extends Component {
         name: this.props.masterRubric.name,
         criteria: this.props.masterRubric.criteria.slice() // deep copy array for first student
       },
-      currentCriteriaIndex: 32,
+      currentCriteriaIndex: 0,
       currentCriteriaGrade: '',
       currentCriteriaComment: '',
       showGradingReport: false
@@ -155,6 +155,7 @@ class CriteriaPage extends Component {
     this.handleLaunchReportButtonClicked = this.handleLaunchReportButtonClicked.bind(this);
     this.setCurrentCriteriaGrade = this.setCurrentCriteriaGrade.bind(this);
     this.setCurrentCriteriaComment = this.setCurrentCriteriaComment.bind(this);
+    this.context = context;
   }
 
   transitionCriteriaState() {
@@ -213,8 +214,15 @@ class CriteriaPage extends Component {
     var currentCriteria = this.state.currentRubric.criteria[this.state.currentCriteriaIndex];
     currentCriteria.grade = this.state.currentCriteriaGrade;
     currentCriteria.comment = this.state.currentCriteriaComment;
-    
+
     this.setState({showGradingReport: true});
+  }
+
+  componentWillMount() {
+    if (this.state.currentRubric.name === '' && this.state.currentRubric.criteria.length === 0) {
+      console.log("EMPTY RUBRIC");
+      this.context.router.push('/');
+    }
   }
 
   componentDidMount() {
@@ -257,6 +265,7 @@ class CriteriaPage extends Component {
     }
   }
 }
+CriteriaPage.contextTypes = {router: React.PropTypes.object};
 
 export default CriteriaPage;
 

@@ -57,7 +57,7 @@ class StartOver extends Component {
   render() {
     var buttonStyle = {};
     return (
-      <Button style={buttonStyle} bsStyle="primary" bsSize="large" onClick={this.props.handleStartOverButtonClicked} block>Start over</Button>
+      <button style={buttonStyle} bsStyle="primary" bsSize="large" onClick={this.props.handleStartOverButtonClicked} block>Start over</button>
     );
   }
 }
