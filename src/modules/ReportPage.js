@@ -29,10 +29,13 @@ class Comment extends Component {
   render() {
     var customDivStyle = Object.assign({}, divStyle);
     customDivStyle['padding'] = '1em';
+    customDivStyle['overflow'] = 'scroll';
     return (
       <div style={customDivStyle}>
         {this.props.comments.map(function(comment, i){
-            return <p key={i}>* {comment}</p>;
+            if (comment) {
+              return <p key={i}>* {comment}</p>;
+            }
         })}
       </div>
     )
@@ -51,6 +54,36 @@ class Grade extends Component {
 
 
 class ReportPage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      rootSections: {}
+    };
+    this.structureCriteriaArray();
+    console.log('structured root level sections');
+    console.log(this.state.rootSections)
+    console.log('done')
+  }
+
+  structureCriteriaArray() {
+    for (var criteria of this.props.currentRubric.criteria) {
+      var sectionName = criteria.path[0];
+      if (!this.state.rootSections[sectionName]) {
+        this.state.rootSections[sectionName] = {
+          comments: [],
+          pointsEarned: 0,
+          pointsPossible: 0
+        }
+      }
+
+      console.log(criteria.grade);
+      this.state.rootSections[sectionName].comments.push(criteria.comment);
+      this.state.rootSections[sectionName].pointsEarned += parseInt(criteria.grade, 10) || 0;
+      this.state.rootSections[sectionName].pointsPossible += parseInt(criteria.weight, 10);
+
+    }
+  }
+
   render() {
     var containerStyle = {
       // marginLeft
@@ -60,32 +93,18 @@ class ReportPage extends Component {
       marginBottom: '2em'
     };
 
-    var rootSections = [
-      {
-        'name': 'Markup & Accessibility',
-        'comments': ['this', 'that', 'and that'],
-        'numerator': 37,
-        'denominator': 40
-      },
-      {
-        'name': 'Header',
-        'comments': ['this', 'that', 'and that', 'plus this!'],
-        'numerator': 29,
-        'denominator': 30
-      }
-    ];
-
     return (
       <div className="body">
         <h1>Grade Report</h1>
         <Link to="/">Home</Link>
 
         <div className='container' style={containerStyle}>
-        {rootSections.map(function(rootSection, i){
+        {Object.keys(this.state.rootSections).map(function(rootSectionName, i){
+          var rootSection = this.state.rootSections[rootSectionName];
           return (
             <div key={i} className='row' style={rowStyle}>
               <div className='col-sm-2'>
-                <RootSection name={rootSection.name}/>
+                <RootSection name={rootSectionName}/>
               </div>
 
               <div className='col-sm-8'>
@@ -93,11 +112,11 @@ class ReportPage extends Component {
               </div>
 
               <div className='col-sm-2'>
-                <Grade numerator={rootSection.numerator} denominator={rootSection.denominator}/>
+                <Grade numerator={rootSection.pointsEarned} denominator={rootSection.pointsPossible}/>
               </div>
             </div>
           );
-        })}
+        }, this)}
 
         </div>
       </div>
@@ -107,15 +126,3 @@ class ReportPage extends Component {
 }
 
 export default ReportPage;
-
-            // <div className='col-xs-2'>
-            //   <RootSection name={"Markup & Accessibility"}/>
-            // </div>
-
-            // <div className='col-xs-8'>
-            //   <Comment comments={['this', 'that', 'and that']}/>
-            // </div>
-
-            // <div className='col-xs-2'>
-            //   <Grade numerator={37} denominator={40}/>
-            // </div>

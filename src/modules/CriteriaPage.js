@@ -77,12 +77,10 @@ class CriteriaBody extends Component {
   }
 
   onCurrentGradeChange(event) {
-    console.log('grade: ' + event.target.value);
     this.props.setCurrentCriteriaGrade(event.target.value);
   }
 
   onCurrentCommentChange(event) {
-    console.log('comment: ' + event.target.value);
     this.props.setCurrentCriteriaComment(event.target.value);
   }
 
@@ -160,13 +158,9 @@ class CriteriaPage extends Component {
   }
 
   transitionCriteriaState() {
-    console.log('Transitioning current criteria state');
-    console.log(this.state.currentCriteriaIndex);
     var currentCriteria = this.state.currentRubric.criteria[this.state.currentCriteriaIndex];
     this.setState({currentCriteriaGrade: currentCriteria.grade});
     this.setState({currentCriteriaComment: currentCriteria.comment});
-    
-    
   }
 
   setCurrentCriteriaGrade(grade) {
@@ -177,6 +171,7 @@ class CriteriaPage extends Component {
     this.setState({currentCriteriaComment: comment});
   }
 
+  // this method needs some major cleanup
   handleHotkey(event) {
     var newIndex;
     if (event.key === 'ArrowUp') {
@@ -192,7 +187,6 @@ class CriteriaPage extends Component {
         var currentCriteria = this.state.currentRubric.criteria[this.state.currentCriteriaIndex];
         currentCriteria.grade = this.state.currentCriteriaGrade;
         currentCriteria.comment = this.state.currentCriteriaComment;
-        console.log(this.state.currentRubric.criteria[this.state.currentCriteriaIndex]);
 
         this.setState({ currentCriteriaIndex: newIndex });
         this.transitionCriteriaState();
@@ -206,7 +200,6 @@ class CriteriaPage extends Component {
         var currentCriteria = this.state.currentRubric.criteria[this.state.currentCriteriaIndex];
         currentCriteria.grade = this.state.currentCriteriaGrade;
         currentCriteria.comment = this.state.currentCriteriaComment;
-        console.log(this.state.currentRubric.criteria[this.state.currentCriteriaIndex]);
 
         this.setState({ currentCriteriaIndex: newIndex});
         this.transitionCriteriaState();
@@ -254,8 +247,6 @@ class CriteriaPage extends Component {
             nTotalCriteria={this.state.currentRubric.criteria.length}
           />
           <Link to="/criteria/report">Link</Link>
-          <p>Current grade: {this.state.currentCriteriaGrade}</p>
-          <p>Current comment: {this.state.currentCriteriaComment}</p>
         </div>
       )
     }
