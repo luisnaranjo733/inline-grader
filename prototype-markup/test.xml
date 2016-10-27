@@ -6,6 +6,6 @@
 
     <section name="styling">
       <criteria name="Uses SASS" weight="1" />
-      <criteria name="No inline styles" weight="3">
+      <criteria name="No inline styles" weight="3"/>
     </section>
 </rubric>
