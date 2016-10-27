@@ -146,7 +146,7 @@ class CriteriaPage extends Component {
         name: this.props.masterRubric.name,
         criteria: this.props.masterRubric.criteria.slice() // deep copy array for first student
       },
-      currentCriteriaIndex: 0,
+      currentCriteriaIndex: 32,
       currentCriteriaGrade: '',
       currentCriteriaComment: '',
       showGradingReport: false
@@ -209,7 +209,12 @@ class CriteriaPage extends Component {
 
   handleLaunchReportButtonClicked() {
     console.log("Button clicked!!!!");
-    this.setState({showGradingReport: !this.state.showGradingReport});
+
+    var currentCriteria = this.state.currentRubric.criteria[this.state.currentCriteriaIndex];
+    currentCriteria.grade = this.state.currentCriteriaGrade;
+    currentCriteria.comment = this.state.currentCriteriaComment;
+    
+    this.setState({showGradingReport: true});
   }
 
   componentDidMount() {

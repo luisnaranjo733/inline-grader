@@ -52,6 +52,15 @@ class Grade extends Component {
   }
 }
 
+class StartOver extends Component {
+  
+  render() {
+    var buttonStyle = {};
+    return (
+      <Button style={buttonStyle} bsStyle="primary" bsSize="large" onClick={this.props.handleStartOverButtonClicked} block>Start over</Button>
+    );
+  }
+}
 
 class ReportPage extends Component {
   constructor(props) {
@@ -84,6 +93,10 @@ class ReportPage extends Component {
     }
   }
 
+  resetGradingRubric() {
+    console.log("Reset grading rubric");
+  }
+
   render() {
     var containerStyle = {
       // marginLeft
@@ -96,7 +109,6 @@ class ReportPage extends Component {
     return (
       <div className="body">
         <h1>Grade Report</h1>
-        <Link to="/">Home</Link>
 
         <div className='container' style={containerStyle}>
         {Object.keys(this.state.rootSections).map(function(rootSectionName, i){
@@ -119,6 +131,9 @@ class ReportPage extends Component {
         }, this)}
 
         </div>
+
+      <StartOver handleStartOverButtonClicked={this.resetGradingRubric}/>
+        
       </div>
     );
 

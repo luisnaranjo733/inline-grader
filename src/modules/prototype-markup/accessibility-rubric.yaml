@@ -1,0 +1,12 @@
+---
+rubric:
+  name: Accessibility challenge
+  section:
+    name: Markup & accessibility
+    section:
+      name: Meta
+      criteria:
+      - name: Missing doctype
+        weight: 4
+      - name: Missing meta authors tag
+        weight: 2
