@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
-import {Jumbotron, Button, Form, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 
 const BreadCrumbs = ({sectionPath}) => (
   <ul>
