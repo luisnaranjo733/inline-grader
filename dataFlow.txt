@@ -1,0 +1,25 @@
+Route: /
+    Users submits url to XML rubric
+        Presentation level component executes callback
+            Container level component fetches the text content of the XML document
+            Container level component parses the XML into a DOM
+            Container level component semantically validates the XML
+            Container level component populates the store with an array of Criteria objects
+                store.masterRubric = {
+                    name: '',
+                    criteria: [Criteria, Criteria, Criteria]
+                }
+                store.currentRubric = duplicate(store.masterRubric)
+            Container level component programmatically changes the route to the /criteria/0
+
+Route: /criteria/{index}
+    CriteriaPage
+        render()
+            Fetch index from url
+            Use that index to select the current criteria
+
+        onGradeChanged() (callback from child presentation component, gets user input)
+            Dispatch action to update this criteria's grade in the store
+
+        onComment Changed()
+            Dispatch action to update this criteria's comment in the store
