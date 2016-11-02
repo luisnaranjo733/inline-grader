@@ -24,7 +24,7 @@ class UploadRubricForm extends Component {
   constructor(props, context) {
     super(props);
     this.state = {
-      url: 'https://raw.githubusercontent.com/info343-au16/grading/xml/pencil-rubric.xml?token=ABCn2xQGL8k-xNkauzLBxMBgv3qyLYrqks5YG5tbwA%3D%3D'
+      url: 'https://raw.githubusercontent.com/info343-au16/grading/xml/sentiment-rubric.xml?token=ABCn24GwMCN_cQhCkHoLSmDS8qgemC1Bks5YI1bCwA%3D%3D'
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
