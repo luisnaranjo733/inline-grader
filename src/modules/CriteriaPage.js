@@ -2,32 +2,23 @@ import React, { Component, PropTypes } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 
-const BreadCrumbs = ({sectionPath}) => (
-  <ul>
-    {sectionPath.map((section, i) => 
-        <li key={i}>{section}</li>
-      )
-    }
-  </ul>
-)
-BreadCrumbs.propTypes = {
-    sectionPath: PropTypes.arrayOf(React.PropTypes.string).isRequired
-}
-
-const ProgressBox = ({numerator, denominator}) => (
-    <p>Criteria: {numerator} / {denominator}</p>
-)
-ProgressBox.propTypes = {
-  numerator: PropTypes.number.isRequired,
-  denominator: PropTypes.number.isRequired
-}
-
-const Toolbar = () => (
+const Toolbar = ({pathToCurrentCriteria, currentCriteriaNumber, nTotalCriteria}) => (
     <div className="criteria-toolBar">
-        <BreadCrumbs sectionPath={['a', 'b', 'c']} />
-        <ProgressBox numerator={2} denominator={4}/>
+        <ul>
+          {pathToCurrentCriteria.map((section, i) => 
+              <li key={i}>{section}</li>
+            )
+          }
+        </ul>
+
+        <p>Criteria: {currentCriteriaNumber} / {nTotalCriteria}</p>
     </div>
 );
+Toolbar.propTypes = {
+  pathToCurrentCriteria: PropTypes.arrayOf(React.PropTypes.string).isRequired,
+  currentCriteriaNumber: PropTypes.number.isRequired,
+  nTotalCriteria: PropTypes.number.isRequired
+};
 
 
 const CriteriaBody = ({
@@ -57,17 +48,23 @@ CriteriaBody.propTypes = {
 export default class CriteriaPage extends Component {
 
   render() {
-    var criteria = {
+    var criteriaBodyProps = {
       criteriaTitle: 'Must have html5 doctype',
       criteriaPointsPossible: 1,
       criteriaGradeChanged: (e) => console.log(e.target.value),
       criteriaCommentChanged: (e) => console.log(e.target.value)
     }
 
+    var toolBarProps = {
+      pathToCurrentCriteria: ['section A', 'section B', 'section C'],
+      currentCriteriaNumber: 12,
+      nTotalCriteria: 56
+    };
+
     return (
       <div>
-        <Toolbar />
-        <CriteriaBody {...criteria}/>
+        <Toolbar {...toolBarProps}/>
+        <CriteriaBody {...criteriaBodyProps}/>
       </div>
     );
   }
