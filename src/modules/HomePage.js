@@ -11,35 +11,54 @@ const Header = () => (
   </Jumbotron>
 );
 
-const UploadRubricForm = ({url, urlChanged, formSubmitted}) => (
+const UploadRubricForm = ({rubricUrl, onUrlChanged, onFormSubmitted}) => (
   <Form>
     <FormGroup>
       <ControlLabel>Submit rubric URL</ControlLabel>
       <FormControl
         type="text"
-        value={url}
+        value={rubricUrl}
         placeholder="Enter rubric URL"
-        onChange={urlChanged}
+        onChange={onUrlChanged}
       />
       <FormControl.Feedback />
-      <button type="button" onClick={formSubmitted} className="btn btn-default">Submit</button>
+      <button type="button" onClick={onFormSubmitted} className="btn btn-default">Submit</button>
     </FormGroup>
   </Form>
 );
 
 UploadRubricForm.PropTypes = {
-  url: PropTypes.string.isRequired, // parent's url state
-  urlChanged: PropTypes.func.isRequired, // callback to change parent's url state
-  formSubmitted: PropTypes.func.isRequired, // callback for parent to know when the form is submitted (on button click)
+  rubricUrl: PropTypes.string.isRequired, // parent's url state
+  onUrlChanged: PropTypes.func.isRequired, // callback to change parent's url state
+  onFormSubmitted: PropTypes.func.isRequired, // callback for parent to know when the form is submitted (on button click)
 };
 
 export default class HomePage extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      rubricUrl: 'google.com'
+    };
+
+    this.onUrlChanged = this.onUrlChanged.bind(this);
+    this.onFormSubmitted = this.onFormSubmitted.bind(this);
+  }
+
+  onUrlChanged(e) {
+    this.setState({rubricUrl: e.target.value});
+  }
+
+  onFormSubmitted(e) {
+    console.log("Form submitted");
+    console.log(this.state.rubricUrl);
+  }
 
   render() {
     return (
       <div>
         <Header />
-        <UploadRubricForm url={'google.com'} urlChanged={(url) => console.log(url)} formSubmitted={() => console.log('form submitted')}/>
+        <UploadRubricForm rubricUrl={this.state.rubricUrl} onUrlChanged={this.onUrlChanged} onFormSubmitted={this.onFormSubmitted}/>
       </div>
     );
   }
