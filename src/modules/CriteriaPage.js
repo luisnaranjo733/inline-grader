@@ -57,7 +57,7 @@ export default class CriteriaPage extends Component {
 
     var toolBarProps = {
       pathToCurrentCriteria: ['section A', 'section B', 'section C'],
-      currentCriteriaNumber: 12,
+      currentCriteriaNumber: parseInt(this.props.params.criteriaIndex),
       nTotalCriteria: 56
     };
 

@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import './App.css';
-import HomePage from './modules/HomePage'
-import CriteriaPage from './modules/CriteriaPage'
-import ReportPage from './modules/ReportPage'
+import { Link } from 'react-router'
+
 
 class App extends Component {
   render() {
     return (
       <div>
-        <ReportPage />
+        <p>navbar will go here</p>
+        <Link to="/">Home</Link>
+        <Link to="/criteria/1">criteria 1</Link>
+        <Link to="/report">Report</Link>
+        {this.props.children}
       </div>
     );
   }
