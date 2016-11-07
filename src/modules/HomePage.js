@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import {Jumbotron, Button, Form, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
@@ -33,7 +34,7 @@ UploadRubricForm.PropTypes = {
   onFormSubmitted: PropTypes.func.isRequired, // callback for parent to know when the form is submitted (on button click)
 };
 
-export default class HomePage extends Component {
+class HomePage extends Component {
 
   constructor(props) {
     super(props);
@@ -63,3 +64,9 @@ export default class HomePage extends Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {questions: state.questions}
+}
+
+export default connect(mapStateToProps)(HomePage);
