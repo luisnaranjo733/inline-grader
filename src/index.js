@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Router, Route, hashHistory, IndexRoute } from 'react-router'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import App from './App';
@@ -35,7 +36,9 @@ store.dispatch({ type: 'DECREMENT' })
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Router history={hashHistory}>
+      <Route path="/" component={App}/>
+    </Router>
   </Provider>,
   document.getElementById('root')
 );
