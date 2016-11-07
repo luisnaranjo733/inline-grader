@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import {Jumbotron, Button, Form, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
+import 'whatwg-fetch';
 
 const Header = () => (
   <Jumbotron className="hidden-xs">
@@ -39,20 +40,26 @@ class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rubricUrl: 'google.com'
+      rubricUrl: 'https://raw.githubusercontent.com/info343-au16/grading/xml/sentiment-rubric.xml?token=ABCn24GwMCN_cQhCkHoLSmDS8qgemC1Bks5YI1bCwA%3D%3D'
     };
 
     this.onUrlChanged = this.onUrlChanged.bind(this);
     this.onFormSubmitted = this.onFormSubmitted.bind(this);
   }
 
-  onUrlChanged(e) {
-    this.setState({rubricUrl: e.target.value});
+  onUrlChanged(event) {
+    this.setState({rubricUrl: event.target.value});
   }
 
-  onFormSubmitted(e) {
-    console.log("Form submitted");
-    console.log(this.state.rubricUrl);
+  onFormSubmitted(event) {
+    var outerThis = this;
+    fetch(this.state.rubricUrl)
+    .then(function(response) {
+        return response.text();
+    })
+    .then(function(xmlBody) {
+      console.log(xmlBody);
+    });
   }
 
   render() {
