@@ -15,9 +15,9 @@ const Toolbar = ({pathToCurrentCriteria, currentCriteriaNumber, nTotalCriteria})
     </div>
 );
 Toolbar.propTypes = {
-  pathToCurrentCriteria: PropTypes.arrayOf(React.PropTypes.string).isRequired,
-  currentCriteriaNumber: PropTypes.number.isRequired,
-  nTotalCriteria: PropTypes.number.isRequired
+  pathToCurrentCriteria: PropTypes.arrayOf(React.PropTypes.string).isRequired, // array of strings that represent the section path to the current criteria in rubric hierarchy
+  currentCriteriaNumber: PropTypes.number.isRequired, // index + 1 value of current criteria being viewed/edited
+  nTotalCriteria: PropTypes.number.isRequired // total # of criteria in this rubric
 };
 
 
@@ -39,10 +39,10 @@ const CriteriaBody = ({
     </div>
 )
 CriteriaBody.propTypes = {
-  criteriaTitle: PropTypes.string.isRequired,
-  criteriaPointsPossible: PropTypes.number.isRequired,
-  criteriaGradeChanged: PropTypes.func.isRequired,
-  criteriaCommentChanged: PropTypes.func.isRequired
+  criteriaTitle: PropTypes.string.isRequired, //parent state scalar
+  criteriaPointsPossible: PropTypes.number.isRequired, // parent state scalar
+  criteriaGradeChanged: PropTypes.func.isRequired, // callback in parent for when the grade changes
+  criteriaCommentChanged: PropTypes.func.isRequired // callback in parent for when the comment changes
 }
 
 export default class CriteriaPage extends Component {

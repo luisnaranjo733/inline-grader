@@ -18,15 +18,15 @@ const RootSection = ({sectionTitle, pointsEarned, pointsPossible, comments}) => 
   </div>
 );
 RootSection.propTypes = {
-  sectionTitle: PropTypes.string.isRequired,
-  pointsEarned: PropTypes.number.isRequired,
-  pointsPossible: PropTypes.number.isRequired,
-  comments: PropTypes.arrayOf(React.PropTypes.string).isRequired
+  sectionTitle: PropTypes.string.isRequired, // parent state
+  pointsEarned: PropTypes.number.isRequired, // parent state
+  pointsPossible: PropTypes.number.isRequired, // parent state
+  comments: PropTypes.arrayOf(React.PropTypes.string).isRequired // parent state
 };
 
 export default class ReportPage extends Component {
   render() {
-    var rootSections = [
+    var rootSections = [ // sample state data
       {
         sectionTitle: 'Markup & Accessibility',
         pointsEarned: 38,
@@ -43,8 +43,8 @@ export default class ReportPage extends Component {
     return (
       <div className='container'>
         <h1>Grade Report</h1>
-        {rootSections.map((sectionProps) => {
-          return <RootSection {...sectionProps} />
+        {rootSections.map((sectionProps, i) => {
+          return <RootSection key={i} {...sectionProps} />
         })}
         
       </div>

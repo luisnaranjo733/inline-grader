@@ -28,9 +28,9 @@ const UploadRubricForm = ({url, urlChanged, formSubmitted}) => (
 );
 
 UploadRubricForm.PropTypes = {
-  url: PropTypes.string.isRequired,
-  urlChanged: PropTypes.func.isRequired,
-  formSubmitted: PropTypes.func.isRequired,
+  url: PropTypes.string.isRequired, // parent's url state
+  urlChanged: PropTypes.func.isRequired, // callback to change parent's url state
+  formSubmitted: PropTypes.func.isRequired, // callback for parent to know when the form is submitted (on button click)
 };
 
 export default class HomePage extends Component {
