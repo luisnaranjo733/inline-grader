@@ -136,9 +136,14 @@ function parseXmlHelper(tag, path, criteriaArray) {
 
   if (childCriteria) {
     for (var criteria of childCriteria) {
+      var description = '';
+      if (criteria['_']) {
+        description = criteria['_'].trim();
+      }
+
       var criterion = new Criterion(
         criteria['$']['name'],   //name
-        '',                      // description
+        description,                      // description
         parseInt(criteria['$']['weight'], 10), // pointsPossible
         path                     // sectionPath
       );
