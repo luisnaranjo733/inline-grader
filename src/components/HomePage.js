@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import {Jumbotron, Button, Form, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 import 'whatwg-fetch';
+import Criterion from '../models/Criterion';
 import {isXmlValid, parseXml} from '../helpers/parseRubric.js'
 import {addRubric} from '../actions/'
 
@@ -62,7 +63,6 @@ class HomePage extends Component {
     })
     .then(function(xmlBody) {
       if (isXmlValid(xmlBody)) {
-        console.log('xml is valid');
         var parsedXml = parseXml(xmlBody);
         console.log(parsedXml);
 
@@ -72,6 +72,8 @@ class HomePage extends Component {
       } else {
         console.log('xml is NOT valid');
       }
+
+
       // var rubric = new Rubric(xmlBody);
       // if (rubric._isXmlValidated) {
       //   outerThis.props.dispatch(addRubric(rubric));
