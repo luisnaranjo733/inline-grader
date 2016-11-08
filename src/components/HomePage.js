@@ -6,7 +6,7 @@ import {Jumbotron, Button, Form, FormGroup, ControlLabel, FormControl} from 'rea
 import 'whatwg-fetch';
 import Criterion from '../models/Criterion';
 import {isXmlValid, parseXml} from '../helpers/parseRubric.js'
-import {addRubric} from '../actions/'
+import {addCriterion, updateRubricName} from '../actions/'
 
 const Header = () => (
   <Jumbotron className="hidden-xs">
@@ -64,39 +64,27 @@ class HomePage extends Component {
     .then(function(xmlBody) {
       if (isXmlValid(xmlBody)) {
         var parsedXml = parseXml(xmlBody);
-        console.log(parsedXml);
+        
+        // push each criterion to state.criteria array
+        parsedXml.criteria.forEach(function(criterion) {
+          outerThis.props.dispatch(addCriterion(criterion));
+        });
 
         // push parsedXml.rubricName to state (string)
-        // push parsedXml.criteria to state (array of Criterion objects)
+        outerThis.props.dispatch(updateRubricName(parsedXml.rubricName));
 
+        outerThis.context.router.push('criteria/1'); // change router state
       } else {
         console.log('xml is NOT valid');
       }
-
-
-      // var rubric = new Rubric(xmlBody);
-      // if (rubric._isXmlValidated) {
-      //   outerThis.props.dispatch(addRubric(rubric));
-      //   outerThis.context.router.push('criteria/1'); // change router state
-      // } else {
-      //   console.log("XML not valid!")
-      // }
     });
   }
 
   render() {
-    var criteria;
-    if (this.props.rubric) {
-      criteria = this.props.rubric.name
-    } else {
-      criteria='empty'
-    }
-
     return (
       <div>
         <Header />
         <UploadRubricForm rubricUrl={this.state.rubricUrl} onUrlChanged={this.onUrlChanged} onFormSubmitted={this.onFormSubmitted}/>
-        <p>Rubric: {criteria}</p>
       </div>
     );
   }
@@ -104,7 +92,10 @@ class HomePage extends Component {
 HomePage.contextTypes = {router: React.PropTypes.object};
 
 function mapStateToProps(state) {
-  return {rubric: state.rubric}
+  return {
+    criteria: state.criteria,
+    rubricName: state.rubricName
+  }
 }
 
 export default connect(mapStateToProps)(HomePage);

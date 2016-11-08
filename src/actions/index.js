@@ -1,10 +1,15 @@
-export const addRubric = (rubric) => ({
-  type: 'ADD_RUBRIC',
-  rubric
-})
+export const addCriterion = (criterion) => ({
+  type: 'APPEND_CRITERION',
+  criterion
+});
 
-export const updateCriteriaGrade = (criteriaIndex, value) => ({
-  type: 'UPDATE_CRITERIA_GRADE',
-  criteriaIndex,
+export const updateRubricName = (rubricName) => ({
+  type: 'UPDATE_RUBRIC_NAME',
+  rubricName
+});
+
+export const updateCriterionGrade = (criterionIndex, value) => ({
+  type: 'UPDATE_CRITERION_GRADE',
+  criterionIndex,
   value
-})
+});
