@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import {Jumbotron, Button, Form, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 import 'whatwg-fetch';
-import Rubric from '../Rubric.js'
+import {isXmlValid, parseXml} from '../helpers/parseRubric.js'
 import {addRubric} from '../actions/'
 
 const Header = () => (
@@ -61,13 +61,24 @@ class HomePage extends Component {
         return response.text();
     })
     .then(function(xmlBody) {
-      var rubric = new Rubric(xmlBody);
-      if (rubric._isXmlValidated) {
-        outerThis.props.dispatch(addRubric(rubric));
-        outerThis.context.router.push('criteria/1'); // change router state
+      if (isXmlValid(xmlBody)) {
+        console.log('xml is valid');
+        var parsedXml = parseXml(xmlBody);
+        console.log(parsedXml);
+
+        // push parsedXml.rubricName to state (string)
+        // push parsedXml.criteria to state (array of Criterion objects)
+
       } else {
-        console.log("XML not valid!")
+        console.log('xml is NOT valid');
       }
+      // var rubric = new Rubric(xmlBody);
+      // if (rubric._isXmlValidated) {
+      //   outerThis.props.dispatch(addRubric(rubric));
+      //   outerThis.context.router.push('criteria/1'); // change router state
+      // } else {
+      //   console.log("XML not valid!")
+      // }
     });
   }
 

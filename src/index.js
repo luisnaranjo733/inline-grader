@@ -7,9 +7,9 @@ import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 
 import App from './App';
-import HomePage from './modules/HomePage'
-import CriteriaPage from './modules/CriteriaPage'
-import ReportPage from './modules/ReportPage'
+import HomePage from './components/HomePage'
+import CriteriaPage from './components/CriteriaPage'
+import ReportPage from './components/ReportPage'
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
