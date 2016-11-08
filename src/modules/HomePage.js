@@ -40,7 +40,7 @@ UploadRubricForm.PropTypes = {
 class HomePage extends Component {
 
   constructor(props, context) {
-    super(props);
+    super(props, context);
     this.state = {
       rubricUrl: 'https://raw.githubusercontent.com/info343-au16/grading/xml/sentiment-rubric.xml?token=ABCn24GwMCN_cQhCkHoLSmDS8qgemC1Bks5YI1bCwA%3D%3D'
     };
@@ -62,8 +62,12 @@ class HomePage extends Component {
     })
     .then(function(xmlBody) {
       var rubric = new Rubric(xmlBody);
-      outerThis.props.dispatch(addRubric(rubric));
-      //outerThis.context.router.push('criteria/1'); // change router state
+      if (rubric._isXmlValidated) {
+        outerThis.props.dispatch(addRubric(rubric));
+        outerThis.context.router.push('criteria/1'); // change router state
+      } else {
+        console.log("XML not valid!")
+      }
     });
   }
 
