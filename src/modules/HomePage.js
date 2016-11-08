@@ -4,6 +4,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import {Jumbotron, Button, Form, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 import 'whatwg-fetch';
+import Rubric from '../Rubric.js'
+import {addRubric} from '../actions/'
 
 const Header = () => (
   <Jumbotron className="hidden-xs">
@@ -37,7 +39,7 @@ UploadRubricForm.PropTypes = {
 
 class HomePage extends Component {
 
-  constructor(props) {
+  constructor(props, context) {
     super(props);
     this.state = {
       rubricUrl: 'https://raw.githubusercontent.com/info343-au16/grading/xml/sentiment-rubric.xml?token=ABCn24GwMCN_cQhCkHoLSmDS8qgemC1Bks5YI1bCwA%3D%3D'
@@ -45,6 +47,7 @@ class HomePage extends Component {
 
     this.onUrlChanged = this.onUrlChanged.bind(this);
     this.onFormSubmitted = this.onFormSubmitted.bind(this);
+    this.context = context;
   }
 
   onUrlChanged(event) {
@@ -58,22 +61,33 @@ class HomePage extends Component {
         return response.text();
     })
     .then(function(xmlBody) {
-      console.log(xmlBody);
+      var rubric = new Rubric(xmlBody);
+      outerThis.props.dispatch(addRubric(rubric));
+      //outerThis.context.router.push('criteria/1'); // change router state
     });
   }
 
   render() {
+    var criteria;
+    if (this.props.rubric) {
+      criteria = this.props.rubric.name
+    } else {
+      criteria='empty'
+    }
+
     return (
       <div>
         <Header />
         <UploadRubricForm rubricUrl={this.state.rubricUrl} onUrlChanged={this.onUrlChanged} onFormSubmitted={this.onFormSubmitted}/>
+        <p>Rubric: {criteria}</p>
       </div>
     );
   }
 }
+HomePage.contextTypes = {router: React.PropTypes.object};
 
 function mapStateToProps(state) {
-  return {questions: state.questions}
+  return {rubric: state.rubric}
 }
 
 export default connect(mapStateToProps)(HomePage);

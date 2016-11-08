@@ -1,4 +1,4 @@
-export const requestXmlRubric = (url) => ({
-  type: 'REQUEST_XML',
-  url
+export const addRubric = (rubric) => ({
+  type: 'ADD_RUBRIC',
+  rubric
 })

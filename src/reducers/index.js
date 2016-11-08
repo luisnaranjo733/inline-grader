@@ -1,9 +1,11 @@
-const rubricReducer = (state = [], action) => {
+var initialState = {
+  rubric: null
+};
+
+const rubricReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'REQUEST_XML':
-      return '';
-    case 'RECEIVE_XML':
-      return '';
+    case 'ADD_RUBRIC':
+      return Object.assign({}, initialState, {rubric: action.rubric});
     default:
       return state
   }

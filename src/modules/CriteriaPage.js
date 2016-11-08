@@ -65,6 +65,7 @@ export default class CriteriaPage extends Component {
       <div>
         <Toolbar {...toolBarProps}/>
         <CriteriaBody {...criteriaBodyProps}/>
+        
       </div>
     );
   }
