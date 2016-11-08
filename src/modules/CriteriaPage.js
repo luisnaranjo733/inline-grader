@@ -70,18 +70,28 @@ class CriteriaPage extends Component {
     }
   }
 
+  onCriteriaGradeChanged(e) {
+    console.log(e.target.value);
+    var currentCriteriaIndex = parseInt(this.props.params.criteriaIndex, 10) - 1;
+    //this.props.dispatch(updateCriteriaGrade(currentCriteriaIndex, e.target.value));
+  }
+
+  onCriteriaCommentChanged(e) {
+    console.log(e.target.value)
+  }
+
   render() {
     var currentCriteriaIndex = parseInt(this.props.params.criteriaIndex, 10) - 1;
 
     var criteriaBodyProps = {
       criteriaTitle: '',
       criteriaPointsPossible: -1,
-      criteriaGradeChanged: (e) => console.log(e.target.value),
-      criteriaCommentChanged: (e) => console.log(e.target.value)
+      criteriaGradeChanged: this.onCriteriaGradeChanged,
+      criteriaCommentChanged: this.onCriteriaCommentChanged
     }
 
     var toolBarProps = {
-      pathToCurrentCriteria: ['section A', 'section B', 'section C'],
+      pathToCurrentCriteria: [''],
       currentCriteriaNumber: -1,
       nTotalCriteria: -1
     };
