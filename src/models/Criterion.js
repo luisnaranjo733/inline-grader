@@ -39,7 +39,7 @@ export default class Criterion {
     // Reset this criteria's grade values so that it can be reused for the next student
     clearGradeAndComment() {
         // default values for ungraded criteria
-        this.pointsEarned = 0;
+        this.pointsEarned = this.pointsPossible || 0;
         this.comment = '';
         
     }

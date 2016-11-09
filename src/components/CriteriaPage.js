@@ -23,13 +23,13 @@ const Toolbar = ({criterion, currentCriterionNumber, nCriterion}) => (
 // };
 
 
-const CriteriaBody = ({criterion, criteriaGradeChanged, criteriaCommentChanged}) => (
+const CriteriaBody = ({criterion, pointsEarned, criteriaGradeChanged, criteriaCommentChanged}) => (
     <div className='criteria-body'>
         <p className='center-block'>{criterion.name} ({criterion.pointsPossible})</p>
         <p>{criterion.description}</p>
         <div>
             <label htmlFor="grade">Grade</label><br />
-            <input type="text" id="grade" name="grade" onChange={criteriaGradeChanged} />
+            <input type="text" id="grade" name="grade" value={criterion.pointsEarned} onChange={criteriaGradeChanged} />
         </div>
 
         <div>
@@ -51,6 +51,10 @@ class CriteriaPage extends Component {
   constructor(props, context) {
     super(props, context);
     this.context = context;
+    this.state = {
+      pointsEarned: 0,
+      comment: '' 
+    }
 
     this.onCriteriaGradeChanged = this.onCriteriaGradeChanged.bind(this);
     this.onCriteriaCommentChanged = this.onCriteriaCommentChanged.bind(this);
@@ -107,6 +111,7 @@ class CriteriaPage extends Component {
         />
         <CriteriaBody
           criterion={criterion}
+          pointsEarned={this.state.pointsEarned}
           criteriaGradeChanged={this.onCriteriaGradeChanged}
           criteriaCommentChanged={this.onCriteriaCommentChanged}
         />
