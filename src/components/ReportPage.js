@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import {HotKeys} from 'react-hotkeys';
@@ -14,7 +14,7 @@ const RootSectionComponent = ({sectionTitle, totalPointsEarned, totalPointsPossi
 
     <Col sm={10}>
       {comments.filter((comment) => {
-        return comment != ''
+        return comment !== ''
       })
       .map((comment, i) => 
           <p key={i}>* {comment}</p>

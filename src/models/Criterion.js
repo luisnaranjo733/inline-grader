@@ -1,20 +1,53 @@
+function nameParameterException(value, issue) {
+   this.value = value;
+   this.message = issue;
+   this.toString = function() {
+      return this.value + this.message;
+   };
+}
+
+function descriptionParameterException(value, issue) {
+   this.value = value;
+   this.message = issue;
+   this.toString = function() {
+      return this.value + this.message;
+   };
+}
+
+function pointsPossibleParameterException(value, issue) {
+   this.value = value;
+   this.message = issue;
+   this.toString = function() {
+      return this.value + this.message;
+   };
+}
+
+function sectionPathParameterException(issue) {
+    this.issue = issue;
+    this.toString = function() {
+        return this.issue;
+    }
+}
+
+
 export default class Criterion {
     constructor(name, description, pointsPossible, sectionPath) {
        if (typeof name !== "string") {
-           throw 'Name parameter must be a string!';
+           throw new nameParameterException(name, 'Name parameter must be a string!');
+
        }
        if (typeof description !== "string") {
-           throw 'description parameter must be a string!';
+           throw new descriptionParameterException(name, 'description parameter must be a string!');
        }
        if (typeof pointsPossible !== "number") {
-           throw 'pointsPossible parameter must be a number!';
+           throw new pointsPossibleParameterException(pointsPossible, 'pointsPossible parameter must be a number!');
        }
        if (!Array.isArray(sectionPath)) {
-           throw 'sectionPath parameter must be an array!'
+           throw new sectionPathParameterException('sectionPath parameter must be an array!');
        } else if (sectionPath.length > 0) {
            sectionPath.forEach(function(section) {
                if (typeof section !== "string") {
-                   throw 'all elements of sectionPath parameter must be strings!';
+                   throw new sectionPathParameterException('all elements of sectionPath parameter must be strings!');
                }
            });
        };

@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import {Jumbotron, Button, Form, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 import 'whatwg-fetch';
-import Criterion from '../models/Criterion';
+
 import {isXmlValid, parseXml} from '../helpers/parseRubric.js'
 import {addCriterion, updateRubricName} from '../actions/'
 

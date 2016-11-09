@@ -1,24 +1,26 @@
-.App {
-  text-align: center;
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  font-size: 16px;
+  z-index: 1;
+}
+nav ul {
+  padding-left: 15px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+nav li {
+  display: inline-block;
+  padding: 0.5em;
+  font-variant: small-caps;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.criteria-page {
+    margin-top: 60px;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+ol.breadcrumb {
+    display: inline
 }

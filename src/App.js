@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import './App.css';
 import { Link } from 'react-router'
 
@@ -13,25 +14,36 @@ class FixedNavBar extends Component {
     return (
       <nav style={navBarStyle}>
         <ul>
-          <li><Link to="/">{'Inline Grader'}</Link></li>
-          <li><Link to="/criteria/1">criteria 1</Link></li>
-          <li><Link to="/report">Report</Link></li>
+          <li><Link to="/">{this.props.rubricName || String('Inline Grader')}</Link></li>
         </ul>
       </nav>
 
     )
   }
 }
+function mapStateToProps(state) {
+  return {
+    rubricName: state.rubricName
+  }
+}
+connect(mapStateToProps)(FixedNavBar);
 
 class App extends Component {
   render() {
     return (
       <div>
-        <FixedNavBar />
-        {this.props.children}
+        <header>
+          <FixedNavBar />
+        </header>
+        <main>
+          {this.props.children}
+        </main>
       </div>
     );
   }
 }
 
+
+
 export default App;
+

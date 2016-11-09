@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {HotKeys} from 'react-hotkeys';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -121,19 +121,21 @@ class CriteriaPage extends Component {
     }
 
     return (
-      <HotKeys keyMap={keyboardEvents.keyMap} handlers={keyboardEvents.handlers}>
-        <Toolbar 
-          criterion={criterion}
-          currentCriterionNumber={currentCriterionNumber}
-          nCriterion={this.props.criteria.length}
-        />
-        <CriteriaBody
-          criterion={criterion}
-          pointsEarned={this.state.pointsEarned}
-          criteriaGradeChanged={this.onCriteriaGradeChanged}
-          criteriaCommentChanged={this.onCriteriaCommentChanged}
-        />
-      </HotKeys>
+      <div className='criteria-page'>
+        <HotKeys keyMap={keyboardEvents.keyMap} handlers={keyboardEvents.handlers}>
+          <Toolbar 
+            criterion={criterion}
+            currentCriterionNumber={currentCriterionNumber}
+            nCriterion={this.props.criteria.length}
+          />
+          <CriteriaBody
+            criterion={criterion}
+            pointsEarned={this.state.pointsEarned}
+            criteriaGradeChanged={this.onCriteriaGradeChanged}
+            criteriaCommentChanged={this.onCriteriaCommentChanged}
+          />
+        </HotKeys>
+      </div>
     );
   }
 }
@@ -147,8 +149,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(CriteriaPage);
-
-const keyMap = {
-  left: 'left',
-  right: 'right'
-}
