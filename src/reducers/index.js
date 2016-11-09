@@ -14,7 +14,7 @@ const rubricReducer = (state = initialState, action) => {
       return Object.assign({}, state, {rubricName: action.rubricName});
     case 'UPDATE_CRITERION_GRADE':
       var newCriteria = Object.assign([], state.criteria);
-      newCriteria[action.criterionIndex].pointsEarned = parseInt(action.value, 10);
+      newCriteria[action.criterionIndex].pointsEarned = action.value;
       return Object.assign({}, state, {criteria: newCriteria});
     case 'UPDATE_CRITERION_COMMENT':
       var newCriteria = Object.assign([], state.criteria);

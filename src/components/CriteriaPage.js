@@ -72,12 +72,7 @@ class CriteriaPage extends Component {
 
   onCriteriaGradeChanged(e) {
     var currentCriterionIndex = parseInt(this.props.params.criteriaIndex, 10) - 1;
-    var newGrade = parseInt(e.target.value, 10);
-    if (currentCriterionIndex + 1) {
-      this.props.dispatch(updateCriterionGrade(currentCriterionIndex, newGrade));
-    } else {
-      // invalidate grade form and prevent left/right navigation
-    }
+    this.props.dispatch(updateCriterionGrade(currentCriterionIndex, e.target.value));
   }
 
   onCriteriaCommentChanged(e) {
