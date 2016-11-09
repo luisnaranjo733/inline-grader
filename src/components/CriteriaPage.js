@@ -81,6 +81,7 @@ class CriteriaPage extends Component {
   }
 
   onNavigateUp(e) {
+    this.context.router.push(`/report/${this.props.params.criteriaIndex}`);
   }
 
   onNavigateDown(e) {

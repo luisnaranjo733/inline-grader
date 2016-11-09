@@ -24,7 +24,7 @@ ReactDOM.render(
       <Route path="/" component={App}>
         <IndexRoute component={HomePage}/>
         <Route path="/criteria/:criteriaIndex" component={CriteriaPage}/>
-        <Route path="/report" component={ReportPage}/>
+        <Route path="/report/:criteriaIndex" component={ReportPage}/>
       </Route>
     </Router>
   </Provider>,

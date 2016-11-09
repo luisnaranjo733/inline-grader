@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import {HotKeys} from 'react-hotkeys';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import { Col } from 'react-bootstrap';
@@ -25,6 +26,14 @@ RootSection.propTypes = {
 };
 
 export default class ReportPage extends Component {
+  constructor(props, context) {
+    super(props);
+    this.context = context;
+    this.onNavigateDown = this.onNavigateDown.bind(this);
+  }
+  onNavigateDown(e) {
+    this.context.router.push(`/criteria/${this.props.params.criteriaIndex}`);
+  }
   render() {
     var rootSections = [ // sample state data
       {
@@ -40,14 +49,25 @@ export default class ReportPage extends Component {
         comments: ['that', 'this', 'yblah', 'blah']
       }
     ];
+
+    const keyboardEvents = {
+      keyMap: {
+        down: 'down',
+      },
+      handlers: {
+        down: this.onNavigateDown,
+      }
+    }
+
     return (
-      <div className='container'>
+      <HotKeys keyMap={keyboardEvents.keyMap} handlers={keyboardEvents.handlers}>
         <h1>Grade Report</h1>
         {rootSections.map((sectionProps, i) => {
           return <RootSection key={i} {...sectionProps} />
         })}
         
-      </div>
+      </HotKeys>
     );
   }
 }
+ReportPage.contextTypes = {router: React.PropTypes.object};
