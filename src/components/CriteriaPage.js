@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
+import {updateCriterionGrade} from '../actions/'
 
 const Toolbar = ({criterion, currentCriterionNumber, nCriterion}) => (
     <div className="criteria-toolBar">
@@ -28,7 +29,7 @@ const CriteriaBody = ({criterion, criteriaGradeChanged, criteriaCommentChanged})
         <p>{criterion.description}</p>
         <div>
             <label htmlFor="grade">Grade</label><br />
-            <input type="text" id="grade" name="grade" onChange={criteriaGradeChanged}/>
+            <input type="text" id="grade" name="grade" onChange={criteriaGradeChanged} />
         </div>
 
         <div>
@@ -37,6 +38,7 @@ const CriteriaBody = ({criterion, criteriaGradeChanged, criteriaCommentChanged})
         </div>
     </div>
 )
+
 // CriteriaBody.propTypes = {
 //   criteriaTitle: PropTypes.string.isRequired, //parent state scalar
 //   criteriaDesc: PropTypes.string.isRequired,
@@ -49,6 +51,9 @@ class CriteriaPage extends Component {
   constructor(props, context) {
     super(props, context);
     this.context = context;
+
+    this.onCriteriaGradeChanged = this.onCriteriaGradeChanged.bind(this);
+    this.onCriteriaCommentChanged = this.onCriteriaCommentChanged.bind(this);
   }
 
   componentWillMount() {
@@ -70,9 +75,18 @@ class CriteriaPage extends Component {
   }
 
   onCriteriaGradeChanged(e) {
-    console.log(e.target.value);
-    var currentCriterionNumber = parseInt(this.props.params.criteriaIndex, 10);
-    //this.props.dispatch(updateCriteriaGrade(currentCriteriaIndex, e.target.value));
+    var currentCriterionIndex = parseInt(this.props.params.criteriaIndex, 10) - 1;
+    var newGrade = parseInt(e.target.value, 10);
+    console.log(currentCriterionIndex);
+    console.log(newGrade);
+    if (currentCriterionIndex + 1) {
+      console.log('Updating state');
+      // update state
+      this.props.dispatch(updateCriterionGrade(currentCriterionIndex, newGrade));
+      console.log(this.props.criteria[currentCriterionIndex]);
+    } else {
+      // invalidate grade form and prevent left/right navigation
+    }
   }
 
   onCriteriaCommentChanged(e) {
@@ -82,8 +96,6 @@ class CriteriaPage extends Component {
   render() {
     var currentCriterionNumber = parseInt(this.props.params.criteriaIndex, 10);
     var criterion = this.props.criteria[currentCriterionNumber - 1]; // todo: range error handling
-    console.log(criterion);
-
     
 
     return (
