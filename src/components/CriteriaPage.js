@@ -100,11 +100,7 @@ class CriteriaPage extends Component {
       this.context.router.push(`/criteria/${nextCriterionNumber}`);
     }
   }
-
-  componentDidMount() {
-    //this.hotKeyArea.focus();
-  }
-
+  
   render() {
     var currentCriterionNumber = parseInt(this.props.params.criteriaIndex, 10);
     var criterion = this.props.criteria[currentCriterionNumber - 1]; // todo: range error handling
@@ -125,7 +121,7 @@ class CriteriaPage extends Component {
     }
 
     return (
-      <HotKeys autoFocus keyMap={keyboardEvents.keyMap} handlers={keyboardEvents.handlers}>
+      <HotKeys keyMap={keyboardEvents.keyMap} handlers={keyboardEvents.handlers}>
         <Toolbar 
           criterion={criterion}
           currentCriterionNumber={currentCriterionNumber}
