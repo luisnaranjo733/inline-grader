@@ -7,15 +7,13 @@ import {Breadcrumb} from 'react-bootstrap'
 import {updateCriterionGrade, updateCriterionComment} from '../actions/'
 
 const Toolbar = ({criterion, currentCriterionNumber, nCriterion}) => (
-    <div>
-      <span>
+    <div id="criteria-toolbar">
         <Breadcrumb>
           {criterion.sectionPath.map((section, i) => 
               <Breadcrumb.Item key={i}>{section}</Breadcrumb.Item>
             )
           }
         </Breadcrumb>
-      </span>
 
       <span className="pull-right" id='progress-box'>
         Criteria: {currentCriterionNumber} / {nCriterion}
@@ -24,7 +22,7 @@ const Toolbar = ({criterion, currentCriterionNumber, nCriterion}) => (
 );
 
 const CriteriaBody = ({criterion, pointsEarned, criteriaGradeChanged, criteriaCommentChanged}) => (
-    <div className='criteria-body'>
+    <div id='criteria-body'>
         <p className='center-block'>{criterion.name} ({criterion.pointsPossible})</p>
         <p>{criterion.description}</p>
         <div>
@@ -126,7 +124,7 @@ class CriteriaPage extends Component {
     }
 
     return (
-      <div id='criteria-page'>
+      <div id='criteria-page' className='container'>
         <HotKeys keyMap={keyboardEvents.keyMap} handlers={keyboardEvents.handlers}>
           <Toolbar 
             criterion={criterion}

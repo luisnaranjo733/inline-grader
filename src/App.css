@@ -18,15 +18,30 @@ nav li {
   font-variant: small-caps;
 }
 
-/* Home page*/
-
-#home-page {
-    margin-top: 50px
+main {
+    margin-top: 5em;
 }
 
+/* Home page*/
+
+
 /* Criteria page */
-#criteria-page {
+/*#criteria-page {
     margin-top: 60px;
+}*/
+
+#criteria-toolbar {
+
+}
+
+#criteria-body {
+  border: 1px solid black;
+  padding: 2em;
+}
+
+textarea {
+  width: 100%;
+  height: 300px;
 }
 
 #progress-box {
@@ -34,7 +49,8 @@ nav li {
 }
 
 ol.breadcrumb {
-    display: inline
+    display: inline;
+
 }
 
 /* Report Page */
