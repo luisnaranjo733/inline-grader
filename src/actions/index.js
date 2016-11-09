@@ -13,3 +13,9 @@ export const updateCriterionGrade = (criterionIndex, value) => ({
   criterionIndex,
   value
 });
+
+export const updateCriterionComment = (criterionIndex, value) => ({
+  type: 'UPDATE_CRITERION_COMMENT',
+  criterionIndex,
+  value
+});

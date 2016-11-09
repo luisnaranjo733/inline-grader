@@ -16,6 +16,10 @@ const rubricReducer = (state = initialState, action) => {
       var newCriteria = Object.assign([], state.criteria);
       newCriteria[action.criterionIndex].pointsEarned = parseInt(action.value, 10);
       return Object.assign({}, state, {criteria: newCriteria});
+    case 'UPDATE_CRITERION_COMMENT':
+      var newCriteria = Object.assign([], state.criteria);
+      newCriteria[action.criterionIndex].comment = action.value;
+      return Object.assign({}, state, {criteria: newCriteria});
     default:
       return state
   }

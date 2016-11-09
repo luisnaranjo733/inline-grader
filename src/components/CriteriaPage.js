@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import {HotKeys} from 'react-hotkeys';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
-import {updateCriterionGrade} from '../actions/'
+import {updateCriterionGrade, updateCriterionComment} from '../actions/'
 
 const Toolbar = ({criterion, currentCriterionNumber, nCriterion}) => (
     <div className="criteria-toolBar">
@@ -29,7 +29,7 @@ const CriteriaBody = ({criterion, pointsEarned, criteriaGradeChanged, criteriaCo
 
         <div>
             <label htmlFor="comment">Comment</label><br/>
-            <textarea id="comment" name="comment" onChange={criteriaCommentChanged}></textarea>
+            <textarea id="comment" name="comment" value={criterion.comment} onChange={criteriaCommentChanged}></textarea>
         </div>
     </div>
 )
@@ -73,20 +73,16 @@ class CriteriaPage extends Component {
   onCriteriaGradeChanged(e) {
     var currentCriterionIndex = parseInt(this.props.params.criteriaIndex, 10) - 1;
     var newGrade = parseInt(e.target.value, 10);
-    console.log(currentCriterionIndex);
-    console.log(newGrade);
     if (currentCriterionIndex + 1) {
-      console.log('Updating state');
-      // update state
       this.props.dispatch(updateCriterionGrade(currentCriterionIndex, newGrade));
-      console.log(this.props.criteria[currentCriterionIndex]);
     } else {
       // invalidate grade form and prevent left/right navigation
     }
   }
 
   onCriteriaCommentChanged(e) {
-    console.log(e.target.value)
+    var currentCriterionIndex = parseInt(this.props.params.criteriaIndex, 10) - 1;
+    this.props.dispatch(updateCriterionComment(currentCriterionIndex, e.target.value));
   }
 
   onNavigateUp(e) {

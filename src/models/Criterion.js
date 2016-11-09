@@ -26,8 +26,9 @@ export default class Criterion {
         this.sectionPath = sectionPath;
 
         this.defaultComments = [];
-
-        this.clearGradeAndComment();
+        // default values for ungraded criteria
+        this.pointsEarned = this.pointsPossible || 0;
+        this.comment = '';
     }
 
     // Getter method for this criterion's root section
@@ -38,9 +39,6 @@ export default class Criterion {
 
     // Reset this criteria's grade values so that it can be reused for the next student
     clearGradeAndComment() {
-        // default values for ungraded criteria
-        this.pointsEarned = this.pointsPossible || 0;
-        this.comment = '';
-        
+
     }
 }
