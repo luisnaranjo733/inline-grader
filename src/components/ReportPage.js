@@ -6,26 +6,23 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import { Col } from 'react-bootstrap';
 
-const RootSection = ({sectionTitle, pointsEarned, pointsPossible, comments}) => (
+const RootSectionComponent = ({sectionTitle, totalPointsEarned, totalPointsPossible, comments}) => (
   <div className="row">
     <Col sm={2}>
-      <p>{sectionTitle} ({pointsEarned}/{pointsPossible})</p>
+      <p>{sectionTitle} ({totalPointsEarned}/{totalPointsPossible})</p>
     </Col>
 
     <Col sm={10}>
-      {comments.map((comment, i) => 
+      {comments.filter((comment) => {
+        return comment != ''
+      })
+      .map((comment, i) => 
           <p key={i}>* {comment}</p>
         )
       }
     </Col>
   </div>
 );
-RootSection.propTypes = {
-  sectionTitle: PropTypes.string.isRequired, // parent state
-  pointsEarned: PropTypes.number.isRequired, // parent state
-  pointsPossible: PropTypes.number.isRequired, // parent state
-  comments: PropTypes.arrayOf(React.PropTypes.string).isRequired // parent state
-};
 
 class ReportPage extends Component {
   constructor(props, context) {
@@ -40,6 +37,16 @@ class ReportPage extends Component {
 
   render() {
     var rootSections = {};
+    /*
+    var rootSections = {
+      'sectionTitle': {
+        pointsEarned: 0,
+        poitnsPossible: 0,
+        comments: ['', '']
+      }
+    };
+    */
+
     this.props.criteria.forEach(function(criterion) {
       if (!rootSections[criterion.rootSection]) {
         rootSections[criterion.rootSection] = {
@@ -48,8 +55,9 @@ class ReportPage extends Component {
           comments: []
         };
       }
-      rootSections[criterion.rootSection]['totalPointsEarned'] += criterion.pointsEarned;
-      rootSections[criterion.rootSection]['totalPointsPossible'] += criterion.pointsPossible;
+      rootSections[criterion.rootSection]['sectionTitle'] = criterion.rootSection;
+      rootSections[criterion.rootSection]['totalPointsEarned'] += parseInt(criterion.pointsEarned, 10);
+      rootSections[criterion.rootSection]['totalPointsPossible'] += parseInt(criterion.pointsPossible, 10);
       rootSections[criterion.rootSection]['comments'].push(criterion.comment);
     });
 
@@ -62,6 +70,12 @@ class ReportPage extends Component {
       }
     }
 
+    var rootSectionsArray = [];
+    Object.keys(rootSections).forEach(function(rootSectionName) {
+      var rootSection = rootSections[rootSectionName];
+      rootSectionsArray.push(rootSection);
+    })
+
 
     return (
       <HotKeys keyMap={keyboardEvents.keyMap} handlers={keyboardEvents.handlers} ref={function(component) {
@@ -70,6 +84,18 @@ class ReportPage extends Component {
           }
         }}>
         <h1>Grade Report</h1>
+        <ul>
+          {rootSectionsArray.map((rootSectionObj, i) => 
+              <RootSectionComponent
+                key={i}
+                sectionTitle={rootSectionObj.sectionTitle}
+                totalPointsEarned={rootSectionObj.totalPointsEarned}
+                totalPointsPossible={rootSectionObj.totalPointsPossible}
+                comments={rootSectionObj.comments}
+              />
+            )
+          }
+        </ul>
       </HotKeys>
     );
   }
