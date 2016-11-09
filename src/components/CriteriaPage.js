@@ -90,22 +90,23 @@ class CriteriaPage extends Component {
   }
 
   onNavigateUp(e) {
-    console.log(e);
   }
 
   onNavigateDown(e) {
-    console.log(e);
   }
 
   onNavigateLeft(e) {
-    var currentCriterionNumber = parseInt(this.props.params.criteriaIndex, 10);
-    this.context.router.push(`/criteria/${currentCriterionNumber - 1}`);
+    var previousCriterionNumber = parseInt(this.props.params.criteriaIndex, 10) - 1;
+    if (previousCriterionNumber > 0) {
+      this.context.router.push(`/criteria/${previousCriterionNumber}`);
+    }
   }
 
   onNavigateRight(e) {
-    console.log(e);
-    var currentCriterionNumber = parseInt(this.props.params.criteriaIndex, 10);
-    this.context.router.push(`/criteria/${currentCriterionNumber + 1}`);
+    var nextCriterionNumber = parseInt(this.props.params.criteriaIndex, 10) + 1;
+    if (nextCriterionNumber <= this.props.criteria.length) {
+      this.context.router.push(`/criteria/${nextCriterionNumber}`);
+    }
   }
 
   render() {
