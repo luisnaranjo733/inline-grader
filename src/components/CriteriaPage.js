@@ -24,7 +24,7 @@ const CriteriaBody = ({criterion, pointsEarned, criteriaGradeChanged, criteriaCo
         <p>{criterion.description}</p>
         <div>
             <label htmlFor="grade">Grade</label><br />
-            <input type="text" id="grade" name="grade" value={criterion.pointsEarned} onChange={criteriaGradeChanged} />
+            <input autoFocus type="text" id="grade" name="grade" value={criterion.pointsEarned} onChange={criteriaGradeChanged} />
         </div>
 
         <div>
@@ -101,6 +101,10 @@ class CriteriaPage extends Component {
     }
   }
 
+  componentDidMount() {
+    //this.hotKeyArea.focus();
+  }
+
   render() {
     var currentCriterionNumber = parseInt(this.props.params.criteriaIndex, 10);
     var criterion = this.props.criteria[currentCriterionNumber - 1]; // todo: range error handling
@@ -121,7 +125,7 @@ class CriteriaPage extends Component {
     }
 
     return (
-      <HotKeys keyMap={keyboardEvents.keyMap} handlers={keyboardEvents.handlers}>
+      <HotKeys autoFocus keyMap={keyboardEvents.keyMap} handlers={keyboardEvents.handlers}>
         <Toolbar 
           criterion={criterion}
           currentCriterionNumber={currentCriterionNumber}

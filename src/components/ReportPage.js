@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import {HotKeys} from 'react-hotkeys';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -32,9 +33,11 @@ class ReportPage extends Component {
     this.context = context;
     this.onNavigateDown = this.onNavigateDown.bind(this);
   }
+
   onNavigateDown(e) {
     this.context.router.push(`/criteria/${this.props.params.criteriaIndex}`);
   }
+
   render() {
     var rootSections = {};
     this.props.criteria.forEach(function(criterion) {
@@ -49,7 +52,6 @@ class ReportPage extends Component {
       rootSections[criterion.rootSection]['totalPointsPossible'] += criterion.pointsPossible;
       rootSections[criterion.rootSection]['comments'].push(criterion.comment);
     });
-    console.log(rootSections);
 
     const keyboardEvents = {
       keyMap: {
@@ -62,9 +64,12 @@ class ReportPage extends Component {
 
 
     return (
-      <HotKeys keyMap={keyboardEvents.keyMap} handlers={keyboardEvents.handlers}>
+      <HotKeys keyMap={keyboardEvents.keyMap} handlers={keyboardEvents.handlers} ref={function(component) {
+          if (component) {
+            ReactDOM.findDOMNode(component).focus();
+          }
+        }}>
         <h1>Grade Report</h1>
-        
       </HotKeys>
     );
   }
