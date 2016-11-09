@@ -17,12 +17,6 @@ const Toolbar = ({criterion, currentCriterionNumber, nCriterion}) => (
         <p>Criteria: {currentCriterionNumber} / {nCriterion}</p>
     </div>
 );
-// Toolbar.propTypes = {
-//   pathToCurrentCriteria: PropTypes.arrayOf(React.PropTypes.string).isRequired, // array of strings that represent the section path to the current criteria in rubric hierarchy
-//   currentCriteriaNumber: PropTypes.number.isRequired, // index + 1 value of current criteria being viewed/edited
-//   nTotalCriteria: PropTypes.number.isRequired // total # of criteria in this rubric
-// };
-
 
 const CriteriaBody = ({criterion, pointsEarned, criteriaGradeChanged, criteriaCommentChanged}) => (
     <div className='criteria-body'>
@@ -40,14 +34,6 @@ const CriteriaBody = ({criterion, pointsEarned, criteriaGradeChanged, criteriaCo
     </div>
 )
 
-// CriteriaBody.propTypes = {
-//   criteriaTitle: PropTypes.string.isRequired, //parent state scalar
-//   criteriaDesc: PropTypes.string.isRequired,
-//   criteriaPointsPossible: PropTypes.number.isRequired, // parent state scalar
-//   criteriaGradeChanged: PropTypes.func.isRequired, // callback in parent for when the grade changes
-//   criteriaCommentChanged: PropTypes.func.isRequired // callback in parent for when the comment changes
-// }
-
 class CriteriaPage extends Component {
   constructor(props, context) {
     super(props, context);
@@ -59,6 +45,11 @@ class CriteriaPage extends Component {
 
     this.onCriteriaGradeChanged = this.onCriteriaGradeChanged.bind(this);
     this.onCriteriaCommentChanged = this.onCriteriaCommentChanged.bind(this);
+
+    this.onNavigateUp = this.onNavigateUp.bind(this);
+    this.onNavigateDown = this.onNavigateDown.bind(this);
+    this.onNavigateLeft = this.onNavigateLeft.bind(this);
+    this.onNavigateRight = this.onNavigateRight.bind(this);
   }
 
   componentWillMount() {
@@ -107,11 +98,14 @@ class CriteriaPage extends Component {
   }
 
   onNavigateLeft(e) {
-    console.log(e);
+    var currentCriterionNumber = parseInt(this.props.params.criteriaIndex, 10);
+    this.context.router.push(`/criteria/${currentCriterionNumber - 1}`);
   }
 
   onNavigateRight(e) {
     console.log(e);
+    var currentCriterionNumber = parseInt(this.props.params.criteriaIndex, 10);
+    this.context.router.push(`/criteria/${currentCriterionNumber + 1}`);
   }
 
   render() {
