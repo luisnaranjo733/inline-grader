@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import {HotKeys} from 'react-hotkeys';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import {updateCriterionGrade} from '../actions/'
@@ -97,13 +98,43 @@ class CriteriaPage extends Component {
     console.log(e.target.value)
   }
 
+  onNavigateUp(e) {
+    console.log(e);
+  }
+
+  onNavigateDown(e) {
+    console.log(e);
+  }
+
+  onNavigateLeft(e) {
+    console.log(e);
+  }
+
+  onNavigateRight(e) {
+    console.log(e);
+  }
+
   render() {
     var currentCriterionNumber = parseInt(this.props.params.criteriaIndex, 10);
     var criterion = this.props.criteria[currentCriterionNumber - 1]; // todo: range error handling
-    
+
+    const keyboardEvents = {
+      keyMap: {
+        up: 'up',
+        down: 'down',
+        left: 'left',
+        right: 'right'
+      },
+      handlers: {
+        up: this.onNavigateUp,
+        down: this.onNavigateDown,
+        left: this.onNavigateLeft,
+        right: this.onNavigateRight
+      }
+    }
 
     return (
-      <div>
+      <HotKeys keyMap={keyboardEvents.keyMap} handlers={keyboardEvents.handlers}>
         <Toolbar 
           criterion={criterion}
           currentCriterionNumber={currentCriterionNumber}
@@ -115,7 +146,7 @@ class CriteriaPage extends Component {
           criteriaGradeChanged={this.onCriteriaGradeChanged}
           criteriaCommentChanged={this.onCriteriaCommentChanged}
         />
-      </div>
+      </HotKeys>
     );
   }
 }
@@ -129,3 +160,8 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(CriteriaPage);
+
+const keyMap = {
+  left: 'left',
+  right: 'right'
+}
