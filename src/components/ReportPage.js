@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import {HotKeys} from 'react-hotkeys';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
@@ -25,7 +26,7 @@ RootSection.propTypes = {
   comments: PropTypes.arrayOf(React.PropTypes.string).isRequired // parent state
 };
 
-export default class ReportPage extends Component {
+class ReportPage extends Component {
   constructor(props, context) {
     super(props);
     this.context = context;
@@ -35,20 +36,20 @@ export default class ReportPage extends Component {
     this.context.router.push(`/criteria/${this.props.params.criteriaIndex}`);
   }
   render() {
-    var rootSections = [ // sample state data
-      {
-        sectionTitle: 'Markup & Accessibility',
-        pointsEarned: 38,
-        pointsPossible: 40,
-        comments: ['this', 'that', 'you forgot blah', 'blah']
-      },
-      {
-        sectionTitle: 'Coding style & Documentation',
-        pointsEarned: 24,
-        pointsPossible: 27,
-        comments: ['that', 'this', 'yblah', 'blah']
+    var rootSections = {};
+    this.props.criteria.forEach(function(criterion) {
+      if (!rootSections[criterion.rootSection]) {
+        rootSections[criterion.rootSection] = {
+          totalPointsEarned: 0,
+          totalPointsPossible: 0,
+          comments: []
+        };
       }
-    ];
+      rootSections[criterion.rootSection]['totalPointsEarned'] += criterion.pointsEarned;
+      rootSections[criterion.rootSection]['totalPointsPossible'] += criterion.pointsPossible;
+      rootSections[criterion.rootSection]['comments'].push(criterion.comment);
+    });
+    console.log(rootSections);
 
     const keyboardEvents = {
       keyMap: {
@@ -59,15 +60,22 @@ export default class ReportPage extends Component {
       }
     }
 
+
     return (
       <HotKeys keyMap={keyboardEvents.keyMap} handlers={keyboardEvents.handlers}>
         <h1>Grade Report</h1>
-        {rootSections.map((sectionProps, i) => {
-          return <RootSection key={i} {...sectionProps} />
-        })}
         
       </HotKeys>
     );
   }
 }
 ReportPage.contextTypes = {router: React.PropTypes.object};
+
+function mapStateToProps(state) {
+  return {
+    criteria: state.criteria,
+    rubricName: state.rubricName
+  }
+}
+
+export default connect(mapStateToProps)(ReportPage);
