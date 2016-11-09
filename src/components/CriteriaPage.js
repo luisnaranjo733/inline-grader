@@ -3,16 +3,18 @@ import { connect } from 'react-redux';
 import {HotKeys} from 'react-hotkeys';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
+import {Breadcrumb} from 'react-bootstrap'
 import {updateCriterionGrade, updateCriterionComment} from '../actions/'
 
 const Toolbar = ({criterion, currentCriterionNumber, nCriterion}) => (
     <div className="criteria-toolBar">
-        <ul>
-          {criterion.sectionPath.map((section, i) => 
-              <li key={i}>{section}</li>
-            )
-          }
-        </ul>
+
+        <Breadcrumb>
+        {criterion.sectionPath.map((section, i) => 
+            <Breadcrumb.Item key={i}>{section}</Breadcrumb.Item>
+          )
+        }
+        </Breadcrumb>
 
         <p>Criteria: {currentCriterionNumber} / {nCriterion}</p>
     </div>
