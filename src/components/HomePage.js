@@ -82,7 +82,7 @@ class HomePage extends Component {
 
   render() {
     return (
-      <div className='home-page'>
+      <div id='home-page'>
         <Header />
         <UploadRubricForm rubricUrl={this.state.rubricUrl} onUrlChanged={this.onUrlChanged} onFormSubmitted={this.onFormSubmitted}/>
       </div>

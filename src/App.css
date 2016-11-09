@@ -1,3 +1,4 @@
+/* Navbar */
 nav {
   position: fixed;
   top: 0;
@@ -17,25 +18,30 @@ nav li {
   font-variant: small-caps;
 }
 
-.criteria-page {
-    margin-top: 60px;
-}
+/* Home page*/
 
-.home-page {
+#home-page {
     margin-top: 50px
 }
 
-.header {
-  padding-left: 20px;
+/* Criteria page */
+#criteria-page {
+    margin-top: 60px;
+}
+
+#progress-box {
+    color: red;
 }
 
 ol.breadcrumb {
     display: inline
 }
 
+/* Report Page */
+
 /* Large desktops and laptops */
 @media (min-width: 1200px) {
-  .home-page {
+  #home-page {
     margin-top: 0px;
   }
 }
