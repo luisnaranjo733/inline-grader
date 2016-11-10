@@ -1,6 +1,7 @@
 <rubric name="Sample assignment rubric">
 	<!-- Demonstrate unnested criteria (does not have to have a grading section) -->
-	<criteria name="uses modulus correctly" weight="20"/>
+	<criteria name="uses modulus correctly" weight="10"/>
+  <criteria name="uses ternary operator correctly" weight="10"/>
 
 	<!-- Demonstrate simple rubric structure -->
 	<section name="grading section A">
