@@ -1,4 +1,7 @@
 <rubric name="Sample assignment rubric">
+	<!-- Demonstrate unnested criteria (does not have to have a grading section) -->
+	<criteria name="uses modulus correctly" weight="20"/>
+
 	<!-- Demonstrate simple rubric structure -->
 	<section name="grading section A">
 		<criteria name="missing aria landmarks" weight="3"/>
@@ -16,6 +19,5 @@
 		</section>
 	</section>
 
-	<!-- Demonstrate unnested criteria (does not have to have a grading section) -->
-	<criteria name="uses modulus correctly" weight="20"/>
+
 </rubric>
