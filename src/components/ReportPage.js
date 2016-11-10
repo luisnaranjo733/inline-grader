@@ -7,19 +7,23 @@ import 'bootstrap/dist/css/bootstrap-theme.css';
 import { Col } from 'react-bootstrap';
 
 const RootSectionComponent = ({sectionTitle, totalPointsEarned, totalPointsPossible, comments}) => (
-  <div className="row">
-    <Col sm={2}>
-      <p>{sectionTitle} ({totalPointsEarned}/{totalPointsPossible})</p>
+  <div className="row rootSectionRow">
+    <Col sm={2} className='rootSectionTitle'>
+      <p>{sectionTitle}</p>
+      <br />
+      <p>({totalPointsEarned}/{totalPointsPossible})</p>
     </Col>
 
-    <Col sm={10}>
+    <Col sm={10} className='rootSectionComments'>
+      <p>
       {comments.filter((comment) => {
         return comment !== ''
       })
       .map((comment, i) => 
-          <p key={i}>* {comment}</p>
+          <span key={i}>* {comment}</span>
         )
       }
+      </p>
     </Col>
   </div>
 );
@@ -78,25 +82,27 @@ class ReportPage extends Component {
 
 
     return (
-      <HotKeys keyMap={keyboardEvents.keyMap} handlers={keyboardEvents.handlers} ref={function(component) {
-          if (component) {
-            ReactDOM.findDOMNode(component).focus();
-          }
-        }}>
-        <h1>Grade Report</h1>
-        <ul>
-          {rootSectionsArray.map((rootSectionObj, i) => 
-              <RootSectionComponent
-                key={i}
-                sectionTitle={rootSectionObj.sectionTitle}
-                totalPointsEarned={rootSectionObj.totalPointsEarned}
-                totalPointsPossible={rootSectionObj.totalPointsPossible}
-                comments={rootSectionObj.comments}
-              />
-            )
-          }
-        </ul>
-      </HotKeys>
+      <div className='container'>
+        <HotKeys keyMap={keyboardEvents.keyMap} handlers={keyboardEvents.handlers} ref={function(component) {
+            if (component) {
+              ReactDOM.findDOMNode(component).focus();
+            }
+          }}>
+          <h1>Grade Report</h1>
+          <ul id='rootSectionRows'>
+            {rootSectionsArray.map((rootSectionObj, i) => 
+                <RootSectionComponent
+                  key={i}
+                  sectionTitle={rootSectionObj.sectionTitle}
+                  totalPointsEarned={rootSectionObj.totalPointsEarned}
+                  totalPointsPossible={rootSectionObj.totalPointsPossible}
+                  comments={rootSectionObj.comments}
+                />
+              )
+            }
+          </ul>
+        </HotKeys>
+      </div>
     );
   }
 }

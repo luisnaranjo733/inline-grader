@@ -55,29 +55,57 @@ ol.breadcrumb {
 
 /* Report Page */
 
-/* Large desktops and laptops */
-@media (min-width: 1200px) {
+
+#rootSectionRows {
+  padding-left: 0;
+  margin-top: 3em;
+}
+
+.rootSectionRow {
+  margin-bottom: 1.5em;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.rootSectionTitle {
+  overflow: hidden;
+  border: 1px solid black;
+  height: 75px;
+
+}
+
+.rootSectionTitle > p {
+  margin: 0 auto;
+}
+
+.rootSectionComments {
+  overflow: scroll;
+  border: 1px solid black;
+  padding: 0.5em;
+  height: 150px;
+  margin-top: 0.5em;
+}
+
+
+/* Portrait tablets and small desktops */
+@media (min-width: 768px) {
+  .rootSectionTitle {
+    height: 150px;
+    padding: 3em;
+  }
+
+  .rootSectionComments {
+    height: 150px;
+    margin-top: 0;
+  }
+
   #home-page {
     margin-top: 0px;
   }
+
+  .rootSectionRow {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
-/* Landscape tablets and medium desktops */
-@media (min-width: 992px) and (max-width: 1199px) {
-
-}
-
-/* Portrait tablets and small desktops */
-@media (min-width: 768px) and (max-width: 991px) {
-
-}
-
-/* Landscape phones and portrait tablets */
-@media (max-width: 767px) {
-
-}
-
-/* Portrait phones and smaller */
-@media (max-width: 480px) {
-
-}
