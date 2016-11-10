@@ -20,7 +20,7 @@ const RootSectionComponent = ({sectionTitle, totalPointsEarned, totalPointsPossi
         return comment !== ''
       })
       .map((comment, i) => 
-          <span key={i}>* {comment}</span>
+          <p key={i}>* {comment}</p>
         )
       }
       </p>
