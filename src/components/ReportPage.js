@@ -15,18 +15,17 @@ const RootSectionComponent = ({sectionTitle, totalPointsEarned, totalPointsPossi
     </Col>
 
     <Col sm={10} className='rootSectionComments'>
-      <p>
-      {comments.filter((comment) => {
-        return comment !== ''
-      })
-      .map((comment, i) => 
-          <p key={i}>* {comment}</p>
-        )
-      }
-      </p>
+      <textarea value={
+        comments.filter((comment) => {
+          return comment !== '';
+        }).map((comment) => {
+          return `* ${comment}`
+        }).join('\n')
+      } readOnly/>
     </Col>
   </div>
 );
+
 
 class ReportPage extends Component {
   constructor(props, context) {

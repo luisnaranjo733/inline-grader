@@ -86,6 +86,11 @@ ol.breadcrumb {
   margin-top: 0.5em;
 }
 
+.rootSectionComments > textarea {
+  border: none;
+  height: 100%;
+}
+
 
 /* Portrait tablets and small desktops */
 @media (min-width: 768px) {
