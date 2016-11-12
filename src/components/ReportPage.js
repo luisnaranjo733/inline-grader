@@ -2,30 +2,42 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import {HotKeys} from 'react-hotkeys';
+import CopyToClipboard from 'react-copy-to-clipboard';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import { Col } from 'react-bootstrap';
 
-const RootSectionComponent = ({sectionTitle, totalPointsEarned, totalPointsPossible, comments}) => (
-  <div className="row rootSectionRow">
-    <Col sm={2} className='rootSectionTitle'>
-      <p>{sectionTitle}</p>
-      <br />
-      <p>({totalPointsEarned}/{totalPointsPossible})</p>
-    </Col>
+class RootSectionComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+    this.state.comments = this.props.comments.filter((comment) => {
+      return comment !== '';
+    }).map((comment) => {
+      return `* ${comment}`
+    }).join('\n');
 
-    <Col sm={10} className='rootSectionComments'>
-      <textarea value={
-        comments.filter((comment) => {
-          return comment !== '';
-        }).map((comment) => {
-          return `* ${comment}`
-        }).join('\n')
-      } readOnly/>
-    </Col>
-  </div>
-);
+  }
 
+  render() {
+    var formattedComments
+    return (
+      <div className="row rootSectionRow">
+        <Col sm={2} className='rootSectionTitle'>
+          <p>{this.props.sectionTitle}</p>
+          <br />
+          <p>({this.props.totalPointsEarned}/{this.props.totalPointsPossible})</p>
+        </Col>
+
+        <CopyToClipboard text={this.state.comments}>
+          <Col sm={10} className='rootSectionComments'>
+            <textarea value={this.state.comments} readOnly/>
+          </Col>
+        </CopyToClipboard>
+      </div>
+    );
+  }
+}
 
 class ReportPage extends Component {
   constructor(props, context) {
