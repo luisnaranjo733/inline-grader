@@ -24,14 +24,16 @@ Here are some ideas for other who might benefit from this:
 
 It is currently coupled to the way Canvas is setup (because the grading report at the end assumes that you want the report flattened and organized under the root level sections, which aligns with Canvas so you can copy and paste). This could change upon further deliberation.
 
-## How to run it
+## How to access it
+
+Visit https://luisnaranjo733.github.io/inline-grader/#/
+
+**OR**
 
 1. Clone the repository
 2. run npm install
 3. run npm start
 4. Navigate to localhost:3000 in your browser
-
-I plan to publish this page to gh-pages in the near future. For now, you need to clone and run the http server locally.
 
 ## How to use it
 
