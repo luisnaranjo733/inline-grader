@@ -5,22 +5,23 @@ import {HotKeys} from 'react-hotkeys';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
-import { Col } from 'react-bootstrap';
+import { Col, Button} from 'react-bootstrap';
+import {updateRubricName, resetCriteria} from '../actions/'
 
 class RootSectionComponent extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
-    this.state.comments = this.props.comments.filter((comment) => {
-      return comment !== '';
-    }).map((comment) => {
-      return `* ${comment}`
-    }).join('\n');
+    this.state = {
+      comments: this.props.comments.filter((comment) => {
+        return comment !== '';
+      }).map((comment) => {
+        return `* ${comment}`
+      }).join('\n')
+    };
 
   }
 
   render() {
-    var formattedComments
     return (
       <div className="row rootSectionRow">
         <Col sm={2} className='rootSectionTitle'>
@@ -45,6 +46,7 @@ class ReportPage extends Component {
     this.context = context;
     this.onNavigateDown = this.onNavigateDown.bind(this);
     this.onNavigateLeft = this.onNavigateLeft.bind(this);
+    this.onResetRubric = this.onResetRubric.bind(this);
   }
 
   onNavigateDown(e) {
@@ -53,6 +55,12 @@ class ReportPage extends Component {
 
   onNavigateLeft(e) {
     this.context.router.push(`/criteria/${this.props.params.criteriaIndex}`);
+  }
+
+  onResetRubric() {
+    this.props.dispatch(updateRubricName(''));
+    this.props.dispatch(resetCriteria());
+    this.context.router.push('/criteria/1');
   }
 
   render() {
@@ -111,6 +119,8 @@ class ReportPage extends Component {
             }
           </ul>
         </HotKeys>
+
+      <Button bsStyle="primary" onClick={this.onResetRubric}>Reset rubric</Button>
       </div>
     );
   }

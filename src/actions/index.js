@@ -19,3 +19,7 @@ export const updateCriterionComment = (criterionIndex, value) => ({
   criterionIndex,
   value
 });
+
+export const resetCriteria = () => ({
+  type: 'RESET_CRITERIA',
+});
