@@ -101,6 +101,8 @@ class CriteriaPage extends Component {
     var nextCriterionNumber = parseInt(this.props.params.criteriaIndex, 10) + 1;
     if (nextCriterionNumber <= this.props.criteria.length) {
       this.context.router.push(`/criteria/${nextCriterionNumber}`);
+    } else if (nextCriterionNumber > this.props.criteria.length) {
+      this.context.router.push(`/report/${nextCriterionNumber - 1}`);
     }
   }
   

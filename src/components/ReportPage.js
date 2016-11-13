@@ -44,23 +44,19 @@ class ReportPage extends Component {
     super(props);
     this.context = context;
     this.onNavigateDown = this.onNavigateDown.bind(this);
+    this.onNavigateLeft = this.onNavigateLeft.bind(this);
   }
 
   onNavigateDown(e) {
     this.context.router.push(`/criteria/${this.props.params.criteriaIndex}`);
   }
 
+  onNavigateLeft(e) {
+    this.context.router.push(`/criteria/${this.props.params.criteriaIndex}`);
+  }
+
   render() {
     var rootSections = {};
-    /*
-    var rootSections = {
-      'sectionTitle': {
-        pointsEarned: 0,
-        poitnsPossible: 0,
-        comments: ['', '']
-      }
-    };
-    */
 
     this.props.criteria.forEach(function(criterion) {
       if (!rootSections[criterion.rootSection]) {
@@ -79,9 +75,11 @@ class ReportPage extends Component {
     const keyboardEvents = {
       keyMap: {
         down: 'down',
+        left: 'left',
       },
       handlers: {
         down: this.onNavigateDown,
+        left: this.onNavigateLeft,
       }
     }
 
