@@ -6,7 +6,7 @@ import {Jumbotron, Button, Form, FormGroup, ControlLabel, FormControl} from 'rea
 import 'whatwg-fetch';
 
 import {isXmlValid, parseXml} from '../helpers/parseRubric.js'
-import {addCriterion, updateRubricName} from '../actions/'
+import {replaceRubric} from '../actions/'
 
 const Header = () => (
   <Jumbotron className="hidden-xs">
@@ -64,15 +64,7 @@ class HomePage extends Component {
     .then(function(xmlBody) {
       if (isXmlValid(xmlBody)) {
         var parsedXml = parseXml(xmlBody);
-        
-        // push each criterion to state.criteria array
-        parsedXml.criteria.forEach(function(criterion) {
-          outerThis.props.dispatch(addCriterion(criterion));
-        });
-
-        // push parsedXml.rubricName to state (string)
-        outerThis.props.dispatch(updateRubricName(parsedXml.rubricName));
-
+        outerThis.props.dispatch(replaceRubric(parsedXml.rubricName, parsedXml.criteria));
         outerThis.context.router.push('criteria/1'); // change router state
       } else {
         console.log('xml is NOT valid');
