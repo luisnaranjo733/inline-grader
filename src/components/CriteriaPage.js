@@ -59,8 +59,8 @@ class CriteriaBody extends Component {
 CriteriaBody.propTypes = {
   criterion: React.PropTypes.shape({
     name: React.PropTypes.string.isRequired,
-    pointsPossible: React.PropTypes.number.isRequired,
-    pointsEarned: React.PropTypes.number.isRequired
+    pointsPossible: React.PropTypes.string.isRequired,
+    pointsEarned: React.PropTypes.string.isRequired
   }).isRequired,
   criteriaGradeChanged: React.PropTypes.func.isRequired,
   criteriaCommentChanged: React.PropTypes.func.isRequired
@@ -68,8 +68,8 @@ CriteriaBody.propTypes = {
 CriteriaBody.defaultProps = {
   criterion: {
     name: '',
-    pointsEarned: -1,
-    pointsPossible: -1
+    pointsEarned: '-1',
+    pointsPossible: '-1'
   },
   criteriaGradeChanged: () => {},
   criteriaCommentChanged: () => {}
@@ -80,7 +80,7 @@ class CriteriaPage extends Component {
     super(props, context);
     this.context = context;
     this.state = {
-      pointsEarned: 0,
+      pointsEarned: '0',
       comment: '' 
     }
 

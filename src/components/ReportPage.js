@@ -74,8 +74,8 @@ class ReportPage extends Component {
         };
       }
       rootSections[criterion.rootSection]['sectionTitle'] = criterion.rootSection;
-      rootSections[criterion.rootSection]['totalPointsEarned'] += parseInt(criterion.pointsEarned, 10);
-      rootSections[criterion.rootSection]['totalPointsPossible'] += parseInt(criterion.pointsPossible, 10);
+      rootSections[criterion.rootSection]['totalPointsEarned'] += parseFloat(criterion.pointsEarned, 10);
+      rootSections[criterion.rootSection]['totalPointsPossible'] += parseFloat(criterion.pointsPossible, 10);
       rootSections[criterion.rootSection]['comments'].push(criterion.comment);
     });
 

@@ -144,7 +144,7 @@ function parseXmlHelper(tag, path, criteriaArray) {
       var criterion = new Criterion(
         criteria['$']['name'],   //name
         description,                      // description
-        parseInt(criteria['$']['weight'], 10), // pointsPossible
+        criteria['$']['weight'], // pointsPossible
         path                     // sectionPath
       );
       criteriaArray.push(criterion);
