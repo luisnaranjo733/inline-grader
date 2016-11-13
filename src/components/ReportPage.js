@@ -6,7 +6,7 @@ import CopyToClipboard from 'react-copy-to-clipboard';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import { Col, Button} from 'react-bootstrap';
-import {updateRubricName, resetCriteria} from '../actions/'
+import {resetRubric} from '../actions/'
 
 class RootSectionComponent extends Component {
   constructor(props) {
@@ -58,8 +58,7 @@ class ReportPage extends Component {
   }
 
   onResetRubric() {
-    this.props.dispatch(updateRubricName(''));
-    this.props.dispatch(resetCriteria());
+    this.props.dispatch(resetRubric());
     this.context.router.push('/criteria/1');
   }
 

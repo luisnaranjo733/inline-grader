@@ -20,6 +20,6 @@ export const updateCriterionComment = (criterionIndex, value) => ({
   value
 });
 
-export const resetCriteria = () => ({
-  type: 'RESET_CRITERIA',
+export const resetRubric = () => ({
+  type: 'RESET_RUBRIC',
 });
