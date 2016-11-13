@@ -6,36 +6,74 @@ import 'bootstrap/dist/css/bootstrap-theme.css';
 import {Breadcrumb} from 'react-bootstrap'
 import {updateCriterionGrade, updateCriterionComment} from '../actions/'
 
-const Toolbar = ({criterion, currentCriterionNumber, nCriterion}) => (
-    <div id="criteria-toolbar">
-        <Breadcrumb>
-          {criterion.sectionPath.map((section, i) => 
-              <Breadcrumb.Item key={i}>{section}</Breadcrumb.Item>
-            )
-          }
-        </Breadcrumb>
+class Toolbar extends Component {
+  render() {
+    return (
+      <div id="criteria-toolbar">
+          <Breadcrumb>
+            {this.props.criterion.sectionPath.map((section, i) => 
+                <Breadcrumb.Item key={i}>{section}</Breadcrumb.Item>
+              )
+            }
+          </Breadcrumb>
 
-      <span className="pull-right" id='progress-box'>
-        Criteria: {currentCriterionNumber} / {nCriterion}
-      </span>
-    </div>
-);
+        <span className="pull-right" id='progress-box'>
+          Criteria: {this.props.currentCriterionNumber} / {this.props.nCriterion}
+        </span>
+      </div>
+    );
+  }
+}
+Toolbar.propTypes = {
+  criterion: React.PropTypes.shape({
+    sectionPath: React.PropTypes.arrayOf(React.PropTypes.string.isRequired).isRequired
+  }).isRequired,
+  currentCriterionNumber: React.PropTypes.number.isRequired,
+  nCriterion: React.PropTypes.number.isRequired
+}
+Toolbar.defaultProps = {
+  criterion: {
+    sectionPath: ['']
+  }
+}
 
-const CriteriaBody = ({criterion, pointsEarned, criteriaGradeChanged, criteriaCommentChanged}) => (
-    <div id='criteria-body'>
-        <p className='center-block'>{criterion.name} ({criterion.pointsPossible})</p>
-        <p>{criterion.description}</p>
-        <div>
-            <label htmlFor="grade">Grade</label><br />
-            <input autoFocus type="text" id="grade" name="grade" value={criterion.pointsEarned} onChange={criteriaGradeChanged} />
-        </div>
+class CriteriaBody extends Component {
+  render() {
+    return (
+      <div id='criteria-body'>
+          <p className='center-block'>{this.props.criterion.name} ({this.props.criterion.pointsPossible})</p>
+          <p>{this.props.criterion.description}</p>
+          <div>
+              <label htmlFor="grade">Grade</label><br />
+              <input autoFocus type="text" id="grade" name="grade" value={this.props.criterion.pointsEarned} onChange={this.props.criteriaGradeChanged} />
+          </div>
 
-        <div>
-            <label htmlFor="comment">Comment</label><br/>
-            <textarea id="comment" name="comment" value={criterion.comment} onChange={criteriaCommentChanged}></textarea>
-        </div>
-    </div>
-)
+          <div>
+              <label htmlFor="comment">Comment</label><br/>
+              <textarea id="comment" name="comment" value={this.props.criterion.comment} onChange={this.props.criteriaCommentChanged}></textarea>
+          </div>
+      </div>
+    );
+  }
+}
+CriteriaBody.propTypes = {
+  criterion: React.PropTypes.shape({
+    name: React.PropTypes.string.isRequired,
+    pointsPossible: React.PropTypes.number.isRequired,
+    pointsEarned: React.PropTypes.number.isRequired
+  }).isRequired,
+  criteriaGradeChanged: React.PropTypes.func.isRequired,
+  criteriaCommentChanged: React.PropTypes.func.isRequired
+}
+CriteriaBody.defaultProps = {
+  criterion: {
+    name: '',
+    pointsEarned: -1,
+    pointsPossible: -1
+  },
+  criteriaGradeChanged: () => {},
+  criteriaCommentChanged: () => {}
+}
 
 class CriteriaPage extends Component {
   constructor(props, context) {
@@ -61,15 +99,15 @@ class CriteriaPage extends Component {
       // retrieve current criteria index from url route parameter
       var currentCriterionNumber = parseInt(this.props.params.criteriaIndex, 10);
       if (currentCriterionNumber > 0) {
-        if (!this.props.criteria) {
-          console.log('redirect to home, rubric has not been loaded yet');
+        if (this.props.criteria && this.props.criteria.length === 0) {
+          // console.log('redirect to home, rubric has not been loaded yet');
           this.context.router.push('/');
         }
       } else {
-        console.log('404 - url integer parameter must be from [1, inf]');
+        // console.log('404 - url integer parameter must be from [1, inf]');
       }
     } else {
-      console.log('404 - url must include an integer parameter');
+      // console.log('404 - url must include an integer parameter');
     }
   }
 
@@ -101,6 +139,8 @@ class CriteriaPage extends Component {
     var nextCriterionNumber = parseInt(this.props.params.criteriaIndex, 10) + 1;
     if (nextCriterionNumber <= this.props.criteria.length) {
       this.context.router.push(`/criteria/${nextCriterionNumber}`);
+    } else if (nextCriterionNumber > this.props.criteria.length) {
+      this.context.router.push(`/report/${nextCriterionNumber - 1}`);
     }
   }
   

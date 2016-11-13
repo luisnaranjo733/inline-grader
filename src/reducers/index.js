@@ -6,12 +6,18 @@ var initialState = {
 const rubricReducer = (state = initialState, action) => {
   var newCriteria = Object.assign([], state.criteria);
   switch (action.type) {
-    case 'APPEND_CRITERION':
-      newCriteria.push(action.criterion);
-      var newState = Object.assign({}, state, {criteria: newCriteria});
-      return newState;
-    case 'UPDATE_RUBRIC_NAME':
-      return Object.assign({}, state, {rubricName: action.rubricName});
+    case 'REPLACE_RUBRIC':
+      return {
+        criteria: action.criteria,
+        rubricName: action.rubricName
+      };
+    case 'RESET_RUBRIC':
+      newCriteria.forEach(function(criterion) {
+        criterion.comment = '';
+        criterion.defaultComments = [];
+        criterion.pointsEarned = criterion.pointsPossible
+      });
+      return Object.assign({}, state, {criteria: newCriteria});
     case 'UPDATE_CRITERION_GRADE':
       newCriteria[action.criterionIndex].pointsEarned = action.value;
       return Object.assign({}, state, {criteria: newCriteria});

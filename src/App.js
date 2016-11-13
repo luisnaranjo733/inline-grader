@@ -14,26 +14,20 @@ class FixedNavBar extends Component {
     return (
       <nav style={navBarStyle}>
         <ul>
-          <li><Link to="/">{this.props.rubricName || String('Inline Grader')}</Link></li>
+          <li><Link to="/">{this.props.rubricName ? this.props.rubricName : String('Inline Grader')}</Link></li>
         </ul>
       </nav>
 
     )
   }
 }
-function mapStateToProps(state) {
-  return {
-    rubricName: state.rubricName
-  }
-}
-connect(mapStateToProps)(FixedNavBar);
 
 class App extends Component {
   render() {
     return (
       <div>
         <header>
-          <FixedNavBar />
+          <FixedNavBar rubricName={this.props.rubricName}/>
         </header>
         <main>
           {this.props.children}
@@ -43,7 +37,11 @@ class App extends Component {
   }
 }
 
+function mapStateToProps(state) {
+  return {
+    rubricName: state.rubricName
+  }
+}
 
-
-export default App;
+export default connect(mapStateToProps)(App);
 
