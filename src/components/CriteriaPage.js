@@ -68,8 +68,8 @@ CriteriaBody.propTypes = {
 CriteriaBody.defaultProps = {
   criterion: {
     name: '',
-    pointsEarned: 0,
-    pointsPossible: 0
+    pointsEarned: -1,
+    pointsPossible: -1
   },
   criteriaGradeChanged: () => {},
   criteriaCommentChanged: () => {}
@@ -91,6 +91,24 @@ class CriteriaPage extends Component {
     this.onNavigateDown = this.onNavigateDown.bind(this);
     this.onNavigateLeft = this.onNavigateLeft.bind(this);
     this.onNavigateRight = this.onNavigateRight.bind(this);
+  }
+
+  componentWillMount() {
+    // invoked once, before initial 'render'
+    if (parseInt(this.props.params.criteriaIndex, 10)) {
+      // retrieve current criteria index from url route parameter
+      var currentCriterionNumber = parseInt(this.props.params.criteriaIndex, 10);
+      if (currentCriterionNumber > 0) {
+        if (this.props.criteria && this.props.criteria.length === 0) {
+          // console.log('redirect to home, rubric has not been loaded yet');
+          this.context.router.push('/');
+        }
+      } else {
+        // console.log('404 - url integer parameter must be from [1, inf]');
+      }
+    } else {
+      // console.log('404 - url must include an integer parameter');
+    }
   }
 
   onCriteriaGradeChanged(e) {
