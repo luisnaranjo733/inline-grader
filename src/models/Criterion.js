@@ -6,7 +6,13 @@ export default class Criterion {
         this.pointsPossible = pointsPossible; // string
         this.sectionPath = sectionPath;
 
-        this.defaultComments = [];
+        // set a default comment
+        this.defaultComments = [
+            {
+                text: '-',
+                weight: pointsPossible
+            }
+        ];
         // default values for ungraded criteria
         this.pointsEarned = this.pointsPossible; // string
         this.comment = '';

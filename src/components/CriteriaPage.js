@@ -38,7 +38,7 @@ Toolbar.defaultProps = {
 }
 
 class CriteriaBody extends Component {
-  render() {
+  render() {  
     return (
       <div id='criteria-body'>
           <p className='center-block'>{this.props.criterion.name} ({this.props.criterion.pointsPossible})</p>
@@ -46,6 +46,17 @@ class CriteriaBody extends Component {
           <div>
               <label htmlFor="grade">Grade</label><br />
               <input autoFocus type="text" id="grade" name="grade" value={this.props.criterion.pointsEarned} onChange={this.props.criteriaGradeChanged} />
+          </div>
+
+          <div id="default-comments-dropdown">
+            <label htmlFor="defaultComment">Default comments</label><br/>
+            <select>
+              {
+                this.props.criterion.defaultComments.map((defaultComment, i) => 
+                  <option key={i} value={defaultComment.weight}>{defaultComment.text}</option>
+                )
+              }
+            </select>
           </div>
 
           <div>
@@ -60,7 +71,11 @@ CriteriaBody.propTypes = {
   criterion: React.PropTypes.shape({
     name: React.PropTypes.string.isRequired,
     pointsPossible: React.PropTypes.string.isRequired,
-    pointsEarned: React.PropTypes.string.isRequired
+    pointsEarned: React.PropTypes.string.isRequired,
+    defaultComments: React.PropTypes.arrayOf(React.PropTypes.shape({
+      text: React.PropTypes.string,
+      weight: React.PropTypes.string
+    })),
   }).isRequired,
   criteriaGradeChanged: React.PropTypes.func.isRequired,
   criteriaCommentChanged: React.PropTypes.func.isRequired
@@ -69,7 +84,8 @@ CriteriaBody.defaultProps = {
   criterion: {
     name: '',
     pointsEarned: '-1',
-    pointsPossible: '-1'
+    pointsPossible: '-1',
+    defaultComments: []
   },
   criteriaGradeChanged: () => {},
   criteriaCommentChanged: () => {}

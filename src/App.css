@@ -34,9 +34,20 @@ main {
 
 }
 
+
+
 #criteria-body {
   border: 1px solid black;
   padding: 2em;
+}
+
+#default-comments-dropdown {
+  margin-top: 1em;
+  width: 100%;
+}
+
+#default-comments-dropdown > select {
+  width: 100%
 }
 
 textarea {
