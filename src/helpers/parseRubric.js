@@ -5,6 +5,7 @@ import Criterion from '../models/Criterion';
 const RUBRIC_TAG = 'rubric';
 const SECTION_TAG = 'section';
 const CRITERIA_TAG = 'criteria';
+const COMMENT_TAG = 'comment';
 
 // helper method to convert xmlString into xml2js dom object
 function stringToDom(xmlString) {
@@ -78,6 +79,20 @@ function isXmlValidHelper(tag) {
         allCriteriaTagsValid = false;
         console.log("All criteria tags should have a non empty name attribute");
       }
+      if (!criteria['$']['weight'] || criteria['$']['weight'].length === 0) {
+        allCriteriaTagsValid = false;
+        console.log("All criteria tags should have a non empty weight attribute");
+      }
+
+      if (criteria[COMMENT_TAG]) {
+        for (let comment of criteria[COMMENT_TAG]) {
+          if (!comment['_']) {
+            allCriteriaTagsValid = false;
+            console.log('All comment tags should have an inner text value')
+          }
+        }        
+      }
+
     }
   } 
 
@@ -147,6 +162,15 @@ function parseXmlHelper(tag, path, criteriaArray) {
         criteria['$']['weight'], // pointsPossible
         path                     // sectionPath
       );
+
+      if (criteria[COMMENT_TAG]) {
+        for (let comment of criteria[COMMENT_TAG]) {
+          criterion.defaultComments.push({
+            text: comment['_'].trim(),
+            weight: comment['$']['weight']
+          });
+        }
+      }
       criteriaArray.push(criterion);
     }
   } 
