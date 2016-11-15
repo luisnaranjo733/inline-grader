@@ -44,16 +44,11 @@ class ReportPage extends Component {
   constructor(props, context) {
     super(props);
     this.context = context;
-    this.onNavigateDown = this.onNavigateDown.bind(this);
-    this.onNavigateLeft = this.onNavigateLeft.bind(this);
+    this.onNavigateToCriteriaPage = this.onNavigateToCriteriaPage.bind(this);
     this.onResetRubric = this.onResetRubric.bind(this);
   }
 
-  onNavigateDown(e) {
-    this.context.router.push(`/criteria/${this.props.params.criteriaIndex}`);
-  }
-
-  onNavigateLeft(e) {
+  onNavigateToCriteriaPage(e) {
     this.context.router.push(`/criteria/${this.props.params.criteriaIndex}`);
   }
 
@@ -81,12 +76,10 @@ class ReportPage extends Component {
 
     const keyboardEvents = {
       keyMap: {
-        down: 'down',
-        left: 'left',
+        shift_down: 'shift+down'
       },
       handlers: {
-        down: this.onNavigateDown,
-        left: this.onNavigateLeft,
+        shift_down: this.onNavigateToCriteriaPage
       }
     }
 

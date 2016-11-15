@@ -79,19 +79,19 @@ class CriteriaPage extends Component {
   constructor(props, context) {
     super(props, context);
     this.context = context;
-    this.state = {
-      pointsEarned: '0',
-      comment: '' 
-    }
 
     this.onCriteriaGradeChanged = this.onCriteriaGradeChanged.bind(this);
     this.onCriteriaCommentChanged = this.onCriteriaCommentChanged.bind(this);
 
-    this.onNavigateUp = this.onNavigateUp.bind(this);
-    this.onNavigateDown = this.onNavigateDown.bind(this);
-    this.onNavigateLeft = this.onNavigateLeft.bind(this);
-    this.onNavigateRight = this.onNavigateRight.bind(this);
+    this.onNavigateToReportPage = this.onNavigateToReportPage.bind(this);
+    this.onNavigateToPrevCriteria = this.onNavigateToPrevCriteria.bind(this);
+    this.onNavigateToNextCriteria = this.onNavigateToNextCriteria.bind(this);
+    this.onIncrementCriteriaGrade = this.onIncrementCriteriaGrade.bind(this);
+    this.onDecrementCriteriaGrade = this.onDecrementCriteriaGrade.bind(this);
   }
+
+  get currentCriterionIndex() {return parseInt(this.props.params.criteriaIndex, 10) - 1;}
+  get currentCriterion() {return this.props.criteria[this.currentCriterionIndex]; }
 
   componentWillMount() {
     // invoked once, before initial 'render'
@@ -112,35 +112,50 @@ class CriteriaPage extends Component {
   }
 
   onCriteriaGradeChanged(e) {
-    var currentCriterionIndex = parseInt(this.props.params.criteriaIndex, 10) - 1;
-    this.props.dispatch(updateCriterionGrade(currentCriterionIndex, e.target.value));
+    this.props.dispatch(updateCriterionGrade(this.currentCriterionIndex, e.target.value));
   }
 
   onCriteriaCommentChanged(e) {
-    var currentCriterionIndex = parseInt(this.props.params.criteriaIndex, 10) - 1;
-    this.props.dispatch(updateCriterionComment(currentCriterionIndex, e.target.value));
+    this.props.dispatch(updateCriterionComment(this.currentCriterionIndex, e.target.value));
   }
 
-  onNavigateUp(e) {
+  onNavigateToReportPage(e) {
     this.context.router.push(`/report/${this.props.params.criteriaIndex}`);
   }
 
-  onNavigateDown(e) {
-  }
-
-  onNavigateLeft(e) {
+  onNavigateToPrevCriteria(e) {
     var previousCriterionNumber = parseInt(this.props.params.criteriaIndex, 10) - 1;
     if (previousCriterionNumber > 0) {
       this.context.router.push(`/criteria/${previousCriterionNumber}`);
     }
   }
 
-  onNavigateRight(e) {
+  onNavigateToNextCriteria(e) {
     var nextCriterionNumber = parseInt(this.props.params.criteriaIndex, 10) + 1;
     if (nextCriterionNumber <= this.props.criteria.length) {
       this.context.router.push(`/criteria/${nextCriterionNumber}`);
-    } else if (nextCriterionNumber > this.props.criteria.length) {
-      this.context.router.push(`/report/${nextCriterionNumber - 1}`);
+    }
+  }
+
+  onIncrementCriteriaGrade() {
+    // check for '0' because a parseFloat("0", 10) === false, so we have to avoid that edge case
+    if (parseFloat(this.currentCriterion.pointsEarned, 10)  || this.currentCriterion.pointsEarned === '0') {
+      var incrementedGrade = parseFloat(this.currentCriterion.pointsEarned, 10) + 1;
+
+      // don't increment past points possible
+      if (incrementedGrade <= parseFloat(this.currentCriterion.pointsPossible)) {
+        incrementedGrade = String(incrementedGrade);
+        this.props.dispatch(updateCriterionGrade(this.currentCriterionIndex, incrementedGrade));
+      }
+    }
+  }
+
+  onDecrementCriteriaGrade() {
+    // don't need to check for parseFloat("0", 10) === false edge case because we don't want to decrement if already zero
+    if (parseFloat(this.currentCriterion.pointsEarned, 10)) {
+      var decrementedGrade = parseFloat(this.currentCriterion.pointsEarned, 10) - 1;
+      decrementedGrade = String(decrementedGrade);
+      this.props.dispatch(updateCriterionGrade(this.currentCriterionIndex, decrementedGrade));
     }
   }
   
@@ -153,13 +168,15 @@ class CriteriaPage extends Component {
         up: 'up',
         down: 'down',
         left: 'left',
-        right: 'right'
+        right: 'right',
+        shift_up: 'shift+up'
       },
       handlers: {
-        up: this.onNavigateUp,
-        down: this.onNavigateDown,
-        left: this.onNavigateLeft,
-        right: this.onNavigateRight
+        up: this.onIncrementCriteriaGrade,
+        down: this.onDecrementCriteriaGrade,
+        left: this.onNavigateToPrevCriteria,
+        right: this.onNavigateToNextCriteria,
+        shift_up: this.onNavigateToReportPage
       }
     }
 
@@ -173,7 +190,6 @@ class CriteriaPage extends Component {
           />
           <CriteriaBody
             criterion={criterion}
-            pointsEarned={this.state.pointsEarned}
             criteriaGradeChanged={this.onCriteriaGradeChanged}
             criteriaCommentChanged={this.onCriteriaCommentChanged}
           />
