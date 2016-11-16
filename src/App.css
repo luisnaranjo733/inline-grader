@@ -61,7 +61,10 @@ textarea {
 
 ol.breadcrumb {
     display: inline;
+}
 
+.alert {
+  margin-bottom: 2em;
 }
 
 /* Report Page */

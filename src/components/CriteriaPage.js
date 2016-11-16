@@ -228,12 +228,8 @@ class CriteriaPage extends Component {
     // check for '0' because a parseFloat("0", 10) === false, so we have to avoid that edge case
     if (parseFloat(this.currentCriterion.pointsEarned, 10)  || this.currentCriterion.pointsEarned === '0') {
       var incrementedGrade = parseFloat(this.currentCriterion.pointsEarned, 10) + 1;
-
-      // don't increment past points possible
-      if (incrementedGrade <= parseFloat(this.currentCriterion.pointsPossible)) {
-        incrementedGrade = String(incrementedGrade);
-        this.props.dispatch(updateCriterionGrade(this.currentCriterionIndex, incrementedGrade));
-      }
+      incrementedGrade = String(incrementedGrade);
+      this.props.dispatch(updateCriterionGrade(this.currentCriterionIndex, incrementedGrade));
     }
   }
 
@@ -245,7 +241,8 @@ class CriteriaPage extends Component {
       this.props.dispatch(updateCriterionGrade(this.currentCriterionIndex, decrementedGrade));
     }
   }
-  
+
+
   render() {
     var currentCriterionNumber = parseInt(this.props.params.criteriaIndex, 10);
     var criterion = this.props.criteria[currentCriterionNumber - 1]; // todo: range error handling
@@ -270,18 +267,20 @@ class CriteriaPage extends Component {
     return (
       <div id='criteria-page' className='container'>
         <HotKeys keyMap={keyboardEvents.keyMap} handlers={keyboardEvents.handlers}>
+
           <Toolbar 
             criterion={criterion}
             currentCriterionNumber={currentCriterionNumber}
             nCriterion={this.props.criteria.length}
           />
+
           <CriteriaBody
             criterion={criterion}
             criteriaGradeChanged={this.onCriteriaGradeChanged}
             criteriaCommentChanged={this.onCriteriaCommentChanged}
             criteriaDefaultCommentChanged={this.onCriteriaDefaultCommentChanged}
             criteriaSaveCommentAsDefault={this.onCriteriaSaveCommentAsDefault}
-          />
+          />     
         </HotKeys>
       </div>
     );
