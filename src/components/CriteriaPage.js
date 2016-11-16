@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import {HotKeys} from 'react-hotkeys';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
-import {Breadcrumb} from 'react-bootstrap'
+import {Breadcrumb, FormGroup, ControlLabel, FormControl} from 'react-bootstrap'
 import {updateCriterionGrade, updateCriterionComment, addCriterionDefaultComment} from '../actions/'
 
 class Toolbar extends Component {
@@ -38,33 +38,67 @@ Toolbar.defaultProps = {
 }
 
 class CriteriaBody extends Component {
+
+  getGradeValidationState() {
+    console.log('validating form');
+    return 'warning';
+  }
+
+  getCommentValidationState() {
+
+  }
+
+  getDefaultCommentValidationState() {
+
+  }
+
   render() {  
     return (
-      <div id='criteria-body'>
+      <form id='criteria-body'>
           <p className='center-block'>{this.props.criterion.name} ({this.props.criterion.pointsPossible})</p>
           <p>{this.props.criterion.description}</p>
-          <div className='form-group'>
-              <label htmlFor="grade" className='control-label'>Grade</label><br />
-              <input autoFocus type="number" className='form-control' id="grade" name="grade" value={this.props.criterion.pointsEarned} onChange={this.props.criteriaGradeChanged} />
-          </div>
+          <FormGroup
+            controlId="criteriaGradeForm"
+            validationState={this.getGradeValidationState()}
+          >
+              <ControlLabel>Grade</ControlLabel>
+              <FormControl autoFocus
+                type="number"
+                value={this.props.criterion.pointsEarned}
+                onChange={this.props.criteriaGradeChanged}
+              />
+              <FormControl.Feedback />
+          </FormGroup>
 
-          <div id="default-comments-dropdown" className='form-group'>
-            <label htmlFor="defaultComment" className='control-label'>Default comments</label><br/>
-            <select className='form-control' onChange={this.props.criteriaDefaultCommentChanged}>
+
+          <FormGroup
+            controlId="criteriaDefaultCommentForm"
+            validationState={this.getDefaultCommentValidationState()}
+          >
+            <ControlLabel>Default comments</ControlLabel>
+            <FormControl componentClass='select' onChange={this.props.criteriaDefaultCommentChanged}>
               {
                 this.props.criterion.defaultComments.map((defaultComment, i) => 
                   <option key={i} value={i}>{defaultComment.text}</option>
                 )
               }
-            </select>
-          </div>
+            </FormControl>
+          </FormGroup>
 
-          <div className='form-group'>
-              <label htmlFor="comment" className='control-label'>Comment</label><br/>
-              <textarea id="comment" name="comment" className="form-control" rows="4" value={this.props.criterion.comment} onChange={this.props.criteriaCommentChanged}></textarea>
-          </div>
+          <FormGroup
+            controlId="criteriaCommentForm"
+            validationState={this.getCommentValidationState()}
+          >
+            <ControlLabel>Comment</ControlLabel>
+            <FormControl 
+              componentClass="textarea"
+              value={this.props.criterion.comment}
+              onChange={this.props.criteriaCommentChanged}
+            />
+          </FormGroup>
+
           <button onClick={this.props.criteriaSaveCommentAsDefault}>Save comment as a default comment</button>
-      </div>
+      </form>
     );
   }
 }
