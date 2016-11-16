@@ -16,6 +16,12 @@ export const updateCriterionComment = (criterionIndex, value) => ({
   value
 });
 
+export const addCriterionDefaultComment = (criterionIndex, value) => ({
+  type: 'ADD_CRITERION_DEFAULT_COMMENT',
+  criterionIndex,
+  value
+});
+
 export const resetRubric = () => ({
   type: 'RESET_RUBRIC',
 });

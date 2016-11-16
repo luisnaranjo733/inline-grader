@@ -4,7 +4,7 @@ import {HotKeys} from 'react-hotkeys';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import {Breadcrumb} from 'react-bootstrap'
-import {updateCriterionGrade, updateCriterionComment} from '../actions/'
+import {updateCriterionGrade, updateCriterionComment, addCriterionDefaultComment} from '../actions/'
 
 class Toolbar extends Component {
   render() {
@@ -63,6 +63,7 @@ class CriteriaBody extends Component {
               <label htmlFor="comment">Comment</label><br/>
               <textarea id="comment" name="comment" value={this.props.criterion.comment} onChange={this.props.criteriaCommentChanged}></textarea>
           </div>
+          <button onClick={this.props.criteriaSaveCommentAsDefault}>Save comment as a default comment</button>
       </div>
     );
   }
@@ -79,7 +80,8 @@ CriteriaBody.propTypes = {
   }).isRequired,
   criteriaGradeChanged: React.PropTypes.func.isRequired,
   criteriaCommentChanged: React.PropTypes.func.isRequired,
-  criteriaDefaultCommentChanged: React.PropTypes.func.isRequired
+  criteriaDefaultCommentChanged: React.PropTypes.func.isRequired,
+  criteriaSaveCommentAsDefault: React.PropTypes.func.isRequired,
 }
 CriteriaBody.defaultProps = {
   criterion: {
@@ -91,6 +93,7 @@ CriteriaBody.defaultProps = {
   criteriaGradeChanged: () => {},
   criteriaCommentChanged: () => {},
   criteriaDefaultCommentChanged: () => {},
+  criteriaSaveCommentAsDefault: () => {},
 }
 
 class CriteriaPage extends Component {
@@ -107,6 +110,7 @@ class CriteriaPage extends Component {
     this.onNavigateToNextCriteria = this.onNavigateToNextCriteria.bind(this);
     this.onIncrementCriteriaGrade = this.onIncrementCriteriaGrade.bind(this);
     this.onDecrementCriteriaGrade = this.onDecrementCriteriaGrade.bind(this);
+    this.onCriteriaSaveCommentAsDefault = this.onCriteriaSaveCommentAsDefault.bind(this);
   }
 
   get currentCriterionIndex() {return parseInt(this.props.params.criteriaIndex, 10) - 1;}
@@ -149,6 +153,14 @@ class CriteriaPage extends Component {
     } else {
       this.props.dispatch(updateCriterionComment(this.currentCriterionIndex, ''));
     }
+  }
+
+  onCriteriaSaveCommentAsDefault() {
+    let defaultComment = {
+      text: this.currentCriterion.comment,
+      deduction: String(this.currentCriterion.pointsPossible - this.currentCriterion.pointsEarned),
+    }
+    this.props.dispatch(addCriterionDefaultComment(this.currentCriterionIndex, defaultComment));
   }
 
   onNavigateToReportPage(e) {
@@ -225,6 +237,7 @@ class CriteriaPage extends Component {
             criteriaGradeChanged={this.onCriteriaGradeChanged}
             criteriaCommentChanged={this.onCriteriaCommentChanged}
             criteriaDefaultCommentChanged={this.onCriteriaDefaultCommentChanged}
+            criteriaSaveCommentAsDefault={this.onCriteriaSaveCommentAsDefault}
           />
         </HotKeys>
       </div>

@@ -14,7 +14,6 @@ const rubricReducer = (state = initialState, action) => {
     case 'RESET_RUBRIC':
       newCriteria.forEach(function(criterion) {
         criterion.comment = '';
-        criterion.defaultComments = [];
         criterion.pointsEarned = criterion.pointsPossible
       });
       return Object.assign({}, state, {criteria: newCriteria});
@@ -23,6 +22,10 @@ const rubricReducer = (state = initialState, action) => {
       return Object.assign({}, state, {criteria: newCriteria});
     case 'UPDATE_CRITERION_COMMENT':
       newCriteria[action.criterionIndex].comment = action.value;
+      return Object.assign({}, state, {criteria: newCriteria});
+    case 'ADD_CRITERION_DEFAULT_COMMENT':
+      newCriteria[action.criterionIndex].defaultComments.push(action.value);
+      console.log(newCriteria[action.criterionIndex].defaultComments);
       return Object.assign({}, state, {criteria: newCriteria});
     default:
       return state
