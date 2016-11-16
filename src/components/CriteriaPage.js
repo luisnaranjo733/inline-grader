@@ -43,14 +43,14 @@ class CriteriaBody extends Component {
       <div id='criteria-body'>
           <p className='center-block'>{this.props.criterion.name} ({this.props.criterion.pointsPossible})</p>
           <p>{this.props.criterion.description}</p>
-          <div>
+          <div className='form-group'>
               <label htmlFor="grade">Grade</label><br />
-              <input autoFocus type="text" id="grade" name="grade" value={this.props.criterion.pointsEarned} onChange={this.props.criteriaGradeChanged} />
+              <input autoFocus type="number" className='form-control' id="grade" name="grade" value={this.props.criterion.pointsEarned} onChange={this.props.criteriaGradeChanged} />
           </div>
 
-          <div id="default-comments-dropdown">
+          <div id="default-comments-dropdown" className='form-group'>
             <label htmlFor="defaultComment">Default comments</label><br/>
-            <select onChange={this.props.criteriaDefaultCommentChanged}>
+            <select className='form-control' onChange={this.props.criteriaDefaultCommentChanged}>
               {
                 this.props.criterion.defaultComments.map((defaultComment, i) => 
                   <option key={i} value={i}>{defaultComment.text}</option>
@@ -59,9 +59,9 @@ class CriteriaBody extends Component {
             </select>
           </div>
 
-          <div>
+          <div className='form-group'>
               <label htmlFor="comment">Comment</label><br/>
-              <textarea id="comment" name="comment" value={this.props.criterion.comment} onChange={this.props.criteriaCommentChanged}></textarea>
+              <textarea id="comment" name="comment" className="form-control" rows="4" value={this.props.criterion.comment} onChange={this.props.criteriaCommentChanged}></textarea>
           </div>
           <button onClick={this.props.criteriaSaveCommentAsDefault}>Save comment as a default comment</button>
       </div>
