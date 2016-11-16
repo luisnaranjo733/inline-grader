@@ -18,6 +18,8 @@ export default class Criterion {
         this.comment = '';
     }
 
+    get pointsEarnedFloat() {return parseFloat(this.pointsEarned, 10);}
+    get pointsPossibleFloat() {return parseFloat(this.pointsPossible, 10);}
     // Getter method for this criterion's root section
     // If the criteria has no root section (if the criteria is a direct child of the root tag) return empty string
     get rootSection() {

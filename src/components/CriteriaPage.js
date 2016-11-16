@@ -40,21 +40,31 @@ Toolbar.defaultProps = {
 class CriteriaBody extends Component {
 
   getGradeValidationState() {
-    console.log('validating form');
-    return 'warning';
+    if ((!this.props.criterion.pointsEarnedFloat && this.props.criterion.pointsEarnedFloat !== 0) || (this.props.criterion.pointsEarnedFloat < 0)) {
+      /* This conditional really tests 2 different edge cases that both result in 'error'
+        1. User supplies value that is not a float (need to check for zero false positive)
+        2. User supplies value that is not negative
+      */
+      return 'error'
+    } else if (this.props.criterion.pointsEarnedFloat > this.props.criterion.pointsPossibleFloat) {
+      // check for a value that exceeds the rubric's points possible
+      // warn the user that they are giving extra credit, but don't stop them from doing so'
+      return 'warning'
+    } else {
+      // will only happen for numeric value in [0, pointsPossible]
+      return 'success'
+    }
   }
 
   getCommentValidationState() {
-
-  }
-
-  getDefaultCommentValidationState() {
-
+    if (this.props.criterion.comment && this.props.criterion.comment.length > 0) {
+      return 'success';
+    }
   }
 
   render() {  
     return (
-      <form id='criteria-body'>
+      <form autoFocus id='criteria-body'>
           <p className='center-block'>{this.props.criterion.name} ({this.props.criterion.pointsPossible})</p>
           <p>{this.props.criterion.description}</p>
           <FormGroup
@@ -62,8 +72,8 @@ class CriteriaBody extends Component {
             validationState={this.getGradeValidationState()}
           >
               <ControlLabel>Grade</ControlLabel>
-              <FormControl autoFocus
-                type="number"
+              <FormControl
+                type="text"
                 value={this.props.criterion.pointsEarned}
                 onChange={this.props.criteriaGradeChanged}
               />
@@ -73,7 +83,6 @@ class CriteriaBody extends Component {
 
           <FormGroup
             controlId="criteriaDefaultCommentForm"
-            validationState={this.getDefaultCommentValidationState()}
           >
             <ControlLabel>Default comments</ControlLabel>
             <FormControl componentClass='select' onChange={this.props.criteriaDefaultCommentChanged}>
