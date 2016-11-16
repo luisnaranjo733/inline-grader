@@ -76,6 +76,8 @@ class CriteriaBody extends Component {
                 type="text"
                 value={this.props.criterion.pointsEarned}
                 onChange={this.props.criteriaGradeChanged}
+                autoFocus
+                autoComplete="off"
               />
               <FormControl.Feedback />
           </FormGroup>
@@ -227,9 +229,11 @@ class CriteriaPage extends Component {
   onIncrementCriteriaGrade() {
     // check for '0' because a parseFloat("0", 10) === false, so we have to avoid that edge case
     if (parseFloat(this.currentCriterion.pointsEarned, 10)  || this.currentCriterion.pointsEarned === '0') {
-      var incrementedGrade = parseFloat(this.currentCriterion.pointsEarned, 10) + 1;
-      incrementedGrade = String(incrementedGrade);
-      this.props.dispatch(updateCriterionGrade(this.currentCriterionIndex, incrementedGrade));
+      var incrementedGrade = this.currentCriterion.pointsEarnedFloat + 1;
+      if (incrementedGrade <= this.currentCriterion.pointsPossibleFloat) {
+        incrementedGrade = String(incrementedGrade);
+        this.props.dispatch(updateCriterionGrade(this.currentCriterionIndex, incrementedGrade));
+      }
     }
   }
 
