@@ -10,7 +10,7 @@ export default class Criterion {
         this.defaultComments = [
             {
                 text: '-',
-                weight: pointsPossible
+                deduction: '0'
             }
         ];
         // default values for ungraded criteria

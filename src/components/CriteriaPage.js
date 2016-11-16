@@ -50,10 +50,10 @@ class CriteriaBody extends Component {
 
           <div id="default-comments-dropdown">
             <label htmlFor="defaultComment">Default comments</label><br/>
-            <select>
+            <select onChange={this.props.criteriaDefaultCommentChanged}>
               {
                 this.props.criterion.defaultComments.map((defaultComment, i) => 
-                  <option key={i} value={defaultComment.weight}>{defaultComment.text}</option>
+                  <option key={i} value={i}>{defaultComment.text}</option>
                 )
               }
             </select>
@@ -78,7 +78,8 @@ CriteriaBody.propTypes = {
     })),
   }).isRequired,
   criteriaGradeChanged: React.PropTypes.func.isRequired,
-  criteriaCommentChanged: React.PropTypes.func.isRequired
+  criteriaCommentChanged: React.PropTypes.func.isRequired,
+  criteriaDefaultCommentChanged: React.PropTypes.func.isRequired
 }
 CriteriaBody.defaultProps = {
   criterion: {
@@ -88,7 +89,8 @@ CriteriaBody.defaultProps = {
     defaultComments: []
   },
   criteriaGradeChanged: () => {},
-  criteriaCommentChanged: () => {}
+  criteriaCommentChanged: () => {},
+  criteriaDefaultCommentChanged: () => {},
 }
 
 class CriteriaPage extends Component {
@@ -98,6 +100,7 @@ class CriteriaPage extends Component {
 
     this.onCriteriaGradeChanged = this.onCriteriaGradeChanged.bind(this);
     this.onCriteriaCommentChanged = this.onCriteriaCommentChanged.bind(this);
+    this.onCriteriaDefaultCommentChanged = this.onCriteriaDefaultCommentChanged.bind(this);
 
     this.onNavigateToReportPage = this.onNavigateToReportPage.bind(this);
     this.onNavigateToPrevCriteria = this.onNavigateToPrevCriteria.bind(this);
@@ -133,6 +136,19 @@ class CriteriaPage extends Component {
 
   onCriteriaCommentChanged(e) {
     this.props.dispatch(updateCriterionComment(this.currentCriterionIndex, e.target.value));
+  }
+
+  onCriteriaDefaultCommentChanged(e) {
+    let defaultCommentIndex = parseInt(e.target.value, 10);
+    let defaultComment = this.currentCriterion.defaultComments[defaultCommentIndex];
+
+    let newGrade = String(this.currentCriterion.pointsPossible - defaultComment.deduction);
+    this.props.dispatch(updateCriterionGrade(this.currentCriterionIndex, newGrade));
+    if (defaultCommentIndex > 0) {
+      this.props.dispatch(updateCriterionComment(this.currentCriterionIndex, defaultComment.text));
+    } else {
+      this.props.dispatch(updateCriterionComment(this.currentCriterionIndex, ''));
+    }
   }
 
   onNavigateToReportPage(e) {
@@ -208,6 +224,7 @@ class CriteriaPage extends Component {
             criterion={criterion}
             criteriaGradeChanged={this.onCriteriaGradeChanged}
             criteriaCommentChanged={this.onCriteriaCommentChanged}
+            criteriaDefaultCommentChanged={this.onCriteriaDefaultCommentChanged}
           />
         </HotKeys>
       </div>

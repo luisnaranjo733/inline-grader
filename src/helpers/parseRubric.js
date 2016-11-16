@@ -167,7 +167,7 @@ function parseXmlHelper(tag, path, criteriaArray) {
         for (let comment of criteria[COMMENT_TAG]) {
           criterion.defaultComments.push({
             text: comment['_'].trim(),
-            weight: comment['$']['weight']
+            deduction: comment['$']['deduction']
           });
         }
       }
