@@ -8,24 +8,18 @@ import {updateCriterionGrade, updateCriterionComment, addCriterionDefaultComment
 
 class Toolbar extends Component {
   render() {
-    console.log(this.props.currentCriterionNumber);
-    console.log(this.props.nCriterion);
     return (
       <div id="criteria-toolbar">
+        <Breadcrumb>
+          {this.props.criterion.sectionPath.map((section, i) => 
+              <Breadcrumb.Item key={i}>{section}</Breadcrumb.Item>
+            )
+          }
+        </Breadcrumb>
 
-          <Breadcrumb>
-            {this.props.criterion.sectionPath.map((section, i) => 
-                <Breadcrumb.Item key={i}>{section}</Breadcrumb.Item>
-              )
-            }
-          </Breadcrumb>
-
-
-
-          <Label className="pull-right" bsStyle={this.props.currentCriterionNumber === this.props.nCriterion ? 'success' : 'default'}>
-            Criteria: {this.props.currentCriterionNumber} / {this.props.nCriterion}
-          </Label>
-
+        <Label className="pull-right" bsStyle={this.props.currentCriterionNumber === this.props.nCriterion ? 'success' : 'default'}>
+          Criteria: {this.props.currentCriterionNumber} / {this.props.nCriterion}
+        </Label>
       </div>
     );
   }
