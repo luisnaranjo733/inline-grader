@@ -83,21 +83,6 @@ class CriteriaBody extends Component {
               <FormControl.Feedback />
           </FormGroup>
 
-
-          <FormGroup
-            controlId="criteriaDefaultCommentForm"
-            bsSize="small"
-          >
-            <ControlLabel>Default comments</ControlLabel>
-            <FormControl componentClass='select' onChange={this.props.criteriaDefaultCommentChanged}>
-              {
-                this.props.criterion.defaultComments.map((defaultComment, i) => 
-                  <option key={i} value={i}>{defaultComment.text}</option>
-                )
-              }
-            </FormControl>
-          </FormGroup>
-
           <FormGroup
             controlId="criteriaCommentForm"
             validationState={this.getCommentValidationState()}
@@ -112,6 +97,19 @@ class CriteriaBody extends Component {
             />
           </FormGroup>
 
+          <FormGroup
+            controlId="criteriaDefaultCommentForm"
+            bsSize="small"
+          >
+            <ControlLabel>Default comments</ControlLabel>
+            <FormControl componentClass='select' onChange={this.props.criteriaDefaultCommentChanged}>
+              {
+                this.props.criterion.defaultComments.map((defaultComment, i) => 
+                  <option key={i} value={i}>{defaultComment.text}</option>
+                )
+              }
+            </FormControl>
+          </FormGroup>
           <button onClick={this.props.criteriaSaveCommentAsDefault}>Save comment as a default comment</button>
       </form>
     );
