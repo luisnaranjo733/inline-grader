@@ -10,6 +10,7 @@ class Toolbar extends Component {
   render() {
     return (
       <div id="criteria-toolbar">
+
           <Breadcrumb>
             {this.props.criterion.sectionPath.map((section, i) => 
                 <Breadcrumb.Item key={i}>{section}</Breadcrumb.Item>
@@ -17,9 +18,12 @@ class Toolbar extends Component {
             }
           </Breadcrumb>
 
-        <span className="pull-right" id='progress-box'>
-          Criteria: {this.props.currentCriterionNumber} / {this.props.nCriterion}
-        </span>
+
+
+          <span className="pull-right" id='progress-box'>
+            Criteria: {this.props.currentCriterionNumber} / {this.props.nCriterion}
+          </span>
+
       </div>
     );
   }
@@ -70,6 +74,7 @@ class CriteriaBody extends Component {
           <FormGroup
             controlId="criteriaGradeForm"
             validationState={this.getGradeValidationState()}
+            bsSize="small"
           >
               <ControlLabel>Grade</ControlLabel>
               <FormControl
@@ -85,6 +90,7 @@ class CriteriaBody extends Component {
 
           <FormGroup
             controlId="criteriaDefaultCommentForm"
+            bsSize="small"
           >
             <ControlLabel>Default comments</ControlLabel>
             <FormControl componentClass='select' onChange={this.props.criteriaDefaultCommentChanged}>
@@ -99,6 +105,8 @@ class CriteriaBody extends Component {
           <FormGroup
             controlId="criteriaCommentForm"
             validationState={this.getCommentValidationState()}
+            bsSize="large"
+            className='comment-form-group'
           >
             <ControlLabel>Comment</ControlLabel>
             <FormControl 

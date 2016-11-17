@@ -25,7 +25,6 @@ const rubricReducer = (state = initialState, action) => {
       return Object.assign({}, state, {criteria: newCriteria});
     case 'ADD_CRITERION_DEFAULT_COMMENT':
       newCriteria[action.criterionIndex].defaultComments.push(action.value);
-      console.log(newCriteria[action.criterionIndex].defaultComments);
       return Object.assign({}, state, {criteria: newCriteria});
     default:
       return state
