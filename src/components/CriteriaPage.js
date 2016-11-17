@@ -3,11 +3,13 @@ import { connect } from 'react-redux';
 import {HotKeys} from 'react-hotkeys';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
-import {Breadcrumb, FormGroup, ControlLabel, FormControl} from 'react-bootstrap'
+import {Breadcrumb, FormGroup, ControlLabel, FormControl, Label} from 'react-bootstrap'
 import {updateCriterionGrade, updateCriterionComment, addCriterionDefaultComment} from '../actions/'
 
 class Toolbar extends Component {
   render() {
+    console.log(this.props.currentCriterionNumber);
+    console.log(this.props.nCriterion);
     return (
       <div id="criteria-toolbar">
 
@@ -20,9 +22,9 @@ class Toolbar extends Component {
 
 
 
-          <span className="pull-right" id='progress-box'>
+          <Label className="pull-right" bsStyle={this.props.currentCriterionNumber === this.props.nCriterion ? 'success' : 'default'}>
             Criteria: {this.props.currentCriterionNumber} / {this.props.nCriterion}
-          </span>
+          </Label>
 
       </div>
     );
