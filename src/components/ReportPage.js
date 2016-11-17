@@ -40,7 +40,7 @@ class RootSectionComponent extends Component {
   }
 }
 
-class ReportPage extends Component {
+export class ReportPage extends Component {
   constructor(props, context) {
     super(props);
     this.context = context;

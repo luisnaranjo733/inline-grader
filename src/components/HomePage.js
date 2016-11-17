@@ -38,7 +38,7 @@ UploadRubricForm.PropTypes = {
   onFormSubmitted: PropTypes.func.isRequired, // callback for parent to know when the form is submitted (on button click)
 };
 
-class HomePage extends Component {
+export class HomePage extends Component {
 
   constructor(props, context) {
     super(props, context);

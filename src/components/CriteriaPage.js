@@ -143,7 +143,7 @@ CriteriaBody.defaultProps = {
   criteriaSaveCommentAsDefault: () => {},
 }
 
-class CriteriaPage extends Component {
+export class CriteriaPage extends Component {
   constructor(props, context) {
     super(props, context);
     this.context = context;
