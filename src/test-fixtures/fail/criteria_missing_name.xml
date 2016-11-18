@@ -1,0 +1,12 @@
+<rubric name="Test challenge">
+  <section name="Coding Style &amp; Documentation">
+    <criteria name="overall organization &amp; indentation (readability); semicolons" weight="2">
+      Make sure that their code is well organized and readable.
+      <comment deduction="2">A substantial amount of the lines in your code as missing semicolons.</comment>
+      <comment deduction="1">A few of the lines in your code are missing semicolons.</comment>
+    </criteria>
+    <criteria name="" weight="2"/>
+    <criteria name="includes some organizing comments/documentation" weight="2"/>
+    <criteria name="filled in README form" weight="1"/>
+  </section>
+</rubric>
