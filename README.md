@@ -1,4 +1,4 @@
-# Inline grader
+# Inline grader [![Build Status](https://travis-ci.com/luisnaranjo733/inline-grader.svg?token=9yzth4LvUdfz5PkxxtAy&branch=master)](https://travis-ci.com/luisnaranjo733/inline-grader)
 
 Inline grader is a webapp built to help teachers and TA's grade assignments while referencing a rubric all in the same place.
 
