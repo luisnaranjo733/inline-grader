@@ -43,7 +43,7 @@ export class HomePage extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      rubricUrl: 'https://raw.githubusercontent.com/info343-au16/grading/xml/chat-rubric.xml?token=ABCn202wQdreYncSueoU7gNm9RI9EF3Jks5YUZ7wwA%3D%3D'
+      rubricUrl: 'https://raw.githubusercontent.com/info498e-w17/admin/master/hwk1-protests-rubric.xml?token=ABCn2036YWTinRS2Xvg9D3OxM9hpyanCks5Yj26KwA%3D%3D'
     };
 
     this.onUrlChanged = this.onUrlChanged.bind(this);
