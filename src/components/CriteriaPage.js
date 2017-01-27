@@ -110,7 +110,7 @@ class CriteriaBody extends Component {
               }
             </FormControl>
           </FormGroup>
-          <button onClick={this.props.criteriaSaveCommentAsDefault}>Save comment as a default comment</button>
+          <button type="button" onClick={this.props.criteriaSaveCommentAsDefault}>Save comment as a default comment</button>
       </form>
     );
   }
@@ -202,7 +202,8 @@ export class CriteriaPage extends Component {
     }
   }
 
-  onCriteriaSaveCommentAsDefault() {
+  onCriteriaSaveCommentAsDefault(e) {
+    // e.preventDefault() is button reset keeps happening
     let defaultComment = {
       text: this.currentCriterion.comment,
       deduction: String(this.currentCriterion.pointsPossible - this.currentCriterion.pointsEarned),
