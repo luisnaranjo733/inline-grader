@@ -44,13 +44,13 @@ export function isXmlValid(xmlString) {
       if (rubricTag[SECTION_TAG] || rubricTag[CRITERIA_TAG]) {
         rubricTagValid = true;
       } else {
-        // console.log('Rubric tag must contain at least 1 criteria or section tag as immediate child');
+        console.log('Rubric tag must contain at least 1 criteria or section tag as immediate child');
       }
     } else {
-      // console.log('Rubric tag should have a name attribute')
+      console.log('Rubric tag should have a name attribute')
     }
   } else {
-    // console.log("Root tag should be a rubric tag");
+    console.log("Root tag should be a rubric tag");
   }
 
   return rubricTagValid && isXmlValidHelper(rubricTag);
@@ -77,18 +77,18 @@ function isXmlValidHelper(tag) {
     for (var criteria of childCriteria) {
       if (!criteria['$']['name'] || criteria['$']['name'].length === 0) {
         allCriteriaTagsValid = false;
-        // console.log("All criteria tags should have a non empty name attribute");
+        console.log("All criteria tags should have a non empty name attribute");
       }
       if (!criteria['$']['weight'] || criteria['$']['weight'].length === 0) {
         allCriteriaTagsValid = false;
-        // console.log("All criteria tags should have a non empty weight attribute");
+        console.log("All criteria tags should have a non empty weight attribute");
       }
 
       if (criteria[COMMENT_TAG]) {
         for (let comment of criteria[COMMENT_TAG]) {
           if (!comment['_']) {
             allCriteriaTagsValid = false;
-            // console.log('All comment tags should have an inner text value')
+            console.log('All comment tags should have an inner text value')
           }
         }        
       }
@@ -100,12 +100,12 @@ function isXmlValidHelper(tag) {
     for (var section of childSections) {
       if (!section['$']['name'] || section['$']['name'].length === 0) {
         allSectionTagsValid = false;
-        // console.log("All section tags should have a non empty name attribute");
+        console.log("All section tags should have a non empty name attribute");
       }
 
       if (!section[SECTION_TAG] && !section[CRITERIA_TAG]) {
         allSectionTagsValid = false;
-        // console.log("All section tags must contain a criteria tag or a section tag");
+        console.log("All section tags must contain a criteria tag or a section tag");
       }
 
       allSectionTagsValid = isXmlValidHelper(section);
