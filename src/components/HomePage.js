@@ -43,7 +43,7 @@ export class HomePage extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      rubricUrl: 'https://raw.githubusercontent.com/info498e-w17/admin/master/hwk6-arch-resist-rubric.xml?token=ABCn28wab5jVSHbaWCEziwmYpPt9wcGxks5Y0aAQwA%3D%3D'
+      rubricUrl: 'https://raw.githubusercontent.com/info498e-w17/admin/master/hwk6-arch-resist-rubric.xml?token=ABCn28IDjKeVFXF27Rm8QyHTXXWOYXFrks5Y0aVXwA%3D%3D'
     };
 
     this.onUrlChanged = this.onUrlChanged.bind(this);
